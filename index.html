@@ -3,29 +3,34 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="DigiSoma: fun lessons in coding, AI, online safety and wellbeing for African kids aged 6 to 16.">
+<meta name="theme-color" content="#3B1F8F">
 <title>DigiSoma Prototype</title>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-/* Plan: violet + sunshine world, one colour per world, chunky 3D buttons, Zuri the robot as guide. Four levels: Home > World > Topic > Lesson. */
-:root{--ink:#1E1147;--bg:#F4F0FF;--sun:#FFC93C;--vio:#3B1F8F;--good:#0B7A5C;--soft:#E5E0F7;color-scheme:light}
+/* Plan: violet + sunshine world, one colour per world, chunky 3D buttons, Zuri the robot as guide. Profiles > Home > World > Topic > Lesson. */
+:root{--ink:#1E1147;--bg:#F4F0FF;--sun:#FFC93C;--vio:#3B1F8F;--soft:#E5E0F7;--mint:#12A87F;--pink:#FF5D8F;color-scheme:light}
 *{box-sizing:border-box}
 body{margin:0;font-family:Fredoka,"Trebuchet MS",system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:18px;line-height:1.5}
 a{color:inherit;text-decoration:none}button{font:inherit;cursor:pointer;color:inherit}:focus-visible{outline:4px solid var(--sun);outline-offset:3px}
 header{position:sticky;top:0;z-index:5;background:var(--vio);color:#fff;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 20px;flex-wrap:wrap}
 .logo{font-weight:700;font-size:28px}.logo b{color:var(--sun)}
 .stats{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.chip{background:rgba(255,255,255,.15);border-radius:99px;padding:3px 13px;font-weight:600;font-size:16px;border:0;color:#fff}
-.bar{width:90px;height:14px;border-radius:99px;background:rgba(255,255,255,.2);overflow:hidden}.bar i{display:block;height:100%;width:0;background:var(--sun);transition:width .5s}
+.chip{background:rgba(255,255,255,.15);border-radius:99px;padding:3px 13px;font-weight:600;font-size:16px;border:0;color:#fff;white-space:nowrap}
+button.chip:hover{background:rgba(255,255,255,.28)}
+.bar{width:80px;height:14px;border-radius:99px;background:rgba(255,255,255,.2);overflow:hidden}.bar i{display:block;height:100%;width:0;background:var(--sun);transition:width .5s}
 .wrap{max-width:1050px;margin:0 auto}
-.hero{background:linear-gradient(120deg,#3B1F8F,#6A3CE0);color:#fff;padding:28px 20px 60px;border-radius:0 0 40px 40px}
+.hero,.screen{background:linear-gradient(120deg,#3B1F8F,#6A3CE0);color:#fff;padding:28px 20px 70px;border-radius:0 0 40px 40px}
+.screen{padding-bottom:50px;min-height:calc(100vh - 60px)}
 .hero .wrap{display:grid;grid-template-columns:1.2fr 1fr;gap:20px;align-items:center}
 h1{font-size:clamp(34px,6vw,54px);line-height:1.05;margin:0 0 12px}.hero p{font-size:20px;margin:0 0 14px}
-.ages{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}.ages button{border:0;border-radius:99px;padding:6px 14px;background:rgba(255,255,255,.18);color:#fff;font-weight:600;font-size:15px}.ages .on{background:var(--sun);color:var(--ink)}
+.ages,.seg{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}.ages button,.seg button{border:0;border-radius:99px;padding:6px 14px;background:rgba(255,255,255,.18);color:#fff;font-weight:600;font-size:15px}.ages .on{background:var(--sun);color:var(--ink)}
+.seg button{background:var(--bg);color:var(--ink);border:3px solid transparent}.seg .on{background:#FFF1C4;border-color:var(--sun)}
 .tk{font-size:15px;opacity:.85;margin:0 0 12px!important}
-input{font:inherit;border:0;border-radius:99px;padding:10px 18px;width:190px;margin:0 6px 8px 0}
+input{font:inherit;border:0;border-radius:99px;padding:10px 18px}
 .cta,.go{background:var(--sun);color:var(--ink);border:0;border-radius:99px;padding:12px 24px;font-weight:700;box-shadow:0 5px 0 #C79A00;display:inline-block}
-.go{background:var(--vio);color:#fff;box-shadow:0 5px 0 #1E1147;margin:6px 4px;font-size:17px}.go.alt{background:#6F6596;box-shadow:0 5px 0 #4A4270}
-.cta:active,.go:active{transform:translateY(3px);box-shadow:none}
+.go{background:var(--vio);color:#fff;box-shadow:0 5px 0 #1E1147;margin:6px 4px;font-size:17px}.go.alt{background:#6F6596;box-shadow:0 5px 0 #4A4270}.go.red{background:#C21E50;box-shadow:0 5px 0 #7E1236}
+.cta:active,.go:active{transform:translateY(3px);box-shadow:none}.go:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
 .mascot{text-align:center}.bz{width:min(250px,70%);cursor:pointer;animation:bob 3s ease-in-out infinite}
 .sw button{width:28px;height:28px;border-radius:50%;border:3px solid #fff;margin:4px 3px}
 .say{background:#fff;color:var(--ink);border-radius:22px;padding:10px 18px;display:inline-block;max-width:360px;font-weight:500;font-size:17px;position:relative;margin-bottom:14px}
@@ -34,6 +39,10 @@ input{font:inherit;border:0;border-radius:99px;padding:10px 18px;width:190px;mar
 .eye{transform-origin:center;transform-box:fill-box;animation:blink 4s infinite}
 @keyframes bob{50%{transform:translateY(-10px)}}@keyframes blink{0%,94%,100%{transform:scaleY(1)}97%{transform:scaleY(.1)}}
 section{padding:36px 20px}h2{font-size:clamp(26px,4vw,34px);margin:0 0 6px}.sub{margin:0 0 20px;opacity:.8}
+.duo{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;margin-top:-56px;position:relative}
+.mis,.wotd{border-radius:24px;padding:16px 20px;display:flex;gap:14px;align-items:center}
+.mis{background:#fff;box-shadow:0 8px 0 rgba(30,17,71,.12)}.mis .em,.wotd .em{font-size:44px;line-height:1}.mis small,.wotd small{display:block;font-weight:600;opacity:.7;font-size:14px;text-transform:uppercase;letter-spacing:.05em}.mis b{font-size:21px;display:block;line-height:1.2}
+.wotd{background:var(--sun);box-shadow:0 8px 0 #C79A00}.wotd b{font-size:24px;display:block;line-height:1.1}
 .worlds{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px}
 .w{display:block;border-radius:28px;color:#fff;padding:20px;min-height:190px;box-shadow:0 8px 0 rgba(0,0,0,.22);transition:transform .15s}
 .w:hover{transform:translateY(-6px) rotate(-1deg)}.w .em{font-size:50px;line-height:1.1;display:block}.w h3{margin:6px 0 2px;font-size:24px}.w .d{font-size:16px}
@@ -41,7 +50,7 @@ section{padding:36px 20px}h2{font-size:clamp(26px,4vw,34px);margin:0 0 6px}.sub{
 .prog{display:block;font-size:15px;font-weight:600;margin-top:6px}
 .row{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
 .card{background:#fff;border-radius:24px;padding:16px 20px;border:4px solid transparent}.card.now{border-color:var(--sun)}.card small{opacity:.8}
-.b{background:#fff;border-radius:22px;padding:10px 16px;text-align:center}.b span{font-size:36px;display:block}.b.off{filter:grayscale(1);opacity:.4}.badges{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:24px}
+.b{background:#fff;border-radius:22px;padding:10px 14px;text-align:center;width:128px}.b span{font-size:36px;display:block}.b small{display:block;font-size:13px;opacity:.75;line-height:1.2}.b.off{filter:grayscale(1);opacity:.4}.badges{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:24px}
 .price{max-width:420px;margin:0 auto;background:var(--sun);border-radius:36px;padding:26px;text-align:center;box-shadow:0 10px 0 #C79A00}
 .price .n{font-size:60px;font-weight:700;line-height:1}.price .n small{font-size:22px;font-weight:500}.price ul{list-style:none;padding:0;text-align:left;font-weight:500;margin:12px 0}.price li:before{content:"✔ ";color:var(--vio)}
 .cr{max-width:1050px;margin:0 auto;padding:16px 20px 0;font-weight:500}.cr a{color:var(--vio);text-decoration:underline}.page{padding:14px 20px 50px}
@@ -49,26 +58,42 @@ section{padding:36px 20px}h2{font-size:clamp(26px,4vw,34px);margin:0 0 6px}.sub{
 .node{display:flex;align-items:center;gap:14px;background:#fff;border-radius:99px;padding:12px 24px;width:84%;box-shadow:0 6px 0 rgba(30,17,71,.15);border:4px solid var(--c);transition:transform .15s}
 .node:nth-child(even){margin-left:auto}a.node:hover{transform:scale(1.03)}.node.lock{opacity:.45;border-color:#999}.node .em{font-size:32px}.node b{display:block;font-size:20px;line-height:1.2}.node small{font-size:15px}
 .lc,dialog{background:#fff;border-radius:32px;overflow:hidden;box-shadow:0 10px 0 rgba(30,17,71,.15);color:var(--ink)}.lc{max-width:640px;margin:10px auto}
-dialog{border:0;padding:0;width:min(560px,94vw);max-height:92vh;overflow:auto}dialog::backdrop{background:rgba(30,17,71,.7)}
+dialog{border:0;padding:0;width:min(580px,94vw);max-height:92vh;overflow:auto}dialog::backdrop{background:rgba(30,17,71,.7)}
 .dh{color:#fff;padding:14px 24px}.dh h3{margin:0;font-size:25px}#st,.pbody{padding:20px 24px 24px}
 .zrow{display:flex;gap:12px;align-items:center;margin-bottom:12px}.zrow svg{flex:none}.zrow .say{margin:0;background:var(--bg)}.zrow .say:after{display:none}
-.step{margin:0;font-size:15px;opacity:.7}.c{text-align:center}
+.step{margin:0;font-size:15px;opacity:.7;display:block}.c{text-align:center}
 .opts{display:grid;gap:10px;margin:12px 0}.opt{background:var(--bg);border:3px solid transparent;border-radius:18px;padding:12px 16px;text-align:left;font-weight:500}
-.opt:hover{border-color:var(--vio)}.opt.good{background:#C9F5E4;border-color:#12A87F}.opt.bad{background:#FFD6E1;border-color:#FF5D8F}
+.opt:hover{border-color:var(--vio)}.opt.good{background:#C9F5E4;border-color:var(--mint)}.opt.bad{background:#FFD6E1;border-color:var(--pink)}
 .grid{display:grid;gap:6px;margin:10px auto}.cell{aspect-ratio:1;background:var(--bg);border-radius:14px;display:grid;place-items:center;font-size:clamp(22px,6vw,32px)}.cell.st{background:#FFF1C4}
 .pad{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:6px 0}.ar{background:#E1E7FF;border:0;border-radius:14px;padding:8px 16px;font-size:24px;box-shadow:0 4px 0 #B9C2EE}.ar:active{transform:translateY(3px);box-shadow:none}
-.q{min-height:48px;background:var(--bg);border-radius:14px;padding:8px;text-align:center;font-size:26px;display:flex;flex-wrap:wrap;gap:4px;justify-content:center;align-items:center}
-.q span{border-radius:10px;padding:0 4px}.q .hl{background:var(--sun)}.q small{font-size:16px}
+.ar.lp{background:#FFE7A8;box-shadow:0 4px 0 #D9B24A;font-size:18px;font-weight:600}
+.q{min-height:48px;background:var(--bg);border-radius:14px;padding:8px;text-align:center;font-size:24px;display:flex;flex-wrap:wrap;gap:4px;justify-content:center;align-items:center}
+.q span{border-radius:10px;padding:0 4px}.q .hl{background:var(--sun)}.q small{font-size:16px}.q .loop{background:#FFF1C4;border:2px dashed #D9B24A}
 pre{background:#1E293B;color:#7CF5D0;border-radius:14px;padding:12px;text-align:left;font-size:14px;overflow:auto;margin:10px 0}
 .moods{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}.moods button{background:var(--bg);border:3px solid transparent;border-radius:20px;padding:6px 12px;font-size:34px;line-height:1.2}.moods button:hover{border-color:var(--vio)}.moods small{display:block;font-size:14px;font-family:inherit}
 .breath{width:90px;height:90px;border-radius:50%;background:#B9A6FF;margin:16px auto;animation:br 8s ease-in-out infinite;display:grid;place-items:center;font-weight:600}@keyframes br{0%,100%{transform:scale(.6)}50%{transform:scale(1.15)}}
 .big{font-size:54px;text-align:center}
 .help{background:#FFF1C4;border-radius:16px;padding:10px 14px;font-size:16px}
-.wk{display:flex;gap:6px;align-items:flex-end;height:90px;margin:8px 0 2px}.wk div{flex:1;text-align:center;font-size:13px}.wk i{display:block;background:var(--vio);border-radius:6px 6px 0 0;margin:0 auto 2px;width:70%;min-height:3px}
+.homecard{background:#E2F8EE;border-radius:18px;padding:12px 16px;margin:12px 0;font-size:16px}
+.phone{max-width:330px;margin:10px auto;background:var(--ink);border-radius:32px;padding:14px 14px 20px;color:#fff}.pt{font-size:13px;opacity:.7;text-align:center}.from{font-weight:600;margin:10px 4px 6px}.msgb{background:#fff;color:var(--ink);border-radius:18px 18px 18px 4px;padding:12px 14px;font-size:16px}
+.pw{width:100%;border:3px solid var(--soft);border-radius:16px;font-size:22px;padding:10px 14px;margin:6px 0;background:var(--bg)}
+.meter{height:14px;background:var(--soft);border-radius:99px;overflow:hidden}.meter i{display:block;height:100%;width:0;transition:width .3s}
+.ck{list-style:none;padding:0;columns:2;font-size:16px;margin:8px 0}.ck .y{color:#0B7A5C;font-weight:600}
+.mrow{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:10px 0}.mrow div{text-align:center;width:96px}.mrow small{display:block;font-size:13px;line-height:1.25}
+.ob{background:#fff;color:var(--ink);border-radius:32px;max-width:540px;margin:10px auto;padding:24px;box-shadow:0 10px 0 rgba(0,0,0,.2)}
+.ob label{display:block;font-weight:600;margin:14px 0 6px}.ob input{width:100%;background:var(--bg);border:3px solid var(--soft);font-size:20px}
+.avs{display:flex;gap:8px;flex-wrap:wrap}.avs button{font-size:34px;background:var(--bg);border:3px solid transparent;border-radius:18px;padding:2px 10px}.avs .on{border-color:var(--vio);background:#FFF1C4}
+.kids{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px;max-width:720px;margin:20px auto}
+.kc{background:#fff;color:var(--ink);border:0;border-radius:28px;padding:20px;text-align:center;box-shadow:0 8px 0 rgba(0,0,0,.2);transition:transform .15s}.kc:hover{transform:translateY(-4px)}.kc .av{font-size:64px;display:block;line-height:1.1}.kc b{font-size:22px;display:block}.kc small{opacity:.75}
+.kc.add{background:rgba(255,255,255,.12);color:#fff;border:3px dashed rgba(255,255,255,.6);box-shadow:none}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:8px 0 14px}.tile{background:var(--bg);border-radius:16px;padding:8px 10px;font-size:14px;line-height:1.2}.tile b{font-size:24px;display:block;line-height:1.15}
+.wk{display:flex;gap:6px;align-items:flex-end;height:96px;margin:8px 0 2px}.wk div{flex:1;text-align:center;font-size:13px}.wk i{display:block;background:var(--vio);border-radius:6px 6px 0 0;margin:0 auto 2px;width:70%;min-height:3px}
+.ptabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}.ptabs button{border:2px solid var(--soft);background:#fff;border-radius:99px;padding:4px 12px}.ptabs .on{background:var(--vio);color:#fff;border-color:var(--vio)}
 .note{font-size:14px;opacity:.85;border-top:2px dashed var(--soft);margin-top:14px;padding-top:10px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:12px 22px;border-radius:99px;font-weight:600;z-index:40;box-shadow:0 6px 20px rgba(0,0,0,.3);text-align:center;max-width:92vw}
 .cf{position:fixed;top:-30px;font-style:normal;font-size:28px;z-index:30;pointer-events:none;animation:fall 2s ease-in forwards}@keyframes fall{to{transform:translate(var(--dx),105vh) rotate(360deg)}}
 footer{text-align:center;padding:24px;opacity:.75;font-size:15px}
-@media(max-width:760px){.hero .wrap{grid-template-columns:1fr}.node{width:100%}}
+@media(max-width:760px){.hero .wrap,.duo{grid-template-columns:1fr}.node{width:100%}.tiles{grid-template-columns:repeat(2,1fr)}.bar,#lvl{display:none}.chip{font-size:15px;padding:3px 10px}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -81,7 +106,7 @@ footer{text-align:center;padding:24px;opacity:.75;font-size:15px}
 <circle cx="48" cy="118" r="8" fill="#FF8A3D" opacity=".8"/><circle cx="152" cy="118" r="8" fill="#FF8A3D" opacity=".8"/><rect x="60" y="158" width="80" height="26" rx="13" fill="#4361EE"/></symbol></svg>
 <header>
   <a href="#" class="logo" aria-label="DigiSoma home">Digi<b>Soma</b></a>
-  <div class="stats"><span class="chip">🔥 <span id="streak">0</span>-day streak</span><span class="chip">⭐ <span id="xp">0</span> XP</span><span class="chip" id="lvl"></span><div class="bar" title="Progress to next level"><i id="fill"></i></div><button class="chip" id="pzb" aria-label="Open Parent Zone">👨‍👩‍👧 Parent Zone</button></div>
+  <div class="stats" id="hs"><button class="chip" id="me" aria-label="Switch learner"></button><span class="chip" title="Learning streak">🔥 <span id="streak">0</span></span><span class="chip">⭐ <span id="xp">0</span> XP</span><span class="chip" id="lvl"></span><div class="bar" title="Progress to next level"><i id="fill"></i></div><button class="chip" id="snd"></button><button class="chip" id="pzb" aria-label="Open Parent Zone">👨‍👩‍👧 Parents</button></div>
 </header>
 <main id="app"></main>
 <footer>DigiSoma preview prototype · “Soma” means “learn” in Swahili · Built in Nairobi</footer>
@@ -92,30 +117,36 @@ const $=s=>document.querySelector(s),app=$("#app"),pz=$("#pz");
 const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
 const esc=s=>String(s).replace(/[&<>"']/g,c=>"&#"+c.charCodeAt(0)+";"),strip=s=>s.replace(/<[^>]+>/g,"");
 const calm=matchMedia("(prefers-reduced-motion: reduce)").matches,canTalk="speechSynthesis" in window;
-const TT=["Explorer","Maker","Inventor","Wizard","Legend"];
+const TT=["Explorer","Maker","Inventor","Wizard","Legend"],AV=["🦁","🦒","🐘","🦓","🐆","🦜","🐢","🦩"];
 const AG=["Sprouts · 6–8","Builders · 9–12","Pioneers · 13–16"],HL=["Ready to train your first AI robot?","Build smart AI logic and beat online tricks!","Go from block code to real AI and Python!"];
-const TK=["Sprouts get easier maths, bigger buttons and a 🔊 read-aloud helper.","Builders see the Python version of their robot code.","Pioneers get Python code, harder maths and bonus challenge questions."];
+const TK=["Sprouts get easier maths and a 🔊 read-aloud helper.","Builders see the Python version of their robot code.","Pioneers get Python, harder maths and ⚡ bonus questions."];
+const WD=[["Kompyuta","Computer","💻"],["Akili bandia","Artificial intelligence (AI)","🧠"],["Programu","Program or app","📱"],["Nenosiri","Password","🔐"],["Mtandao","Internet or network","🌍"],["Roboti","Robot","🤖"],["Simu janja","Smartphone","📲"]];
 const D={
 code:{t:"Code & AI Lab",e:"🤖",c:"#4361EE",d:"Teach robots, understand AI",topics:[
-{t:"Robot Basics",e:"🕹️",d:"Tell a robot what to do",L:[{t:"Guide Zuri",k:"robot",lv:0},{t:"Dodge the rocks",k:"robot",lv:1},{t:"Mango delivery",k:"robot",lv:2}]},
-{t:"How AI Works",e:"🧠",d:"See, think, act",L:[
+{t:"Robot Basics",e:"🕹️",d:"Tell a robot what to do",L:[{t:"Guide Zuri",k:"robot",lv:0,home:"Be the robot! Ask someone at home to give you arrow steps to walk from the door to the kitchen."},{t:"Dodge the rocks",k:"robot",lv:1},{t:"Mango delivery",k:"robot",lv:2,home:"Draw a map of your street on paper and write the steps to get to the duka."}]},
+{t:"Loops",e:"🔁",d:"Repeat without rewriting",L:[
+{t:"Spot the pattern",k:"q",learn:"A loop repeats steps for you. Instead of writing ➡️➡️➡️➡️, you say “repeat 4 times: ➡️”. Programmers use loops every day.",Q:[["Clap, stomp, clap, stomp, clap, stomp. How many times does “clap, stomp” repeat?",["2","3","4"],1,"Three times. You just found a loop!"],["Which code is shorter?",["➡️➡️➡️➡️➡️","🔁×5 [ ➡️ ]"],1,"Loops save you from writing the same step again and again."]],X:["In Python, for i in range(3): repeats the code…",["3 times","4 times","Forever"],0,"range(3) counts 0, 1, 2, so the code runs three times."]},
+{t:"Rooftop garden",k:"robot",lv:3,home:"Make up a dance with a repeating pattern, then teach it to someone using “repeat 3 times”."}]},
+{t:"How AI Works",e:"🧠",d:"See, think, act, learn",L:[
 {t:"See, Think, Act",k:"order",learn:"Every AI robot works in 3 steps. It sees the world, thinks about what it saw, then acts."},
+{t:"Teach the AI",k:"train",learn:"Let’s build a mango-sorting AI! First you teach it with examples. Then we test it on mangoes it has never seen.",home:"Sort fruit at home into ripe and not ripe. What clues did you use? AI calls those clues “features”."},
 {t:"Learning from examples",k:"q",learn:"AI isn’t told every rule. It studies lots of examples, like cat photos, and finds patterns.",Q:[["How does AI learn to spot a cat?",["It’s born knowing","It studies lots of cat photos"],1,"Examples are what AI learns from."],["Next in the pattern: 🔴🔵🔴🔵 ?",["🔴","🔵","🟢"],0,"Spotting patterns is what AI does best."]],X:["The examples an AI learns from are called…",["Training data","Wi-Fi","A charger"],0,"Training data shapes everything the AI learns."]},
 {t:"Using AI wisely",k:"q",learn:"AI can be wrong. Check facts with a book or a grown-up, and keep private things private.",Q:[["An AI says something odd. You…",["Believe it","Check another source"],1,"AI makes mistakes, so double-check."],["Tell an AI your home address?",["Sure","No, keep it private"],1,"Private stays private, even with robots."]],X:["An AI learned only from photos of one country. It may…",["Work the same everywhere","Make more mistakes with other places and faces"],1,"That is called bias. Varied data makes fairer AI."]}]}]},
 math:{t:"Math Arena",e:"🧮",c:"#C2570C",d:"Numbers, puzzles, real life",topics:[
 {t:"Number Power",e:"🔢",d:"New puzzles every time, set to your age",L:[{t:"Add and subtract",k:"math",m:0},{t:"Times tables",k:"math",m:1}]},
-{t:"Math in Real Life",e:"🛒",d:"Money sense",L:[{t:"Shopping with shillings",k:"q",learn:"To find your change, subtract. Pay KSh 100 for something that costs KSh 60 and you get 100 − 60 = 40 back.",Q:[["3 mandazi at KSh 20 each. Total?",["KSh 40","KSh 60","KSh 80"],1,"3 × 20 = 60."],["Pay KSh 100 for KSh 65. Change?",["KSh 25","KSh 35","KSh 45"],1,"100 − 65 = 35."]],X:["You save KSh 50 a week. How long to reach KSh 400?",["6 weeks","8 weeks","10 weeks"],1,"400 ÷ 50 = 8."]}]}]},
+{t:"Math in Real Life",e:"🛒",d:"Money sense",L:[{t:"Shopping with shillings",k:"q",learn:"To find your change, subtract. Pay KSh 100 for something that costs KSh 60 and you get 100 − 60 = 40 back.",Q:[["3 mandazi at KSh 20 each. Total?",["KSh 40","KSh 60","KSh 80"],1,"3 × 20 = 60."],["Pay KSh 100 for KSh 65. Change?",["KSh 25","KSh 35","KSh 45"],1,"100 − 65 = 35."]],X:["You save KSh 50 a week. How long to reach KSh 400?",["6 weeks","8 weeks","10 weeks"],1,"400 ÷ 50 = 8."],home:"Next time at the duka, work out the change before the shopkeeper does!"}]}]},
 safe:{t:"Cyber Shield",e:"🛡️",c:"#0B7A5C",d:"Smart, kind and balanced online",topics:[
 {t:"Protect Yourself",e:"🔒",d:"Secrets, scams, passwords",L:[
 {t:"Strangers and secrets",k:"q",learn:"Online, anyone can pretend to be anyone. Keep your school, address and photos private.",Q:[["A gamer says, “Free gems! Send your address and password.”",["Send them","Block, and tell a grown-up"],1,"Real prizes never ask for passwords or addresses."],["Someone says, “Keep this secret from your parents.”",["OK","Tell a trusted grown-up now"],1,"Safe people never ask for secrets like that."]]},
-{t:"Passwords and scams",k:"q",learn:"Strong passwords are long and mixed. Free-prize messages are usually tricks.",Q:[["Strongest password?",["baraka123","Zebra!Moon7Tea"],1,"Long and mixed beats names and numbers."],["“YOU WON A PHONE! Tap here!”",["Tap it","Ignore it, show a parent"],1,"Surprise prizes are usually scams."]],X:["Best extra lock for an account?",["Two-step verification","Writing the password on your desk"],0,"A code sent to a phone stops people who guess your password."]}]},
+{t:"Scam or safe?",k:"scam",learn:"Scammers send messages that look real. Red flags: a rush, a prize, a secret, or a request for money, PINs or photos.",home:"With a grown-up, look through recent SMS messages together. Can you spot any scams?"},
+{t:"Password builder",k:"pass",learn:"Strong passwords are long and mixed. A great trick: three random words plus a number and a symbol.",home:"With a grown-up, check that family accounts use long passphrases, not names or birthdays."}]},
 {t:"Be Kind Online",e:"💬",d:"Bullying and balance",L:[
 {t:"If someone is mean",k:"q",learn:"If someone is unkind online: don’t reply, save proof, block them, tell a grown-up. It’s never your fault.",Q:[["First step if someone bullies you online?",["Be mean back","Don’t reply, tell a grown-up"],1,"Getting help is the brave move."],["Is bullying ever your fault?",["Yes","Never"],1,"Never."]]},
-{t:"Screen balance",k:"q",learn:"Try the 20-20-20 rule: every 20 minutes, look at something 20 feet away for 20 seconds. Sleep, play and friends matter too.",Q:[["The 20-20-20 rule helps your…",["Eyes","Shoes"],0,"Looking far away rests tired eyes."],["Screens right before bed…",["Help you sleep","Make sleep harder"],1,"Screen light keeps your brain awake."]]}]}]},
+{t:"Screen balance",k:"q",learn:"Try the 20-20-20 rule: every 20 minutes, look at something 20 feet away for 20 seconds. Sleep, play and friends matter too.",Q:[["The 20-20-20 rule helps your…",["Eyes","Shoes"],0,"Looking far away rests tired eyes."],["Screens right before bed…",["Help you sleep","Make sleep harder"],1,"Screen light keeps your brain awake."]],home:"Agree on a family “screens off” time before bed."}]}]},
 feel:{t:"Mind & Heart",e:"💛",c:"#C22E5F",d:"Understand and calm big feelings",topics:[
-{t:"Know Your Feelings",e:"🪞",d:"Name it to tame it",L:[{t:"Mood check-in",k:"feel"},
+{t:"Know Your Feelings",e:"🪞",d:"Name it to tame it",L:[{t:"Mood check-in",k:"feel",home:"At dinner, everyone shares one feeling from today."},
 {t:"Feelings detective",k:"q",learn:"Feelings have names: happy, sad, angry, scared, proud. Naming one makes it easier to handle.",Q:[["Your heart races before a test. You may feel…",["Nervous","Sleepy"],0,"Nerves make the heart beat faster."],["You lose a game and want to cry. That’s…",["Normal","Silly"],0,"All feelings are okay."]]}]},
-{t:"Calm Toolbox",e:"🧘",d:"Tools for big feelings",L:[{t:"Belly breathing",k:"breathe"},
+{t:"Calm Toolbox",e:"🧘",d:"Tools for big feelings",L:[{t:"Belly breathing",k:"breathe",home:"Teach belly breathing to someone in your family tonight."},
 {t:"Kind self-talk",k:"q",learn:"The voice in your head can be a friend or a bully. Talk to yourself like you would to a friend.",Q:[["You made a mistake. Kind self-talk is…",["“I’m so dumb”","“I’m still learning”"],1,"Mistakes help you learn."],["Who can you talk to when you feel low?",["Nobody","A trusted grown-up or friend"],1,"Sharing makes it lighter."]]}]}]},
 grow:{t:"Growing Up",e:"🌱",c:"#7B4DE0",d:"Changes, friends and your future",topics:[
 {t:"Me and My Body",e:"📏",d:"Everyone grows differently",L:[{t:"Growing at your pace",k:"q",learn:"Bodies and voices change at different times for everyone. There is no “right” time. Questions? Ask a parent, carer or school nurse.",Q:[["Your voice and body are changing. That is…",["Wrong","Normal for growing up"],1,"Everyone goes through it."],["A friend grows faster than you. This means…",["Something’s wrong","Everyone has their own pace"],1,"No two bodies grow the same."]]}]},
@@ -123,74 +154,109 @@ grow:{t:"Growing Up",e:"🌱",c:"#7B4DE0",d:"Changes, friends and your future",t
 {t:"Being a good friend",k:"q",learn:"Good friends listen, share, include others and say sorry.",Q:[["A classmate sits alone. Kind move?",["Ignore it","Invite them to join"],1,"Small kindness, big difference."],["A friend hurt you. You can…",["Say how you feel, calmly","Never speak again"],0,"Talking helps friendships grow."]]},
 {t:"Saying no",k:"q",learn:"You can say no to things that feel wrong, even to friends. Your body and choices belong to you.",Q:[["A friend wants you to do something unsafe. You…",["Say no and walk away","Go along"],0,"Real friends respect your no."],["If you feel unsafe, you should…",["Keep quiet","Tell a trusted adult"],1,"Telling is always right."]]}]},
 {t:"Future You",e:"🚀",d:"Tech that helps Africa",L:[{t:"Your big dream",k:"dream"},
-{t:"African tech heroes",k:"q",learn:"Africa builds amazing tech! M-Pesa, made in Kenya, lets people send money by phone. Ushahidi, also from Kenya, maps reports during emergencies. Zipline drones carry medicine to clinics in Rwanda.",Q:[["Which Kenyan invention lets people send money with a phone?",["M-Pesa","Bluetooth","Email"],0,"M-Pesa changed how millions of people pay."],["Drones in Rwanda deliver…",["Pizza","Medicine to clinics","Homework"],1,"Fast deliveries help clinics far from cities."]],X:["Ushahidi helps people during emergencies by…",["Mapping reports people send in","Selling phones"],0,"Many small reports on a map show where help is needed."]}]}]}
+{t:"African tech heroes",k:"q",learn:"Africa builds amazing tech! M-Pesa, made in Kenya, lets people send money by phone. Ushahidi, also from Kenya, maps reports during emergencies. Zipline drones carry medicine to clinics in Rwanda.",Q:[["Which Kenyan invention lets people send money with a phone?",["M-Pesa","Bluetooth","Email"],0,"M-Pesa changed how millions of people pay."],["Drones in Rwanda deliver…",["Pizza","Medicine to clinics","Homework"],1,"Fast deliveries help clinics far from cities."]],X:["Ushahidi helps people during emergencies by…",["Mapping reports people send in","Selling phones"],0,"Many small reports on a map show where help is needed."],home:"Ask a grown-up how M-Pesa changed the way your family pays for things."}]}]}
 };
 
-/* saved progress */
-const D0=()=>({p:{},n:"",s:0,d:"",z:"",a:1,m:"",dr:"",l:"",h:{}});
-let S=D0();try{Object.assign(S,JSON.parse(localStorage.getItem("ds")||"{}"))}catch(e){}
-const save=()=>{try{localStorage.setItem("ds",JSON.stringify(S))}catch(e){}};
-const dk=d=>d.toISOString().slice(0,10),today=()=>dk(new Date()),yday=()=>dk(new Date(Date.now()-864e5));
-if(S.z)document.documentElement.style.setProperty("--z",S.z);
-const key=(w,t,l)=>w+"."+t+"."+l,st=(w,t,l)=>S.p[key(w,t,l)]||0,xp=()=>Object.values(S.p).reduce((a,b)=>a+b*10,0);
+/* ---------- saved data: up to 3 learners in this browser ---------- */
+const SK="digisoma.v2";let DB={kids:[],cur:"",snd:1};
+try{Object.assign(DB,JSON.parse(localStorage.getItem(SK)||"{}"))}catch(e){}
+const save=()=>{try{localStorage.setItem(SK,JSON.stringify(DB))}catch(e){}};
+const newKid=(n,av,a)=>({id:Date.now().toString(36)+(Math.random()*1e4|0),n,av,a,z:"",p:{},s:0,b:0,d:"",h:{},mn:{},m:"",dr:"",l:"",ms:{}});
+let S=DB.kids.find(k=>k.id==DB.cur)||null;
+const useKid=k=>{S=k;DB.cur=k?k.id:"";save();document.documentElement.style.setProperty("--z",k&&k.z||"#FFC93C")};useKid(S);
+const dk=d=>new Date(d.getTime()-d.getTimezoneOffset()*6e4).toISOString().slice(0,10),today=()=>dk(new Date()),yday=()=>dk(new Date(Date.now()-864e5));
+const key=(w,t,l)=>w+"."+t+"."+l,st=(w,t,l)=>S.p[key(w,t,l)]||0;
+const xpOf=k=>Object.values(k.p).reduce((a,b)=>a+b*10,0),xp=()=>xpOf(S),stars=()=>Object.values(S.p).reduce((a,b)=>a+b,0);
 const lessons=w=>D[w].topics.flatMap((t,i)=>t.L.map((_,l)=>st(w,i,l)));
-const streak=()=>S.d==today()||S.d==yday()?S.s:0;
-function stats(){const x=xp(),l=Math.floor(x/50);$("#xp").textContent=x;$("#streak").textContent=streak();$("#lvl").textContent="Level "+(l+1)+" · "+TT[Math.min(l,4)];$("#fill").style.width=x%50*2+"%"}
-function boom(){if(calm)return;for(let i=0;i<28;i++){const s=document.createElement("i");s.className="cf";s.textContent=["⭐","🎉","✨","💛"][i%4];s.style.cssText=`left:${Math.random()*100}vw;--dx:${Math.random()*200-100}px;animation-delay:${Math.random()*.4}s`;document.body.append(s);setTimeout(()=>s.remove(),2600)}}
+const streakOf=k=>k.d==today()||k.d==yday()?k.s:0;
+const allL=()=>{const o=[];Object.entries(D).forEach(([w,W])=>W.topics.forEach((T,t)=>T.L.forEach((N,l)=>o.push({w,t,l,N,W,T,open:!l||st(w,t,l-1)>0,done:st(w,t,l)}))));return o};
+function stats(){const h=$("#hs");h.hidden=!S;if(!S)return;const x=xp(),l=Math.floor(x/100);
+  $("#me").textContent=S.av+" "+S.n+" ▾";$("#xp").textContent=x;$("#streak").textContent=streakOf(S);$("#lvl").textContent="Lv "+(l+1)+" · "+TT[Math.min(l,4)];$("#fill").style.width=x%100+"%";
+  $("#snd").textContent=DB.snd?"🔊":"🔇";$("#snd").setAttribute("aria-label",DB.snd?"Sound is on. Turn off":"Sound is off. Turn on")}
+$("#me").onclick=()=>location.hash="kids";$("#snd").onclick=()=>{DB.snd=DB.snd?0:1;save();stats();sfx("tap")};
+
+/* ---------- sound, speech, confetti, toast ---------- */
+let AC;const sfx=k=>{if(!DB.snd)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();const n=AC.currentTime;
+  ({ok:[[660,0,.12],[880,.1,.2]],no:[[260,0,.12],[200,.1,.25]],win:[[523,0,.15],[659,.12,.15],[784,.24,.15],[1047,.36,.35]],tap:[[520,0,.05]],bump:[[140,0,.25]],up:[[392,0,.12],[523,.1,.12],[659,.2,.12],[784,.3,.12],[1047,.4,.4]]})[k].forEach(([f,t,d])=>{const o=AC.createOscillator(),g=AC.createGain();o.type="triangle";o.frequency.value=f;g.gain.setValueAtTime(.0001,n+t);g.gain.exponentialRampToValueAtTime(.15,n+t+.02);g.gain.exponentialRampToValueAtTime(.0001,n+t+d);o.connect(g).connect(AC.destination);o.start(n+t);o.stop(n+t+d+.05)})}catch(e){}};
 const speak=t=>{try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.rate=.9;speechSynthesis.speak(u)}catch(e){}};
 document.addEventListener("click",e=>{const b=e.target.closest(".tts");if(b)speak(b.dataset.t)});
 const tb=t=>canTalk?`<button class="tts" data-t="${esc(strip(t))}" aria-label="Read aloud">🔊</button>`:"";
 const zsay=t=>`<div class="zrow"><svg viewBox="0 0 200 200" width="76" height="76" aria-hidden="true"><use href="#z"/></svg><div class="say">${t} ${tb(t)}</div></div>`;
+function boom(){if(calm)return;for(let i=0;i<28;i++){const s=document.createElement("i");s.className="cf";s.textContent=["⭐","🎉","✨","💛"][i%4];s.style.cssText=`left:${Math.random()*100}vw;--dx:${Math.random()*200-100}px;animation-delay:${Math.random()*.4}s`;document.body.append(s);setTimeout(()=>s.remove(),2600)}}
+let tt;const toast=t=>{let e=$(".toast");if(!e){e=document.createElement("div");e.className="toast";e.setAttribute("role","status");document.body.append(e)}e.textContent=t;clearTimeout(tt);tt=setTimeout(()=>e.remove(),3500)};
 const crumbs=a=>`<nav class="cr" aria-label="Breadcrumb"><a href="#">🏠 Home</a>${a.map(([t,h])=>" › "+(h?`<a href="#${h}">${t}</a>`:`<b>${t}</b>`)).join("")}</nav>`;
 
-/* LEVEL 1: home */
+/* ---------- profiles ---------- */
+function onboard(){let av=AV[DB.kids.length%AV.length],a=1;
+  if(DB.kids.length>=3){app.innerHTML=`<div class="screen"><div class="ob c"><h2>3 learners is the limit</h2><p>The Explorer Pass covers up to 3 children. A grown-up can remove a profile in the Parent Zone.</p><a class="go" href="#kids">Back</a></div></div>`;return}
+  app.innerHTML=`<div class="screen"><div class="ob"><div class="zrow"><svg viewBox="0 0 200 200" width="90" height="90" aria-hidden="true"><use href="#z"/></svg><div class="say"><b>Karibu! I’m Zuri.</b> Let’s set up your learner profile.</div></div>
+  <label for="on">What’s your first name?</label><input id="on" maxlength="14" autocomplete="off" placeholder="e.g. Amani">
+  <label id="al">Pick your animal</label><div class="avs" role="radiogroup" aria-labelledby="al">${AV.map(x=>`<button type="button" role="radio" aria-checked="${x==av}" class="${x==av?"on":""}" data-v="${x}">${x}</button>`).join("")}</div>
+  <label id="gl">How old are you?</label><div class="seg" role="radiogroup" aria-labelledby="gl">${AG.map((x,i)=>`<button type="button" role="radio" aria-checked="${i==a}" class="${i==a?"on":""}" data-a="${i}">${x}</button>`).join("")}</div>
+  <p class="step" id="tk">${TK[a]}</p><p class="step" style="margin-top:10px">Only a first name is saved, and only on this device. No email or photo needed.</p>
+  <p class="c"><button class="go" id="ok">Let’s go! 🚀</button>${DB.kids.length?`<a class="go alt" href="#kids">Cancel</a>`:""}</p><p id="oe" class="c" aria-live="polite"></p></div></div>`;
+  const pick=(sel,f)=>app.querySelectorAll(sel+" button").forEach(b=>b.onclick=()=>{app.querySelectorAll(sel+" button").forEach(x=>{x.classList.toggle("on",x==b);x.setAttribute("aria-checked",x==b)});f(b);sfx("tap")});
+  pick(".avs",b=>av=b.dataset.v);pick(".seg",b=>{a=+b.dataset.a;$("#tk").textContent=TK[a]});
+  $("#on").focus();$("#on").onkeydown=e=>{if(e.key=="Enter")$("#ok").click()};
+  $("#ok").onclick=()=>{const n=$("#on").value.trim();if(!n){$("#oe").textContent="Type your first name so I know what to call you!";$("#on").focus();return}
+    const k=newKid(n,av,a);DB.kids.push(k);useKid(k);sfx("win");boom();location.hash="";route()}}
+function kidsPage(){
+  app.innerHTML=`<div class="screen"><div class="wrap c"><svg viewBox="0 0 200 200" width="110" height="110" aria-hidden="true"><use href="#z"/></svg><h1>Who’s learning today?</h1><div class="kids">${DB.kids.map(k=>`<button class="kc" data-id="${k.id}"><span class="av" aria-hidden="true">${k.av}</span><b>${esc(k.n)}</b><small>${AG[k.a]}<br>⭐ ${xpOf(k)} XP · 🔥 ${streakOf(k)}</small></button>`).join("")}${DB.kids.length<3?`<a class="kc add" href="#new"><span class="av" aria-hidden="true">➕</span><b>Add a learner</b><small>Up to 3 per family</small></a>`:""}</div></div></div>`;
+  app.querySelectorAll(".kc[data-id]").forEach(b=>b.onclick=()=>{useKid(DB.kids.find(k=>k.id==b.dataset.id));sfx("tap");location.hash="";route()})}
+
+/* ---------- LEVEL 1: home ---------- */
 function home(){
-  const total=Object.keys(D).reduce((a,w)=>a+lessons(w).filter(Boolean).length,0),all=Object.keys(D).reduce((a,w)=>a+lessons(w).length,0);
-  const B=[[1,"🌟","First step"],[5,"🚀","Rocket"],[10,"🏅","Champion"],[all,"👑","Legend"]];
-  const RM=[["🐣","Sprouts 6–8","Arrow coding, number sense, feelings, basic online safety"],["🛠️","Builders 9–12","How AI learns, spotting scams, bullying defence, growth mindset"],["🧠","Pioneers 13–16","From blocks to Python, AI bias and ethics, real projects for Africa"]];
-  const lines=["Fun fact: AI learns from examples, just like you!","Never share your password, not even with a best friend.","Big feelings are okay. Breathe with me.","Code is just instructions. You tell the computer what to do!","If something online feels weird, tell a grown-up you trust.","M-Pesa was invented right here in Kenya!"];let li=0;
-  app.innerHTML=`<div class="hero"><div class="wrap"><div><h1>Learn the future. Grow up strong.</h1><div class="ages" role="group" aria-label="Age track">${AG.map((x,i)=>`<button data-a="${i}" class="${S.a==i?"on":""}" aria-pressed="${S.a==i}">${x}</button>`).join("")}</div><p class="tk">${TK[S.a]}</p><p id="gr"></p><input id="nm" placeholder="Your first name" maxlength="14" aria-label="Your first name" value="${esc(S.n)}"><a class="cta" href="#${S.l||"worlds"}" id="go">${S.l?"Continue ▶":"Start playing"}</a></div>
-  <div class="mascot"><div class="say" id="say" aria-live="polite">Jambo! I’m Zuri. Tap me.</div><br><svg class="bz" id="zuri" viewBox="0 0 200 200" role="button" tabindex="0" aria-label="Zuri the robot. Tap for a tip"><use href="#z"/></svg>
+  const all=allL(),total=all.filter(x=>x.done).length,sum=stars(),dn=Math.floor(Date.now()/864e5),wd=WD[dn%WD.length];
+  if(S.ms.d!=today()){const c=all.filter(x=>x.open&&!x.done),p=c.length?c[dn%c.length]:all[dn%all.length];S.ms={d:today(),k:`${p.w}/${p.t}/${p.l}`,ok:0};save()}
+  const [mw,mt,ml]=S.ms.k.split("/"),mL=D[mw].topics[mt].L[ml];
+  const B=[["🌟","First step","Finish 1 lesson",total>=1],["🚀","Rocket","Finish 5 lessons",total>=5],["🔥","On fire","3-day streak",S.b>=3],["⭐","Star collector","Earn 30 stars",sum>=30],["🏅","Champion","Finish 15 lessons",total>=15],["👑","Legend","Finish every lesson",total==all.length]];
+  const RM=[["🐣","Sprouts 6–8","Arrow coding, number sense, feelings, basic online safety"],["🛠️","Builders 9–12","Loops, how AI learns, spotting scams, growth mindset"],["🧠","Pioneers 13–16","From blocks to Python, AI bias and ethics, real projects for Africa"]];
+  const lines=["Fun fact: AI learns from examples, just like you!","Never share your password, not even with a best friend.","Big feelings are okay. Breathe with me.","Code is just instructions. You tell the computer what to do!","If something online feels weird, tell a grown-up you trust.","M-Pesa was invented right here in Kenya!","A loop means: do it again! 🔁"];let li=0;
+  app.innerHTML=`<div class="hero"><div class="wrap"><div><h1>Karibu, ${esc(S.n)}! ${S.av}</h1><div class="ages" role="group" aria-label="Age track">${AG.map((x,i)=>`<button data-a="${i}" class="${S.a==i?"on":""}" aria-pressed="${S.a==i}">${x}</button>`).join("")}</div><p class="tk">${TK[S.a]}</p><p>${HL[S.a]}</p><a class="cta" href="#${S.l||"code/0/0"}">${S.l?"Continue ▶":"Start playing ▶"}</a></div>
+  <div class="mascot"><div class="say" id="say" aria-live="polite">Jambo! I’m Zuri. Tap me for a tip.</div><br><svg class="bz" id="zuri" viewBox="0 0 200 200" role="button" tabindex="0" aria-label="Zuri the robot. Tap for a tip"><use href="#z"/></svg>
   <div class="sw">${[["#FFC93C","yellow"],["#7CF5D0","mint"],["#FF9BB8","pink"],["#8FD3FF","blue"]].map(c=>`<button style="background:${c[0]}" data-c="${c[0]}" aria-label="Make Zuri ${c[1]}"></button>`).join("")}</div></div></div></div>
-  <section id="worlds"><div class="wrap"><h2>Pick a world</h2><p class="sub">Open a world, pick a topic, play lessons, collect stars.</p><div class="worlds">${Object.entries(D).map(([w,W])=>{const L=lessons(w),n=L.filter(Boolean).length;return `<a class="w" href="#${w}" style="background:${W.c}"><span class="em" aria-hidden="true">${W.e}</span><h3>${W.t}</h3><span class="d">${W.d}</span><div class="pb"><i style="width:${n/L.length*100}%"></i></div><span class="prog">${n}/${L.length} lessons</span></a>`}).join("")}</div></div></section>
-  <section style="padding-top:0"><div class="wrap"><h2>My badges</h2><div class="badges">${B.map(b=>`<div class="b ${total>=b[0]?"":"off"}"><span aria-hidden="true">${b[1]}</span><b>${b[2]}</b><br><small>${b[0]} lessons</small></div>`).join("")}</div>
+  <section style="padding-top:0"><div class="wrap duo"><a class="mis" href="#${S.ms.k}"><span class="em" aria-hidden="true">${S.ms.ok?"✅":"🎯"}</span><span><small>Today’s mission</small><b>${S.ms.ok?"Mission complete! New one tomorrow.":mL.t}</b>${S.ms.ok?"Hongera! Your streak is safe.":`${D[mw].e} ${D[mw].t} · tap to play`}</span></a>
+  <div class="wotd"><span class="em" aria-hidden="true">${wd[2]}</span><span><small>Neno la siku · Word of the day</small><b>${wd[0]}</b>${wd[1]} ${tb(wd[0]+". "+wd[1])}</span></div></div></section>
+  <section style="padding-top:8px"><div class="wrap"><h2>Pick a world</h2><p class="sub">Open a world, pick a topic, play lessons, collect stars.</p><div class="worlds">${Object.entries(D).map(([w,W])=>{const L=lessons(w),n=L.filter(Boolean).length;return `<a class="w" href="#${w}" style="background:${W.c}"><span class="em" aria-hidden="true">${W.e}</span><h3>${W.t}</h3><span class="d">${W.d}</span><div class="pb"><i style="width:${n/L.length*100}%"></i></div><span class="prog">${n}/${L.length} lessons</span></a>`}).join("")}</div></div></section>
+  <section style="padding-top:0"><div class="wrap"><h2>My badges</h2><p class="sub">${total} lessons done · ${sum} stars</p><div class="badges">${B.map(b=>`<div class="b ${b[3]?"":"off"}"><span aria-hidden="true">${b[0]}</span><b>${b[1]}</b><small>${b[2]}</small></div>`).join("")}</div>
   <h2>The road to future tech</h2><p class="sub">DigiSoma grows with your child.</p><div class="row">${RM.map((r,i)=>`<div class="card ${S.a==i?"now":""}"><span style="font-size:34px" aria-hidden="true">${r[0]}</span><h3 style="margin:0">${r[1]}</h3><small>${r[2]}</small></div>`).join("")}</div></div></section>
   <section style="background:#fff"><div class="wrap"><div class="price"><b>Explorer Pass</b><div class="n">$5<small> / month</small></div><ul><li>All five worlds, new lessons weekly</li><li>Up to 3 child profiles</li><li>No ads, no chat with strangers</li><li>Weekly progress report for parents</li><li>Pay by M-Pesa or card</li></ul><button class="cta" id="try">Parent Zone · 7 days free</button></div></div></section>`;
-  const gr=()=>$("#gr").textContent=`${S.n?"Karibu, "+S.n+"! ":"Karibu! "}${HL[S.a]}`;gr();
-  $("#nm").oninput=e=>{S.n=e.target.value.trim();save();gr()};
-  const tip=()=>{const t=lines[li++%lines.length];$("#say").textContent=t;if(S.a==0)speak(t)};
+  const tip=()=>{const t=lines[li++%lines.length];$("#say").textContent=t;sfx("tap");if(S.a==0)speak(t)};
   $("#zuri").onclick=tip;$("#zuri").onkeydown=e=>{if(e.key=="Enter"||e.key==" "){e.preventDefault();tip()}};
-  app.querySelectorAll(".sw button").forEach(b=>b.onclick=()=>{S.z=b.dataset.c;document.documentElement.style.setProperty("--z",S.z);save()});
-  app.querySelectorAll(".ages button").forEach(b=>b.onclick=()=>{S.a=+b.dataset.a;save();home()});
-  $("#try").onclick=parent;if(!S.l)$("#go").onclick=e=>{e.preventDefault();$("#worlds").scrollIntoView({behavior:calm?"auto":"smooth"})};
-}
-/* LEVEL 2: world */
+  app.querySelectorAll(".sw button").forEach(b=>b.onclick=()=>{S.z=b.dataset.c;document.documentElement.style.setProperty("--z",S.z);save();sfx("tap")});
+  app.querySelectorAll(".ages button").forEach(b=>b.onclick=()=>{S.a=+b.dataset.a;save();sfx("tap");home()});
+  $("#try").onclick=parent}
+/* ---------- LEVEL 2: world ---------- */
 function world(w){const W=D[w];
   app.innerHTML=crumbs([[W.t]])+`<div class="wrap page"><h2 style="color:${W.c}">${W.e} ${W.t}</h2><p class="sub">${W.d}. Pick a topic.</p><div class="worlds">${W.topics.map((T,i)=>{const n=T.L.filter((_,l)=>st(w,i,l)).length;return `<a class="w" href="#${w}/${i}" style="background:${W.c}"><span class="em" aria-hidden="true">${T.e}</span><h3>${T.t}</h3><span class="d">${T.d}</span><div class="pb"><i style="width:${n/T.L.length*100}%"></i></div><span class="prog">${n}/${T.L.length} lessons done</span></a>`}).join("")}</div></div>`}
-/* LEVEL 3: topic */
+/* ---------- LEVEL 3: topic ---------- */
+const ICON={q:"📖",robot:"🎮",train:"🧪",scam:"📱",pass:"🔐",math:"🧮",feel:"🪞",breathe:"🫧",order:"🧩",dream:"🌠"};
 function topic(w,t){const W=D[w],T=W.topics[t];
-  app.innerHTML=crumbs([[W.t,w],[T.t]])+`<div class="wrap page"><h2 style="color:${W.c}">${T.e} ${T.t}</h2><p class="sub">Finish a lesson to unlock the next one.</p><div class="path" style="--c:${W.c}">${T.L.map((N,l)=>{const lock=l>0&&!st(w,t,l-1),s=st(w,t,l),tg=lock?"div":"a";return `<${tg} ${lock?"":`href="#${w}/${t}/${l}"`} class="node${lock?" lock":""}"><span class="em" aria-hidden="true">${lock?"🔒":N.k=="q"?"📖":"🎮"}</span><span><b>${N.t}</b><small>${lock?"Locked: finish the lesson before":s?`<span aria-label="${s} of 3 stars">${"⭐".repeat(s)+"☆".repeat(3-s)}</span>`:"Start"}</small></span></${tg}>`}).join("")}</div></div>`}
-/* LEVEL 4: lesson */
-function lesson(w,t,l){const W=D[w],T=W.topics[t],N=T.L[l];
-  if(l>0&&!st(w,t,l-1))return topic(w,t);
+  app.innerHTML=crumbs([[W.t,w],[T.t]])+`<div class="wrap page"><h2 style="color:${W.c}">${T.e} ${T.t}</h2><p class="sub">Finish a lesson to unlock the next one.</p><div class="path" style="--c:${W.c}">${T.L.map((N,l)=>{const lock=l>0&&!st(w,t,l-1),s=st(w,t,l),tg=lock?"div":"a";return `<${tg} ${lock?"":`href="#${w}/${t}/${l}"`} class="node${lock?" lock":""}"><span class="em" aria-hidden="true">${lock?"🔒":ICON[N.k]}</span><span><b>${N.t}</b><small>${lock?"Locked: finish the lesson before":s?`<span aria-label="${s} of 3 stars">${"⭐".repeat(s)+"☆".repeat(3-s)}</span>`:"Start"}</small></span></${tg}>`}).join("")}</div></div>`}
+/* ---------- LEVEL 4: lesson ---------- */
+function lesson(w,t,l){const W=D[w],T=W.topics[t],N=T.L[l],t0=Date.now();
+  if(l>0&&!st(w,t,l-1)){toast("🔒 Finish the lesson before this one first!");return topic(w,t)}
   S.l=`${w}/${t}/${l}`;save();
   app.innerHTML=crumbs([[W.t,w],[T.t,w+"/"+t],[N.t]])+`<div class="page"><div class="lc"><div class="dh" style="background:${W.c}"><h3>${N.t}</h3></div><div id="st"></div></div></div>`;
   const box=$("#st");
-  const fin=s=>{const old=st(w,t,l);if(s>old){S.p[key(w,t,l)]=s}
-    const d=today();if(S.d!=d){S.s=S.d==yday()?S.s+1:1;S.d=d}S.h[d]=(S.h[d]||0)+1;
-    Object.keys(S.h).sort().slice(0,-30).forEach(k=>delete S.h[k]);save();stats();boom();const nx=T.L[l+1];
-    box.innerHTML=`<div class="big" aria-label="${s} of 3 stars">${"⭐".repeat(s)}${"☆".repeat(3-s)}</div><h3 class="c">${s==3?"Brilliant!":s==2?"Great job!":"You finished it!"}</h3><p class="c">${s>old&&old?"New best! ":""}Best score: ${st(w,t,l)} of 3 stars</p><p class="c"><a class="go" href="#${nx?`${w}/${t}/${l+1}`:`${w}/${t}`}">${nx?"Next lesson ▶":"Back to topic"}</a><button class="go alt" id="ag">Play again</button></p>`;$("#ag").onclick=route};
+  const fin=s=>{const old=st(w,t,l),lv0=Math.floor(xp()/100);if(s>old)S.p[key(w,t,l)]=s;
+    const d=today();if(S.d!=d){S.s=S.d==yday()?S.s+1:1;S.d=d}S.b=Math.max(S.b||0,S.s);S.h[d]=(S.h[d]||0)+1;S.mn[d]=(S.mn[d]||0)+Math.max(1,Math.min(30,Math.round((Date.now()-t0)/6e4)));
+    [S.h,S.mn].forEach(o=>Object.keys(o).sort().slice(0,-30).forEach(k=>delete o[k]));
+    let mis=0;if(S.ms.k==S.l&&!S.ms.ok){S.ms.ok=1;mis=1}save();stats();boom();sfx("win");
+    const lv1=Math.floor(xp()/100);if(lv1>lv0)setTimeout(()=>{sfx("up");toast(`🎉 Level up! You are now Level ${lv1+1}: ${TT[Math.min(lv1,4)]}`)},700);else if(mis)setTimeout(()=>toast("🎯 Today’s mission complete!"),700);
+    const nx=T.L[l+1];
+    box.innerHTML=`<div class="big" aria-label="${s} of 3 stars">${"⭐".repeat(s)}${"☆".repeat(3-s)}</div><h3 class="c">${s==3?"Brilliant, "+esc(S.n)+"!":s==2?"Great job!":"You finished it!"}</h3><p class="c">${s>old&&old?"New best! ":""}Best score: ${st(w,t,l)} of 3 stars</p>${N.home?`<div class="homecard"><b>🏡 Try at home:</b> ${N.home}</div>`:""}<p class="c"><a class="go" href="#${nx?`${w}/${t}/${l+1}`:`${w}/${t}`}">${nx?"Next lesson ▶":"Back to topic"}</a><button class="go alt" id="ag">Play again</button></p>`;$("#ag").onclick=route};
   const Q=N.Q?N.Q.concat(S.a==2&&N.X?[N.X]:[]):0;
-  const go={q:()=>quiz(Q,fin,box),math:()=>quiz(mg(N.m),fin,box),robot:()=>robot(N.lv,fin,box),feel:()=>feel(fin,box),breathe:()=>breathe(fin,box),order:()=>order(fin,box),dream:()=>dream(fin,box)}[N.k];
-  if(N.learn){box.innerHTML=zsay(N.learn)+`<button class="go" id="gt">Got it, let’s play!</button>`;$("#gt").onclick=go}else go();
-}
-/* activities */
+  const go={q:()=>quiz(Q,fin,box),math:()=>quiz(mg(N.m),fin,box),robot:()=>robot(N.lv,fin,box),feel:()=>feel(fin,box),breathe:()=>breathe(fin,box),order:()=>order(fin,box),dream:()=>dream(fin,box),train:()=>train(fin,box),scam:()=>scam(fin,box),pass:()=>pass(fin,box)}[N.k];
+  if(N.learn){box.innerHTML=zsay(N.learn)+`<button class="go" id="gt">Got it, let’s play!</button>`;$("#gt").onclick=()=>{sfx("tap");go()}}else go()}
+
+/* ---------- activities ---------- */
 function quiz(it,fin,box){let i=0,ok=0;
   const go=()=>{if(i>=it.length)return fin(Math.max(1,Math.round(3*ok/it.length)));
     const[q,o,a,w]=it[i],ord=shuffle(o.map((_,j)=>j)),bonus=S.a==2&&i==it.length-1&&it.length>2&&!/^What is/.test(q);
     box.innerHTML=`<p class="step">${bonus?"⚡ Pioneer bonus · ":""}Question ${i+1} of ${it.length}</p><h3>${q} ${tb(q)}</h3><div class="opts">${ord.map(j=>`<button class="opt" data-j="${j}">${o[j]}</button>`).join("")}</div><div id="fb" aria-live="polite"></div>`;
     let lock=0;const bs=[...box.querySelectorAll(".opt")];
-    bs.forEach(b=>b.onclick=()=>{if(lock)return;lock=1;const r=+b.dataset.j==a;
+    bs.forEach(b=>b.onclick=()=>{if(lock)return;lock=1;const r=+b.dataset.j==a;sfx(r?"ok":"no");
       if(r){ok++;b.classList.add("good")}else{b.classList.add("bad");bs.find(x=>+x.dataset.j==a).classList.add("good")}
       $("#fb").innerHTML=`<p><b>${r?"Yes! ":"Good try. "}</b>${w}</p><button class="go" id="nx">${i+1<it.length?"Next":"Finish"}</button>`;$("#nx").focus();$("#nx").onclick=()=>{i++;go()}})};
   go()}
@@ -202,57 +268,105 @@ function mg(m){const R=[[10,6],[40,11],[90,13]][S.a],rn=n=>2+Math.random()*n|0;
     const o=shuffle([...s]);return[`What is ${a} ${sg} ${b}?`,o.map(String),o.indexOf(r),`${a} ${sg} ${b} = ${r}.`]})}
 const RB=[{g:4,o:[0,0],s:[3,2],r:[],best:5,tx:"Guide me to the ⭐! Each arrow moves me one square."},
 {g:4,o:[0,0],s:[3,3],r:[[1,0],[1,1],[3,1]],best:6,tx:"Rocks 🪨 block the way. Plan a path around them!"},
-{g:5,o:[0,4],s:[4,0],r:[[3,4],[3,3],[4,2],[1,2],[0,0],[3,1]],best:8,gi:"🏪",ri:"📦",tx:"Mama Akinyi needs mangoes 🥭 at her stall 🏪. Deliver them without hitting the crates 📦!"}];
+{g:5,o:[0,4],s:[4,0],r:[[3,4],[3,3],[4,2],[1,2],[0,0],[3,1]],best:8,gi:"🏪",ri:"📦",tx:"Mama Akinyi needs mangoes 🥭 at her stall 🏪. Deliver them without hitting the crates 📦!"},
+{g:5,o:[0,4],s:[4,0],r:[[2,4],[0,3],[3,3],[1,2],[2,1],[4,2]],best:3,loop:1,gi:"🌻",ri:"🪴",tx:"Help me climb the steps to the rooftop garden 🌻! The moves repeat, so tap 🔁 Repeat to write less code."}];
 const PY={"⬆️":"up","⬇️":"down","⬅️":"left","➡️":"right"};
-function robot(lv,fin,box){const L=RB[lv],N=L.g,A={"⬆️":[0,-1],"⬇️":[0,1],"⬅️":[-1,0],"➡️":[1,0]};let q=[],p=[...L.o],busy=0,cur=-1;
+function robot(lv,fin,box){const L=RB[lv],N=L.g,A={"⬆️":[0,-1],"⬇️":[0,1],"⬅️":[-1,0],"➡️":[1,0]};let q=[],lp=null,p=[...L.o],busy=0,cur=-1;
   const at=(x,y)=>L.r.some(c=>c[0]==x&&c[1]==y);
-  const draw=(m,win)=>{let g="";for(let y=0;y<N;y++)for(let x=0;x<N;x++){const me=p[0]==x&&p[1]==y,go=L.s[0]==x&&L.s[1]==y;g+=`<div class="cell${L.o[0]==x&&L.o[1]==y?" st":""}">${me?"🤖":go?(L.gi||"⭐"):at(x,y)?(L.ri||"🪨"):""}</div>`}
-    box.innerHTML=zsay(L.tx)+`<div class="grid" style="grid-template-columns:repeat(${N},1fr);max-width:${N*70}px" role="img" aria-label="Map, ${N} by ${N} squares">${g}</div><div class="pad">${Object.keys(A).map(a=>`<button class="ar" data-a="${a}" aria-label="Add a ${PY[a]} step">${a}</button>`).join("")}</div><div class="q" aria-label="Your code">${q.length?q.map((a,i)=>`<span class="${i==cur?"hl":""}">${a}</span>`).join(""):"<small>Tap the arrows to write your code</small>"}</div><div class="pad"><button class="go" id="run">▶ Run code</button><button class="go alt" id="un">↶ Undo</button><button class="go alt" id="clr">↺ Clear</button></div><div class="c" aria-live="polite">${m?`<p>${m}</p>`:""}${win&&S.a?`<pre># The same code in Python\n${q.slice(0,win).map(a=>`zuri.move("${PY[a]}")`).join("\n")}</pre>`:""}${win?`<button class="go" id="cn">Continue ▶</button>`:""}</div>`;
-    box.querySelectorAll(".ar").forEach(b=>b.onclick=()=>{if(!busy&&q.length<14){q.push(b.dataset.a);p=[...L.o];cur=-1;draw()}});
-    $("#un").onclick=()=>{if(!busy){q.pop();p=[...L.o];cur=-1;draw()}};
-    $("#clr").onclick=()=>{if(!busy){q=[];p=[...L.o];cur=-1;draw()}};$("#run").onclick=run;if(win)$("#cn").onclick=()=>fin(win<=L.best?3:2)};
-  const run=()=>{if(busy)return;if(!q.length)return draw("Add some arrow steps first!");busy=1;p=[...L.o];let i=0;cur=-1;draw("Running…");
-    const t=setInterval(()=>{if(i>=q.length){clearInterval(t);busy=0;cur=-1;return draw("I stopped before the goal. Add more steps and run again!")}
-      cur=i;const d=A[q[i]],x=p[0]+d[0],y=p[1]+d[1],off=x<0||y<0||x>=N||y>=N;
-      if(off||at(x,y)){clearInterval(t);busy=0;return draw(`💥 Bump! Step ${i+1} ${off?"takes me off the map":"hits a "+(L.ri?"crate":"rock")}. Fix that step and try again. Finding mistakes is called <b>debugging</b>.`)}
-      p=[x,y];i++;
-      if(p[0]==L.s[0]&&p[1]==L.s[1]){clearInterval(t);busy=0;cur=-1;return draw(`🎉 You did it in ${i} steps${i<=L.best?", the shortest way!":"! Can you find a shorter path?"} A list of steps is called an <b>algorithm</b>.`,i)}
-      draw("Running…")},calm?250:450)};
+  const cnt=()=>q.reduce((n,t)=>n+(typeof t=="string"?1:1+t.b.length),0);
+  const flat=()=>q.flatMap((t,i)=>typeof t=="string"?[[t,i]]:Array.from({length:t.r},()=>t.b.map(a=>[a,i])).flat());
+  const py=()=>q.map(t=>typeof t=="string"?`zuri.move("${PY[t]}")`:`for i in range(${t.r}):\n`+t.b.map(a=>`    zuri.move("${PY[a]}")`).join("\n")).join("\n");
+  const reset=()=>{p=[...L.o];cur=-1};
+  const draw=(m,win)=>{let g="";for(let y=0;y<N;y++)for(let x=0;x<N;x++){const me=p[0]==x&&p[1]==y,gl=L.s[0]==x&&L.s[1]==y;g+=`<div class="cell${L.o[0]==x&&L.o[1]==y?" st":""}">${me?"🤖":gl?(L.gi||"⭐"):at(x,y)?(L.ri||"🪨"):""}</div>`}
+    const code=q.length?q.map((t,i)=>typeof t=="string"?`<span class="${i==cur?"hl":""}">${t}</span>`:`<span class="loop ${i==cur?"hl":""}">🔁×${t.r} [ ${t.b.join(" ")}${t==lp?" …":" ]"}</span>`).join(""):"<small>Tap the arrows to write your code</small>";
+    const lctl=L.loop?(lp?`<button class="ar lp" id="lc" aria-label="Change how many times to repeat">×${lp.r} times ↻</button><button class="ar lp" id="le">Close loop ]</button>`:`<button class="ar lp" id="lo">🔁 Repeat</button>`):"";
+    box.innerHTML=zsay(L.tx)+`<div class="grid" style="grid-template-columns:repeat(${N},1fr);max-width:${N*70}px" role="img" aria-label="Map, ${N} by ${N} squares">${g}</div><div class="pad">${Object.keys(A).map(a=>`<button class="ar" data-a="${a}" aria-label="Add a ${PY[a]} step">${a}</button>`).join("")}${lctl}</div>${lp?`<p class="c step">Arrows now go inside the loop. Tap “Close loop” when done.</p>`:""}<div class="q" aria-label="Your code">${code}</div><div class="pad"><button class="go" id="run">▶ Run code</button><button class="go alt" id="un">↶ Undo</button><button class="go alt" id="clr">↺ Clear</button></div><div class="c" aria-live="polite">${m?`<p>${m}</p>`:""}${win&&S.a?`<pre># The same code in Python\n${py()}</pre>`:""}${win?`<button class="go" id="cn">Continue ▶</button>`:""}</div>`;
+    box.querySelectorAll(".ar[data-a]").forEach(b=>b.onclick=()=>{if(busy)return;if(cnt()>=16)return draw("That’s a lot of code! Try running it.");(lp?lp.b:q).push(b.dataset.a);sfx("tap");reset();draw()});
+    if($("#lo"))$("#lo").onclick=()=>{if(busy)return;lp={r:2,b:[]};q.push(lp);sfx("tap");reset();draw()};
+    if($("#lc"))$("#lc").onclick=()=>{lp.r=lp.r>=5?2:lp.r+1;sfx("tap");draw()};
+    if($("#le"))$("#le").onclick=()=>{if(!lp.b.length)q.pop();lp=null;sfx("tap");draw()};
+    $("#un").onclick=()=>{if(busy)return;if(lp&&lp.b.length)lp.b.pop();else if(lp){q.pop();lp=null}else q.pop();reset();draw()};
+    $("#clr").onclick=()=>{if(busy)return;q=[];lp=null;reset();draw()};$("#run").onclick=run;if(win)$("#cn").onclick=()=>fin(cnt()<=L.best?3:2)};
+  const run=()=>{if(busy)return;if(lp){if(!lp.b.length)q.pop();lp=null}const steps=flat();if(!steps.length)return draw("Add some arrow steps first!");busy=1;reset();let i=0;draw("Running…");
+    const t=setInterval(()=>{if(i>=steps.length){clearInterval(t);busy=0;cur=-1;sfx("no");return draw("I stopped before the goal. Add more steps and run again!")}
+      const[a,ti]=steps[i];cur=ti;const d=A[a],x=p[0]+d[0],y=p[1]+d[1],off=x<0||y<0||x>=N||y>=N;
+      if(off||at(x,y)){clearInterval(t);busy=0;sfx("bump");return draw(`💥 Bump! The highlighted block ${off?"takes me off the map":"hits a "+(L.ri?"crate or pot":"rock")}. Fix it and try again. Finding mistakes is called <b>debugging</b>.`)}
+      p=[x,y];i++;sfx("tap");
+      if(p[0]==L.s[0]&&p[1]==L.s[1]){clearInterval(t);busy=0;cur=-1;const c=cnt();return draw(`🎉 You did it with ${c} blocks${c<=L.best?", the shortest code!":L.loop?". Now try 🔁 Repeat to use fewer blocks!":". Can you find a shorter path?"} A list of steps is called an <b>algorithm</b>.`,1)}
+      draw("Running…")},calm?250:420)};
   draw()}
 function order(fin,box){const T=[["👀","See","A camera spots a smile"],["🧠","Think","The AI decides: smile means happy"],["💃","Act","The robot does a victory spin"]];let n=0,bad=0;
   box.innerHTML=`<p>Tap the 3 steps in the right order! ${tb("Tap the 3 steps in the right order!")}</p><div class="opts">${shuffle(T.map((_,i)=>i)).map(i=>`<button class="opt" data-i="${i}">${T[i][0]} ${T[i][2]}</button>`).join("")}</div><p class="c" id="fb" aria-live="polite"></p>`;
   box.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{const i=+b.dataset.i;if(b.disabled)return;
-    if(i==n){b.classList.add("good");b.disabled=1;b.textContent=`${n+1}. ${T[i][1]}: ${T[i][2]}`;n++;if(n==3){$("#fb").innerHTML=`<b>See → Think → Act.</b> That’s how real AI works!<br><button class="go" id="nx">Continue ▶</button>`;$("#nx").onclick=()=>fin(bad?2:3)}}
-    else{bad++;b.classList.add("bad");setTimeout(()=>b.classList.remove("bad"),600)}})}
+    if(i==n){sfx("ok");b.classList.add("good");b.disabled=1;b.textContent=`${n+1}. ${T[i][1]}: ${T[i][2]}`;n++;if(n==3){$("#fb").innerHTML=`<b>See → Think → Act.</b> That’s how real AI works!<br><button class="go" id="nx">Continue ▶</button>`;$("#nx").onclick=()=>fin(bad?2:3)}}
+    else{bad++;sfx("no");b.classList.add("bad");setTimeout(()=>b.classList.remove("bad"),600)}})}
+function train(fin,box){const TR=[.08,.92,.25,.8,.15,.7],TE=[.18,.85,.6,.35],lab=[];let i=0;
+  const col=v=>`hsl(${Math.round(115-90*v)},72%,${Math.round(40+14*v)}%)`;
+  const mango=(v,z)=>`<svg width="${z}" height="${z}" viewBox="0 0 100 100" aria-hidden="true"><path d="M52 20c-2-9 7-15 16-11-7 1-11 5-13 11z" fill="#2E7D32"/><ellipse cx="50" cy="58" rx="31" ry="37" transform="rotate(-20 50 58)" fill="${col(v)}"/><ellipse cx="39" cy="45" rx="7" ry="12" fill="#fff" opacity=".28" transform="rotate(-20 39 45)"/></svg>`;
+  const step=()=>{if(i<TR.length){box.innerHTML=zsay(i?"And this one? Is it ripe?":"Teach me! Is this mango ripe? Look at its colour.")+`<p class="step c">Training example ${i+1} of ${TR.length}</p><div class="c">${mango(TR[i],130)}</div><div class="pad"><button class="go" data-r="1">😋 Ripe</button><button class="go alt" data-r="0">🌱 Not ripe yet</button></div>`;
+      box.querySelectorAll("[data-r]").forEach(b=>b.onclick=()=>{lab[i++]=+b.dataset.r;sfx("tap");step()});return}
+    box.innerHTML=zsay("Asante! This is my <b>training data</b>. Now test me on new mangoes I have never seen.")+`<div class="mrow">${TR.map((v,k)=>`<div>${mango(v,60)}<small>${lab[k]?"Ripe":"Not ripe"}</small></div>`).join("")}</div><p class="c"><button class="go" id="tt">Test my AI ▶</button></p>`;
+    $("#tt").onclick=test};
+  const test=()=>{const pred=TE.map(v=>{let b=0;TR.forEach((t,k)=>{if(Math.abs(t-v)<Math.abs(TR[b]-v))b=k});return lab[b]});
+    const good=TR.filter((v,k)=>(v>=.5)==!!lab[k]).length,right=TE.filter((v,k)=>(v>=.5)==!!pred[k]).length;
+    box.innerHTML=`<p class="step c">Testing my AI on 4 new mangoes…</p><div class="mrow" id="tr"></div><div id="tm" aria-live="polite"></div>`;let k=0;
+    const reveal=()=>{if(k<TE.length){const r=(TE[k]>=.5)==!!pred[k];$("#tr").insertAdjacentHTML("beforeend",`<div>${mango(TE[k],70)}<small>AI says: <b>${pred[k]?"Ripe":"Not ripe"}</b> ${r?"✅":"❌"}</small></div>`);sfx(r?"ok":"no");k++;setTimeout(reveal,calm?100:650);return}
+      $("#tm").innerHTML=`<p class="c"><b>Your AI got ${right} of 4 right!</b></p><p>${good==6?"You taught it well, so it learned well.":"Some of your labels were mixed up, and the AI copied those mistakes."} An AI is only as good as the examples it learns from.${S.a==2?" This is called <b>supervised learning</b>: your labels are the training data, and this AI copies the label of the most similar example (a nearest-neighbour model).":""}</p><p class="c"><button class="go" id="cn">Continue ▶</button><button class="go alt" id="rt">Teach it again</button></p>`;
+      $("#cn").onclick=()=>fin(good==6?3:good>=4?2:1);$("#rt").onclick=()=>{i=0;lab.length=0;step()}};reveal()};
+  step()}
+const MS=[["💚 M-PESA","Confirmed. You have received KSh 4,500 from JOHN K. Sorry, I sent it by mistake! Please send it back to 0712 345 678.",1,"Scammers send fake “mistake” messages from normal phone numbers. Check your real balance and show a grown-up before sending anything."],["👩🏾 Mum","I’ll pick you up at 4pm after football 💛",0,"A normal message from someone you know."],["+254 7xx xxx xxx","CONGRATS!!! You won a free phone 🎁 Tap bit.ly/fr33-ph0ne and enter your parent’s M-Pesa PIN to claim. Hurry, 10 minutes left!",1,"A prize, a rush and a PIN request: three red flags. Nobody needs a PIN to give you a gift."],["🏫 School","Reminder: Sports Day is on Friday. Please wear your house T-shirt.",0,"Expected news from a sender you know."],["🙂 NewFriend_12","Hi! I’m 12 too. Let’s be best friends. Don’t tell your parents about our chats, ok? Send me a photo of you.",1,"Asking for secrets and photos is a big red flag. Don’t reply, block, and tell a trusted grown-up."]];
+function scam(fin,box){const M=shuffle([...MS]);let i=0,ok=0;
+  const go=()=>{if(i>=M.length)return fin(ok==M.length?3:ok>=M.length-1?2:1);const[f,t,bad,why]=M[i];
+    box.innerHTML=`<p class="step c">Message ${i+1} of ${M.length} · Safe, or a scam?</p><div class="phone"><div class="pt">📶 Messages</div><div class="from">${f}</div><div class="msgb">${t}</div></div><div class="pad"><button class="go" data-b="0">✅ Safe</button><button class="go red" data-b="1">🚩 Scam or unsafe</button></div><div id="fb" aria-live="polite"></div>`;
+    let lock=0;box.querySelectorAll("[data-b]").forEach(b=>b.onclick=()=>{if(lock)return;lock=1;const r=+b.dataset.b==bad;if(r)ok++;sfx(r?"ok":"no");
+      $("#fb").innerHTML=`<p><b>${r?"Spot on! ":"Good try. "}</b>${bad?"🚩 This one is a scam or unsafe. ":"✅ This one is safe. "}${why}</p><p class="c"><button class="go" id="nx">${i+1<M.length?"Next message":"Finish"}</button></p>`;$("#nx").focus();$("#nx").onclick=()=>{i++;go()}})};go()}
+function pass(fin,box){const need=[8,10,12][S.a],W=["Simba","Chai","Moto","Jua","Kiboko","Nyota","Mvua","Embe","Twiga","Pilau"];
+  box.innerHTML=zsay("Build a super-strong password! This is practice only, so never type a real password here.")+`<label for="pw" class="step">Type a practice password</label><input id="pw" class="pw" autocomplete="off" spellcheck="false" autocapitalize="off"><div class="meter"><i id="mt"></i></div><p id="ml" class="c" aria-live="polite"></p><ul class="ck" id="ck"></ul><p class="c"><button class="go alt" id="idea">💡 Give me an idea</button><button class="go" id="pd" disabled>Finish ✔</button></p>`;
+  const R=[[`At least ${need} characters`,v=>v.length>=need],["Small letters (a–z)",v=>/[a-z]/.test(v)],["Capital letters (A–Z)",v=>/[A-Z]/.test(v)],["A number (0–9)",v=>/\d/.test(v)],["A symbol like ! ? #",v=>/[^A-Za-z0-9\s]/.test(v)],["Not a common password",v=>v.length>3&&!/(password|123456|qwerty|abc123|111111|baraka|letmein)/i.test(v)]];
+  let was=0;const up=()=>{const v=$("#pw").value,ok=R.map(r=>r[1](v)),n=ok.filter(Boolean).length;$("#ck").innerHTML=R.map((r,j)=>`<li class="${ok[j]?"y":""}">${ok[j]?"✔":"○"} ${r[0]}</li>`).join("");
+    $("#mt").style.width=n/6*100+"%";$("#mt").style.background=n<3?"var(--pink)":n<5?"var(--sun)":"var(--mint)";$("#ml").innerHTML=v?`<b>${["Very weak","Very weak","Weak","Weak","Okay","Strong","Super strong 💪"][n]}</b>`:"<b>Start typing…</b>";
+    if(n==6&&!was)sfx("ok");was=n==6;$("#pd").disabled=n<6};
+  $("#pw").oninput=up;up();
+  $("#idea").onclick=()=>{const p=shuffle([...W]).slice(0,3);$("#pw").value=p.join(["!","#","?","-"][Math.random()*4|0])+(Math.random()*90+10|0);up();$("#ml").innerHTML+="<br><small>Three random words plus a number and a symbol: long, strong and easy to remember.</small>"};
+  $("#pd").onclick=()=>fin(3)}
 const CL="If a feeling stays big for a long time, talk to a trusted grown-up. In Kenya you can also call Childline on 116 for free, any time.";
 function feel(fin,box){const M=[["😄","Happy","Awesome! Notice what made you feel this way."],["🙂","Okay","Okay is fine. Maybe do one small thing you enjoy."],["😢","Sad","It’s okay to feel sad. Breathe slowly and tell someone you trust."],["😠","Angry","Anger is a signal. Pause, breathe, then say what you need."],["😰","Worried","Worries get smaller when shared. Breathe, then talk to a grown-up."],["😴","Tired","Your body may need rest, water or a snack."]];
   box.innerHTML=zsay("How are you feeling right now? Every feeling is okay.")+`<div class="moods">${M.map((m,i)=>`<button data-i="${i}" aria-label="${m[1]}">${m[0]}<small>${m[1]}</small></button>`).join("")}</div><div id="fb" aria-live="polite"></div>`;
-  box.querySelectorAll("[data-i]").forEach(b=>b.onclick=()=>{const k=+b.dataset.i,m=M[k];S.m=m[0]+" "+m[1];save();$("#fb").innerHTML=`<p><b>${m[1]}.</b> ${m[2]}</p><div class="breath">Breathe</div>${k>1&&k<5?`<p class="help">${CL}</p>`:""}<p class="c"><button class="go" id="fd">Done ✔</button></p>`;$("#fd").onclick=()=>fin(3)})}
+  box.querySelectorAll("[data-i]").forEach(b=>b.onclick=()=>{const k=+b.dataset.i,m=M[k];S.m=m[0]+" "+m[1]+" ("+today()+")";save();sfx("tap");$("#fb").innerHTML=`<p><b>${m[1]}.</b> ${m[2]}</p><div class="breath">Breathe</div>${k>1&&k<5?`<p class="help">${CL}</p>`:""}<p class="c"><button class="go" id="fd">Done ✔</button></p>`;$("#fd").onclick=()=>fin(3)})}
 function breathe(fin,box){box.innerHTML=zsay("Watch the circle. Breathe in through your nose as it grows, and out slowly as it shrinks. Do 4 slow breaths.")+`<div class="breath">Breathe</div><p class="help">${CL}</p><p class="c"><button class="go" id="bd">I did 4 breaths ✔</button></p>`;$("#bd").onclick=()=>fin(3)}
 function dream(fin,box){const M=[["🌾","Farming","AI can spot sick crops in phone photos, so farmers save their harvest."],["🏥","Health","AI helps doctors read scans faster and find illness early."],["🎮","Games","AI makes game characters smart and levels more fun."],["⚡","Clean energy","AI helps solar and wind power waste less energy."],["💸","Money","Apps like M-Pesa use smart code to keep payments safe."]];
   box.innerHTML=zsay("What would you love to help with one day?")+`<div class="moods">${M.map((m,i)=>`<button data-i="${i}" aria-label="${m[1]}">${m[0]}<small>${m[1]}</small></button>`).join("")}</div><div id="fb" aria-live="polite"></div>`;
-  box.querySelectorAll("[data-i]").forEach(b=>b.onclick=()=>{const m=M[+b.dataset.i];S.dr=m[0]+" "+m[1];save();$("#fb").innerHTML=`<p><b>${m[1]}.</b> ${m[2]} Coding and maths are your superpowers for this!</p><p class="c"><button class="go" id="fd">Save my dream ✔</button></p>`;$("#fd").onclick=()=>fin(3)})}
+  box.querySelectorAll("[data-i]").forEach(b=>b.onclick=()=>{const m=M[+b.dataset.i];S.dr=m[0]+" "+m[1];save();sfx("tap");$("#fb").innerHTML=`<p><b>${m[1]}.</b> ${m[2]} Coding and maths are your superpowers for this!</p><p class="c"><button class="go" id="fd">Save my dream ✔</button></p>`;$("#fd").onclick=()=>fin(3)})}
 
-/* Parent Zone: grown-up gate, then the child's real saved progress */
-function parent(){const a=6+Math.random()*7|0,b=12+Math.random()*7|0;
-  pz.innerHTML=`<div class="dh" style="background:var(--vio)"><h3>👨‍👩‍👧 Parent Zone</h3></div><div class="pbody"><p>Grown-ups only. What is <b>${a} × ${b}</b>?</p><input id="ga" inputmode="numeric" aria-label="Answer" style="background:var(--bg)"><button class="go" id="gb">Open</button><button class="go alt" id="gx">Close</button><p id="ge" aria-live="polite"></p></div>`;
+/* ---------- Parent Zone: grown-up gate, then each child's real saved progress ---------- */
+function parent(){if(!S)return;const a=6+Math.random()*7|0,b=12+Math.random()*7|0;
+  pz.innerHTML=`<div class="dh" style="background:var(--vio)"><h3>👨‍👩‍👧 Parent Zone</h3></div><div class="pbody"><p>Grown-ups only. What is <b>${a} × ${b}</b>?</p><input id="ga" inputmode="numeric" aria-label="Answer" style="background:var(--bg);width:140px;margin-right:6px"><button class="go" id="gb">Open</button><button class="go alt" id="gx">Close</button><p id="ge" aria-live="polite"></p></div>`;
   pz.showModal();$("#ga").focus();$("#gx").onclick=()=>pz.close();$("#ga").onkeydown=e=>{if(e.key=="Enter")$("#gb").click()};
-  $("#gb").onclick=()=>{if(+$("#ga").value!=a*b){$("#ge").textContent="That’s not right. Try again.";return}
-    const n=Object.values(S.p).filter(Boolean).length,days=[...Array(7)].map((_,i)=>{const d=new Date(Date.now()-(6-i)*864e5);return[d.toLocaleDateString("en",{weekday:"short"}),S.h[dk(d)]||0]}),mx=Math.max(1,...days.map(d=>d[1]));
-    const weak=[];Object.entries(D).forEach(([w,W])=>W.topics.forEach((T,i)=>T.L.forEach((L,l)=>{if(st(w,i,l)==1)weak.push(`${W.e} ${L.t}`)})));
-    pz.querySelector(".pbody").innerHTML=`<h3 style="margin:0 0 4px">${esc(S.n)||"Your child"} · ${AG[S.a]}</h3><p class="sub" style="margin-bottom:12px">${n} lessons done · ${xp()} XP · ${streak()}-day streak</p>
-    ${Object.entries(D).map(([w,W])=>{const L=lessons(w),k=L.filter(Boolean).length;return `<div style="margin-bottom:8px"><b>${W.e} ${W.t}</b> <small>${k}/${L.length}</small><div class="pb dk"><i style="width:${k/L.length*100}%;background:${W.c}"></i></div></div>`}).join("")}
-    <b>Lessons played, last 7 days</b><div class="wk" role="img" aria-label="Lessons played per day, last 7 days">${days.map(d=>`<div><small>${d[1]||""}</small><i style="height:${d[1]/mx*60}px"></i>${d[0]}</div>`).join("")}</div>
-    <p><b>Could use practice:</b> ${weak.length?weak.slice(0,3).join(", ")+". Replaying a lesson together helps.":"nothing yet. Great going!"}<br><b>Last feeling shared:</b> ${S.m||"none yet"}<br><b>Dream:</b> ${S.dr||"not chosen yet"}</p>
-    <div class="card now" style="background:var(--bg)"><b>Explorer Pass: $5 / month</b><br><small>7 days free. Pay by M-Pesa or card. Cancel any time.</small></div>
-    <p><button class="go" id="trial">Start free trial</button><button class="go alt" id="rs">Reset progress</button><button class="go alt" onclick="pz.close()">Close</button></p><p id="pm" aria-live="polite"></p>
-    <p class="note"><b>Prototype note.</b> Progress is saved only in this browser. Before launch, DigiSoma still needs: a data-protection review (including Kenya’s Data Protection Act and parental consent), content review by teachers and child psychologists, secure accounts, and real M-Pesa and card billing.</p>`;
-    $("#trial").onclick=()=>$("#pm").textContent="Preview only: payments will go live in the real app.";
-    let sure=0;$("#rs").onclick=()=>{if(!sure){sure=1;$("#rs").textContent="Tap again to erase all progress";return}const z=S.z;S=D0();S.z=z;save();pz.close();location.hash="";route()}}}
+  $("#gb").onclick=()=>{if(+$("#ga").value!=a*b){$("#ge").textContent="That’s not right. Try again.";return}view(S.id)}}
+function view(id){const K=DB.kids.find(k=>k.id==id),me=S;S=K;
+  const all=allL(),done=all.filter(x=>x.done).length,wk=[...Array(7)].map((_,i)=>{const d=new Date(Date.now()-(6-i)*864e5),k=dk(d);return[d.toLocaleDateString("en",{weekday:"short"}),K.mn[k]||0,K.h[k]||0]}),mins=wk.reduce((s,d)=>s+d[1],0),mx=Math.max(10,...wk.map(d=>d[1]));
+  const weak=all.filter(x=>x.done==1).map(x=>`${x.W.e} ${x.N.t}`),next=all.find(x=>x.open&&!x.done);
+  const body=`<div class="ptabs" role="tablist">${DB.kids.map(k=>`<button role="tab" aria-selected="${k.id==id}" class="${k.id==id?"on":""}" data-k="${k.id}">${k.av} ${esc(k.n)}</button>`).join("")}</div>
+  <h3 style="margin:0 0 2px">${K.av} ${esc(K.n)} · ${AG[K.a]}</h3>
+  <div class="tiles"><div class="tile"><b>${done}/${all.length}</b>lessons done</div><div class="tile"><b>${mins} min</b>learning this week</div><div class="tile"><b>${streakOf(K)}</b>day streak</div><div class="tile"><b>${stars()}</b>stars earned</div></div>
+  <b>Minutes learning, last 7 days</b><div class="wk" role="img" aria-label="Minutes learning per day for the last 7 days">${wk.map(d=>`<div><small>${d[1]||""}</small><i style="height:${d[1]/mx*64}px"></i>${d[0]}</div>`).join("")}</div><p class="step">For ages 6–16, short daily sessions of 15–30 minutes with breaks work well.</p>
+  <p style="margin-top:12px"><b>Progress by world</b></p>${Object.entries(D).map(([w,W])=>{const L=lessons(w),k=L.filter(Boolean).length;return `<div style="margin-bottom:8px"><b>${W.e} ${W.t}</b> <small>${k}/${L.length}</small><div class="pb dk"><i style="width:${k/L.length*100}%;background:${W.c}"></i></div></div>`}).join("")}
+  <p><b>Up next:</b> ${next?`${next.W.e} ${next.N.t}`:"everything is finished. Amazing!"}<br><b>Could use practice:</b> ${weak.length?weak.slice(0,3).join(", ")+". Replaying together helps.":"nothing yet. Great going!"}<br><b>Last feeling shared:</b> ${K.m||"none yet"}<br><b>Dream:</b> ${K.dr||"not chosen yet"}</p>
+  <div class="card now" style="background:var(--bg)"><b>Explorer Pass: $5 / month</b><br><small>Up to 3 children. 7 days free. Pay by M-Pesa or card. Cancel any time.</small></div>
+  <p><button class="go" id="trial">Start free trial</button><button class="go alt" id="rs">Reset progress</button><button class="go red" id="rm">Remove ${esc(K.n)}</button><button class="go alt" id="cx">Close</button></p><p id="pm" aria-live="polite"></p>
+  <p class="note"><b>Prototype note.</b> Progress is saved only in this browser. Before launch, DigiSoma still needs: a data-protection review (including Kenya’s Data Protection Act and verifiable parental consent), content review by teachers and child psychologists, secure parent accounts, and real M-Pesa and card billing.</p>`;
+  S=me;pz.querySelector(".pbody").innerHTML=body;
+  pz.querySelectorAll("[data-k]").forEach(b=>b.onclick=()=>view(b.dataset.k));
+  $("#cx").onclick=()=>pz.close();$("#trial").onclick=()=>$("#pm").textContent="Preview only: payments will go live in the real app.";
+  const twice=(el,msg,f)=>{let sure=0;el.onclick=()=>{if(!sure){sure=1;el.textContent=msg;return}f()}};
+  twice($("#rs"),"Tap again to erase "+K.n+"’s progress",()=>{Object.assign(K,{p:{},s:0,b:0,d:"",h:{},mn:{},m:"",dr:"",l:"",ms:{}});save();pz.close();route()});
+  twice($("#rm"),"Tap again to remove "+K.n,()=>{DB.kids=DB.kids.filter(k=>k!=K);if(S==K)useKid(DB.kids[0]||null);save();pz.close();location.hash=DB.kids.length?"":"new";route()})}
 $("#pzb").onclick=parent;
 
-function route(){const[w,t,l]=location.hash.slice(1).split("/"),W=D[w];window.scrollTo(0,0);try{speechSynthesis.cancel()}catch(e){}stats();
-  if(!W)return home();const T=W.topics[t];if(!T)return world(w);if(!T.L[l])return topic(w,t);lesson(w,t,+l)}
+/* ---------- router ---------- */
+function route(){const h=location.hash.slice(1),[w,t,l]=h.split("/"),W=D[w];window.scrollTo(0,0);try{speechSynthesis.cancel()}catch(e){}stats();
+  if(h=="new"||!DB.kids.length)return onboard();if(h=="kids"||!S)return kidsPage();
+  if(!W)return home();const T=W.topics[t];if(!T)return world(w);if(!T.L[l])return topic(w,t);lesson(w,+t,+l)}
 window.onhashchange=route;route();
 </script>
 </body>
