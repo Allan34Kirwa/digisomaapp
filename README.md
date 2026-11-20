@@ -9,10 +9,13 @@ DigiSoma ("soma" means "learn" in Swahili) is a fun, safe learning app where chi
 ## What's inside
 - **Five worlds:** Code & AI Lab, Math Arena, Cyber Shield, Mind & Heart, Growing Up
 - **Three age groups:** Sprouts (6–8), Builders (9–12), Pioneers (13–16)
-- **Games:** robot coding with loops, Teach the AI, Scam or safe?, password builder, quizzes
+- **Games:** robot coding with loops, Teach the AI, Teach Zuri kind words (a real text classifier), Prompt power, Can AI be wrong?, Real or fake?, Scam or safe?, password builder, quizzes
+- **AI curriculum** organised around the Five Big Ideas in AI (AI4K12)
+- **Certificates** for every world completed
 - **Create:** Zuri's Story maker and a shareable Maze maker
-- **Parent Zone:** PIN-protected progress, minutes learned and a weekly report
-- **Night and day savanna themes**, large text and an easy-read font
+- **Parent Zone:** PIN-protected progress, minutes learned, a weekly report and a family AI agreement
+- **Sunrise (default) and night savanna themes**, large text and an easy-read font
+- **Book-style front page** on phones: swipe sideways page by page
 
 ## Status
 Early prototype. Progress is saved only in the browser, and payments are not live.
