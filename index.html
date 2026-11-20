@@ -1,99 +1,228 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-mode="night">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="DigiSoma: fun lessons in coding, AI, online safety and wellbeing for African kids aged 6 to 16.">
-<meta name="theme-color" content="#3B1F8F">
-<title>DigiSoma Prototype</title>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta name="theme-color" content="#0B1030">
+<title>DigiSoma</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;700;800&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
 <style>
-/* Plan: violet + sunshine world, one colour per world, chunky 3D buttons, Zuri the robot as guide. Profiles > Home > World > Topic > Lesson. */
-:root{--ink:#1E1147;--bg:#F4F0FF;--sun:#FFC93C;--vio:#3B1F8F;--soft:#E5E0F7;--mint:#12A87F;--pink:#FF5D8F;color-scheme:light}
-*{box-sizing:border-box}
-body{margin:0;font-family:Fredoka,"Trebuchet MS",system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:18px;line-height:1.5}
-a{color:inherit;text-decoration:none}button{font:inherit;cursor:pointer;color:inherit}:focus-visible{outline:4px solid var(--sun);outline-offset:3px}
-header{position:sticky;top:0;z-index:5;background:var(--vio);color:#fff;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 20px;flex-wrap:wrap}
-.logo{font-weight:700;font-size:28px}.logo b{color:var(--sun)}
-.stats{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.chip{background:rgba(255,255,255,.15);border-radius:99px;padding:3px 13px;font-weight:600;font-size:16px;border:0;color:#fff;white-space:nowrap}
-button.chip:hover{background:rgba(255,255,255,.28)}
-.bar{width:80px;height:14px;border-radius:99px;background:rgba(255,255,255,.2);overflow:hidden}.bar i{display:block;height:100%;width:0;background:var(--sun);transition:width .5s}
-.wrap{max-width:1050px;margin:0 auto}
-.hero,.screen{background:linear-gradient(120deg,#3B1F8F,#6A3CE0);color:#fff;padding:28px 20px 70px;border-radius:0 0 40px 40px}
-.screen{padding-bottom:50px;min-height:calc(100vh - 60px)}
-.hero .wrap{display:grid;grid-template-columns:1.2fr 1fr;gap:20px;align-items:center}
-h1{font-size:clamp(34px,6vw,54px);line-height:1.05;margin:0 0 12px}.hero p{font-size:20px;margin:0 0 14px}
-.ages,.seg{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}.ages button,.seg button{border:0;border-radius:99px;padding:6px 14px;background:rgba(255,255,255,.18);color:#fff;font-weight:600;font-size:15px}.ages .on{background:var(--sun);color:var(--ink)}
-.seg button{background:var(--bg);color:var(--ink);border:3px solid transparent}.seg .on{background:#FFF1C4;border-color:var(--sun)}
-.tk{font-size:15px;opacity:.85;margin:0 0 12px!important}
-input{font:inherit;border:0;border-radius:99px;padding:10px 18px}
-.cta,.go{background:var(--sun);color:var(--ink);border:0;border-radius:99px;padding:12px 24px;font-weight:700;box-shadow:0 5px 0 #C79A00;display:inline-block}
-.go{background:var(--vio);color:#fff;box-shadow:0 5px 0 #1E1147;margin:6px 4px;font-size:17px}.go.alt{background:#6F6596;box-shadow:0 5px 0 #4A4270}.go.red{background:#C21E50;box-shadow:0 5px 0 #7E1236}
-.cta:active,.go:active{transform:translateY(3px);box-shadow:none}.go:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
-.mascot{text-align:center}.bz{width:min(250px,70%);cursor:pointer;animation:bob 3s ease-in-out infinite}
-.sw button{width:28px;height:28px;border-radius:50%;border:3px solid #fff;margin:4px 3px}
-.say{background:#fff;color:var(--ink);border-radius:22px;padding:10px 18px;display:inline-block;max-width:360px;font-weight:500;font-size:17px;position:relative;margin-bottom:14px}
-.say:after{content:"";position:absolute;bottom:-11px;left:50%;margin-left:-11px;border:11px solid transparent;border-top-color:#fff;border-bottom:0}
-.tts{border:0;background:var(--soft);border-radius:99px;padding:0 8px;font-size:16px;margin-left:4px;vertical-align:middle}
-.eye{transform-origin:center;transform-box:fill-box;animation:blink 4s infinite}
-@keyframes bob{50%{transform:translateY(-10px)}}@keyframes blink{0%,94%,100%{transform:scaleY(1)}97%{transform:scaleY(.1)}}
-section{padding:36px 20px}h2{font-size:clamp(26px,4vw,34px);margin:0 0 6px}.sub{margin:0 0 20px;opacity:.8}
-.duo{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;margin-top:-56px;position:relative}
-.mis,.wotd{border-radius:24px;padding:16px 20px;display:flex;gap:14px;align-items:center}
-.mis{background:#fff;box-shadow:0 8px 0 rgba(30,17,71,.12)}.mis .em,.wotd .em{font-size:44px;line-height:1}.mis small,.wotd small{display:block;font-weight:600;opacity:.7;font-size:14px;text-transform:uppercase;letter-spacing:.05em}.mis b{font-size:21px;display:block;line-height:1.2}
-.wotd{background:var(--sun);box-shadow:0 8px 0 #C79A00}.wotd b{font-size:24px;display:block;line-height:1.1}
-.worlds{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px}
-.w{display:block;border-radius:28px;color:#fff;padding:20px;min-height:190px;box-shadow:0 8px 0 rgba(0,0,0,.22);transition:transform .15s}
-.w:hover{transform:translateY(-6px) rotate(-1deg)}.w .em{font-size:50px;line-height:1.1;display:block}.w h3{margin:6px 0 2px;font-size:24px}.w .d{font-size:16px}
-.pb{height:10px;background:rgba(255,255,255,.3);border-radius:9px;margin-top:10px;overflow:hidden}.pb i{display:block;height:100%;background:#fff}.pb.dk{background:var(--soft)}
-.prog{display:block;font-size:15px;font-weight:600;margin-top:6px}
-.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
-.card{background:#fff;border-radius:24px;padding:16px 20px;border:4px solid transparent}.card.now{border-color:var(--sun)}.card small{opacity:.8}
-.b{background:#fff;border-radius:22px;padding:10px 14px;text-align:center;width:128px}.b span{font-size:36px;display:block}.b small{display:block;font-size:13px;opacity:.75;line-height:1.2}.b.off{filter:grayscale(1);opacity:.4}.badges{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:24px}
-.price{max-width:420px;margin:0 auto;background:var(--sun);border-radius:36px;padding:26px;text-align:center;box-shadow:0 10px 0 #C79A00}
-.price .n{font-size:60px;font-weight:700;line-height:1}.price .n small{font-size:22px;font-weight:500}.price ul{list-style:none;padding:0;text-align:left;font-weight:500;margin:12px 0}.price li:before{content:"✔ ";color:var(--vio)}
-.cr{max-width:1050px;margin:0 auto;padding:16px 20px 0;font-weight:500}.cr a{color:var(--vio);text-decoration:underline}.page{padding:14px 20px 50px}
-.path{display:grid;gap:18px;max-width:560px;margin:10px auto}
-.node{display:flex;align-items:center;gap:14px;background:#fff;border-radius:99px;padding:12px 24px;width:84%;box-shadow:0 6px 0 rgba(30,17,71,.15);border:4px solid var(--c);transition:transform .15s}
-.node:nth-child(even){margin-left:auto}a.node:hover{transform:scale(1.03)}.node.lock{opacity:.45;border-color:#999}.node .em{font-size:32px}.node b{display:block;font-size:20px;line-height:1.2}.node small{font-size:15px}
-.lc,dialog{background:#fff;border-radius:32px;overflow:hidden;box-shadow:0 10px 0 rgba(30,17,71,.15);color:var(--ink)}.lc{max-width:640px;margin:10px auto}
-dialog{border:0;padding:0;width:min(580px,94vw);max-height:92vh;overflow:auto}dialog::backdrop{background:rgba(30,17,71,.7)}
-.dh{color:#fff;padding:14px 24px}.dh h3{margin:0;font-size:25px}#st,.pbody{padding:20px 24px 24px}
-.zrow{display:flex;gap:12px;align-items:center;margin-bottom:12px}.zrow svg{flex:none}.zrow .say{margin:0;background:var(--bg)}.zrow .say:after{display:none}
-.step{margin:0;font-size:15px;opacity:.7;display:block}.c{text-align:center}
-.opts{display:grid;gap:10px;margin:12px 0}.opt{background:var(--bg);border:3px solid transparent;border-radius:18px;padding:12px 16px;text-align:left;font-weight:500}
-.opt:hover{border-color:var(--vio)}.opt.good{background:#C9F5E4;border-color:var(--mint)}.opt.bad{background:#FFD6E1;border-color:var(--pink)}
-.grid{display:grid;gap:6px;margin:10px auto}.cell{aspect-ratio:1;background:var(--bg);border-radius:14px;display:grid;place-items:center;font-size:clamp(22px,6vw,32px)}.cell.st{background:#FFF1C4}
-.pad{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:6px 0}.ar{background:#E1E7FF;border:0;border-radius:14px;padding:8px 16px;font-size:24px;box-shadow:0 4px 0 #B9C2EE}.ar:active{transform:translateY(3px);box-shadow:none}
-.ar.lp{background:#FFE7A8;box-shadow:0 4px 0 #D9B24A;font-size:18px;font-weight:600}
-.q{min-height:48px;background:var(--bg);border-radius:14px;padding:8px;text-align:center;font-size:24px;display:flex;flex-wrap:wrap;gap:4px;justify-content:center;align-items:center}
-.q span{border-radius:10px;padding:0 4px}.q .hl{background:var(--sun)}.q small{font-size:16px}.q .loop{background:#FFF1C4;border:2px dashed #D9B24A}
-pre{background:#1E293B;color:#7CF5D0;border-radius:14px;padding:12px;text-align:left;font-size:14px;overflow:auto;margin:10px 0}
-.moods{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}.moods button{background:var(--bg);border:3px solid transparent;border-radius:20px;padding:6px 12px;font-size:34px;line-height:1.2}.moods button:hover{border-color:var(--vio)}.moods small{display:block;font-size:14px;font-family:inherit}
-.breath{width:90px;height:90px;border-radius:50%;background:#B9A6FF;margin:16px auto;animation:br 8s ease-in-out infinite;display:grid;place-items:center;font-weight:600}@keyframes br{0%,100%{transform:scale(.6)}50%{transform:scale(1.15)}}
-.big{font-size:54px;text-align:center}
-.help{background:#FFF1C4;border-radius:16px;padding:10px 14px;font-size:16px}
-.homecard{background:#E2F8EE;border-radius:18px;padding:12px 16px;margin:12px 0;font-size:16px}
-.phone{max-width:330px;margin:10px auto;background:var(--ink);border-radius:32px;padding:14px 14px 20px;color:#fff}.pt{font-size:13px;opacity:.7;text-align:center}.from{font-weight:600;margin:10px 4px 6px}.msgb{background:#fff;color:var(--ink);border-radius:18px 18px 18px 4px;padding:12px 14px;font-size:16px}
-.pw{width:100%;border:3px solid var(--soft);border-radius:16px;font-size:22px;padding:10px 14px;margin:6px 0;background:var(--bg)}
-.meter{height:14px;background:var(--soft);border-radius:99px;overflow:hidden}.meter i{display:block;height:100%;width:0;transition:width .3s}
-.ck{list-style:none;padding:0;columns:2;font-size:16px;margin:8px 0}.ck .y{color:#0B7A5C;font-weight:600}
+/* Design: a savanna under the night sky (or at sunrise in Day mode). Stars are the reward currency, so the sky is the stage.
+   Kids navigate with 4 big tabs (Home, Learn, Awards, Me): bottom bar on phones, side rail on computers. Lessons open in a focus mode with no distractions. */
+:root{
+  --sky:linear-gradient(180deg,#9FDBFF 0%,#D6F0FF 42%,#FFF1D6 100%);
+  --ink:#1E1147;--mute:#5A5480;--panel:#FFFFFF;--panel2:#F2EEFF;--line:#E1DAF7;--shade:rgba(30,17,71,.14);
+  --sun:#FFC93C;--sunD:#C99300;--vio:#6A3CE0;--vioD:#3B1F8F;--mint:#14B886;--pink:#FF5D8F;
+  --hill1:#E9C46A;--hill2:#D9A84E;--tree:#5B4022;--glow:rgba(255,201,60,.35);
+  --display:"Fredoka","Trebuchet MS",system-ui,sans-serif;--body:"Nunito","Segoe UI",system-ui,sans-serif;
+  color-scheme:light}
+[data-mode="night"]{
+  --sky:radial-gradient(1200px 600px at 80% -10%,rgba(94,242,194,.18),transparent 60%),radial-gradient(900px 500px at 10% 10%,rgba(155,107,255,.28),transparent 60%),linear-gradient(180deg,#070B26 0%,#13104A 55%,#29165E 100%);
+  --ink:#F4F2FF;--mute:#B7B2E3;--panel:#1C1A4C;--panel2:#2A2768;--line:#3A3780;--shade:rgba(0,0,0,.35);
+  --hill1:#1A1446;--hill2:#120E36;--tree:#0A0826;--glow:rgba(94,242,194,.25);
+  color-scheme:dark}
+*{box-sizing:border-box}[hidden]{display:none!important}
+html,body{margin:0;min-height:100%}
+body{font-family:var(--body);font-weight:500;font-size:18px;line-height:1.5;color:var(--ink);background:var(--sky) fixed;background-color:#13104A}
+[data-mode="day"] body{background-color:#D6F0FF}
+h1,h2,h3{font-family:var(--display);font-weight:600;line-height:1.1;margin:0;text-wrap:balance}
+a{color:inherit;text-decoration:none}button{font:inherit;cursor:pointer;color:inherit}
+:focus-visible{outline:4px solid var(--sun);outline-offset:3px;border-radius:12px}
+
+/* scene */
+.scene{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.stars{position:absolute;inset:0;opacity:0;transition:opacity .6s}
+[data-mode="night"] .stars{opacity:1}
+.stars i{position:absolute;width:2px;height:2px;border-radius:50%;background:#fff;animation:tw 4s ease-in-out infinite}
+@keyframes tw{50%{opacity:.25}}
+.orb{position:absolute;top:70px;right:8%;width:90px;height:90px;border-radius:50%;background:#FFE08A;box-shadow:0 0 80px 30px rgba(255,201,60,.45)}
+[data-mode="night"] .orb{background:#F6F1D8;box-shadow:0 0 60px 14px rgba(246,241,216,.25),inset -18px -6px 0 #DCD5B4;width:70px;height:70px}
+.land{position:absolute;left:0;right:0;bottom:0;width:100%;height:180px}
+.land .h1{fill:var(--hill1)}.land .h2{fill:var(--hill2)}.land .t{fill:var(--tree)}
+
+/* shell */
+.top{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 20px;background:color-mix(in srgb,var(--panel) 82%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.logo{font-family:var(--display);font-weight:700;font-size:26px;display:flex;align-items:center;gap:8px}.logo b{color:var(--sun)}
+.logo svg{width:34px;height:34px}
+.pills{display:flex;gap:8px;align-items:center}
+.pill{display:inline-flex;align-items:center;gap:6px;background:var(--panel2);border:0;border-radius:99px;padding:5px 12px;font-weight:800;font-size:15px;white-space:nowrap}
+.pill.me{padding:3px 12px 3px 4px}.pill.me span{font-size:22px;background:var(--panel);border-radius:50%;width:32px;height:32px;display:grid;place-items:center}
+.nav{position:fixed;z-index:20;display:flex;background:var(--panel);border-top:1px solid var(--line);left:0;right:0;bottom:0;justify-content:space-around;padding:6px 6px calc(6px + env(safe-area-inset-bottom))}
+.nav a{display:flex;flex-direction:column;align-items:center;gap:0;padding:6px 8px;border-radius:18px;font-family:var(--display);font-weight:600;font-size:13px;color:var(--mute);min-width:62px}
+.nav a span{font-size:26px;line-height:1.1;transition:transform .15s}
+.nav a.on{background:var(--sun);color:#1E1147}.nav a.on span{transform:translateY(-2px) scale(1.08)}
+main{position:relative;z-index:1;padding:20px 16px 120px;max-width:1080px;margin:0 auto}
+body.focus .nav,body.focus .top .pills{display:none}body.focus main{padding-bottom:60px}
+@media(min-width:900px){
+  .nav{top:0;bottom:0;right:auto;width:104px;flex-direction:column;justify-content:flex-start;gap:8px;padding:84px 10px 10px;border-top:0;border-right:1px solid var(--line)}
+  .nav a{padding:12px 6px;font-size:14px}
+  body:not(.focus) main,body:not(.focus) .top{margin-left:104px}
+  body:not(.focus) main{padding:28px 32px 140px}
+  .top{z-index:21}
+}
+
+/* type + buttons */
+.kick{font-family:var(--display);font-weight:600;color:var(--sun);font-size:18px;margin:0 0 2px}
+[data-mode="day"] .kick{color:#B4570B}
+h1{font-size:clamp(34px,5.5vw,52px)}h2{font-size:clamp(24px,3.6vw,32px)}
+.sub{color:var(--mute);margin:4px 0 16px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:99px;padding:12px 24px;font-family:var(--display);font-weight:600;font-size:19px;background:var(--sun);color:#1E1147;box-shadow:0 5px 0 var(--sunD);margin:4px}
+.btn.v{background:var(--vio);color:#fff;box-shadow:0 5px 0 var(--vioD)}.btn.s{background:var(--panel2);color:var(--ink);box-shadow:0 5px 0 var(--line)}.btn.r{background:#D7265B;color:#fff;box-shadow:0 5px 0 #8E1239}
+.btn:active{transform:translateY(4px);box-shadow:none}.btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:28px;padding:20px;box-shadow:0 8px 0 var(--shade)}
+.c{text-align:center}.mute{color:var(--mute)}
+
+/* home */
+.hi{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center;margin-bottom:18px}
+.zuri-wrap{text-align:center;position:relative}
+.bub{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:10px 14px;max-width:250px;font-size:16px;margin:0 auto 10px;position:relative;box-shadow:0 6px 0 var(--shade)}
+.bub:after{content:"";position:absolute;bottom:-10px;left:50%;margin-left:-10px;border:10px solid transparent;border-top-color:var(--panel);border-bottom:0}
+.zbig{width:150px;height:150px;cursor:pointer;animation:bob 3s ease-in-out infinite;filter:drop-shadow(0 10px 18px var(--glow))}
+@keyframes bob{50%{transform:translateY(-8px)}}
+.eye{transform-origin:center;transform-box:fill-box;animation:blink 4s infinite}@keyframes blink{0%,94%,100%{transform:scaleY(1)}97%{transform:scaleY(.1)}}
+.bento{display:grid;grid-template-columns:1.4fr 1fr;gap:16px}
+.cont{grid-row:span 2;border-radius:28px;padding:22px;color:#fff;display:flex;flex-direction:column;justify-content:space-between;gap:12px;min-height:240px;box-shadow:0 8px 0 var(--shade);position:relative;overflow:hidden}
+.cont:after{content:"";position:absolute;right:-40px;top:-40px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.12)}
+.cont .em{font-size:64px;line-height:1}.cont h2{font-size:30px}.cont small{font-weight:800;opacity:.85;text-transform:uppercase;letter-spacing:.06em;font-size:13px}
+.mini{display:flex;gap:14px;align-items:center}.mini .em{font-size:40px;line-height:1}.mini small{display:block;font-weight:800;color:var(--mute);text-transform:uppercase;letter-spacing:.06em;font-size:12px}.mini b{font-family:var(--display);font-weight:600;font-size:21px;display:block;line-height:1.15}
+.week{display:flex;gap:6px;margin-top:10px}.week div{flex:1;text-align:center;font-size:12px;color:var(--mute);font-weight:800}.week i{display:grid;place-items:center;height:34px;border-radius:12px;background:var(--panel2);font-style:normal;font-size:18px;margin-bottom:3px}.week i.on{background:var(--sun)}.week .td i{outline:2px dashed var(--sun);outline-offset:1px}
+.shelf{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(170px,1fr);gap:14px;overflow-x:auto;padding:4px 2px 14px;scroll-snap-type:x mandatory}
+.wt{scroll-snap-align:start;border-radius:24px;padding:16px;color:#fff;min-height:150px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 6px 0 var(--shade);transition:transform .15s}.wt:hover{transform:translateY(-4px)}
+.wt .em{font-size:40px;line-height:1}.wt b{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15}
+.pb{height:9px;background:rgba(255,255,255,.3);border-radius:9px;overflow:hidden;margin-top:6px}.pb i{display:block;height:100%;background:#fff;border-radius:9px}
+.pb.k{background:var(--panel2)}
+.sec{margin:28px 0 10px;display:flex;justify-content:space-between;align-items:end;gap:10px}
+
+/* learn map */
+.map{position:relative;max-width:640px;margin:10px auto 0;display:grid;gap:26px;padding:10px 0}
+.map:before{content:"";position:absolute;left:50%;top:30px;bottom:30px;border-left:6px dashed var(--line);transform:translateX(-50%)}
+.stop{position:relative;display:flex;align-items:center;gap:16px;width:82%;background:var(--panel);border:1px solid var(--line);border-radius:99px;padding:10px 24px 10px 10px;box-shadow:0 8px 0 var(--shade);transition:transform .15s}
+.stop:nth-child(even){margin-left:auto;flex-direction:row-reverse;padding:10px 10px 10px 24px;text-align:right}
+.stop:hover{transform:scale(1.03)}
+.stop .ball{flex:none;width:86px;height:86px;border-radius:50%;display:grid;place-items:center;font-size:44px;color:#fff;box-shadow:inset 0 -6px 0 rgba(0,0,0,.2)}
+.stop b{font-family:var(--display);font-weight:600;font-size:22px;display:block;line-height:1.1}.stop small{color:var(--mute);font-size:15px}
+.stop .tx{flex:1;min-width:0}
+/* world path */
+.banner{border-radius:28px;padding:20px 22px;color:#fff;display:flex;gap:16px;align-items:center;box-shadow:0 8px 0 var(--shade);margin-bottom:8px}
+.banner .em{font-size:56px;line-height:1}.banner a{color:#fff;font-weight:800;font-size:15px;opacity:.9}
+.unit{margin:26px 0 6px;display:flex;align-items:center;gap:12px;background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:12px 16px}
+.unit .em{font-size:34px}.unit b{font-family:var(--display);font-weight:600;font-size:20px;display:block;line-height:1.1}.unit small{color:var(--mute)}.unit .ct{margin-left:auto;font-weight:800;color:var(--mute);font-size:15px;white-space:nowrap}
+.trail{display:flex;flex-direction:column;align-items:center;gap:14px;padding:16px 0 4px}
+.lnode{position:relative;display:flex;flex-direction:column;align-items:center;gap:4px;width:150px;text-align:center}
+.lnode .o{width:78px;height:78px;border-radius:50%;display:grid;place-items:center;font-size:34px;color:#fff;box-shadow:0 7px 0 rgba(0,0,0,.28),inset 0 -6px 0 rgba(0,0,0,.18);transition:transform .15s}
+a.lnode:hover .o{transform:scale(1.08)}
+.lnode b{font-family:var(--display);font-weight:600;font-size:15px;line-height:1.15}.lnode small{font-size:13px;letter-spacing:1px}
+.lnode.lock .o{background:var(--panel2)!important;color:var(--mute);box-shadow:0 7px 0 var(--line)}.lnode.lock b{color:var(--mute)}
+.lnode.cur .o{outline:5px solid var(--sun);outline-offset:5px;animation:pulse 1.6s ease-in-out infinite}
+.lnode .go{position:absolute;top:-34px;background:var(--sun);color:#1E1147;font-family:var(--display);font-weight:600;font-size:14px;padding:3px 12px;border-radius:12px;white-space:nowrap}
+.lnode .go:after{content:"";position:absolute;bottom:-7px;left:50%;margin-left:-7px;border:7px solid transparent;border-top-color:var(--sun);border-bottom:0}
+@keyframes pulse{50%{outline-offset:9px}}
+
+/* lesson focus */
+.lbar{display:flex;align-items:center;gap:14px;max-width:680px;margin:0 auto 14px}
+.x{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--panel2);font-size:20px;font-weight:800;flex:none}
+.lprog{flex:1;height:16px;background:var(--panel2);border-radius:99px;overflow:hidden}.lprog i{display:block;height:100%;width:8%;border-radius:99px;transition:width .4s}
+.lc{max-width:680px;margin:0 auto;background:var(--panel);border:1px solid var(--line);border-radius:32px;overflow:hidden;box-shadow:0 10px 0 var(--shade)}
+.dh{color:#fff;padding:16px 24px}.dh small{font-weight:800;opacity:.85;font-size:13px;text-transform:uppercase;letter-spacing:.06em}.dh h2{font-size:28px}
+#st{padding:20px 24px 26px}
+.zrow{display:flex;gap:12px;align-items:center;margin-bottom:14px}.zrow svg{flex:none}
+.say{background:var(--panel2);border-radius:20px;padding:12px 16px;font-size:17px}
+.tts{border:0;background:var(--line);border-radius:99px;padding:0 8px;font-size:15px;margin-left:4px;vertical-align:middle}
+.step{margin:0;font-size:15px;color:var(--mute);display:block;font-weight:700}
+.opts{display:grid;gap:10px;margin:14px 0}.opt{background:var(--panel2);border:3px solid transparent;border-radius:18px;padding:13px 16px;text-align:left;font-weight:700;font-size:17px}
+.opt:hover{border-color:var(--vio)}.opt.good{background:#C9F5E4;border-color:var(--mint);color:#0B3B2C}.opt.bad{background:#FFD6E1;border-color:var(--pink);color:#5A0F27}
+.grid{display:grid;gap:6px;margin:10px auto}.cell{aspect-ratio:1;background:var(--panel2);border-radius:14px;display:grid;place-items:center;font-size:clamp(22px,6vw,32px)}.cell.st{background:color-mix(in srgb,var(--sun) 35%,var(--panel2))}
+.pad{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:8px 0}.ar{background:#E1E7FF;color:#1E1147;border:0;border-radius:14px;padding:8px 16px;font-size:24px;box-shadow:0 4px 0 #9FAAE0}.ar:active{transform:translateY(3px);box-shadow:none}
+.ar.lp{background:#FFE7A8;box-shadow:0 4px 0 #D9B24A;font-size:17px;font-weight:800}
+.q{min-height:50px;background:var(--panel2);border-radius:14px;padding:8px;font-size:24px;display:flex;flex-wrap:wrap;gap:4px;justify-content:center;align-items:center}
+.q span{border-radius:10px;padding:0 4px}.q .hl{background:var(--sun)}.q small{font-size:16px;color:var(--mute)}.q .loop{border:2px dashed #D9B24A;background:rgba(255,201,60,.15)}
+pre{background:#0E1530;color:#7CF5D0;border-radius:14px;padding:12px;text-align:left;font-size:14px;overflow:auto;margin:10px 0}
+.moods{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}.moods button{background:var(--panel2);border:3px solid transparent;border-radius:20px;padding:6px 12px;font-size:34px;line-height:1.2}.moods button:hover{border-color:var(--vio)}.moods small{display:block;font-size:14px;font-family:var(--body);font-weight:800}
+.breath{width:96px;height:96px;border-radius:50%;background:radial-gradient(circle,#CFC2FF,#8E73F2);margin:16px auto;animation:br 8s ease-in-out infinite;display:grid;place-items:center;font-weight:800;color:#1E1147}@keyframes br{0%,100%{transform:scale(.6)}50%{transform:scale(1.15)}}
+.big{font-size:56px;text-align:center}
+.help{background:rgba(255,201,60,.18);border-radius:16px;padding:10px 14px;font-size:16px}
+.homecard{background:rgba(20,184,134,.15);border-radius:18px;padding:12px 16px;margin:12px 0;font-size:16px}
+.phone{max-width:330px;margin:10px auto;background:#120E36;border:3px solid var(--line);border-radius:34px;padding:14px 14px 22px;color:#fff}.pt{font-size:13px;opacity:.7;text-align:center}.from{font-weight:800;margin:10px 4px 6px}.msgb{background:#fff;color:#1E1147;border-radius:18px 18px 18px 4px;padding:12px 14px;font-size:16px}
+.pw{width:100%;border:3px solid var(--line);border-radius:16px;font:inherit;font-size:22px;padding:10px 14px;margin:6px 0;background:var(--panel2);color:var(--ink)}
+.meter{height:14px;background:var(--panel2);border-radius:99px;overflow:hidden}.meter i{display:block;height:100%;width:0;transition:width .3s}
+.ck{list-style:none;padding:0;columns:2;font-size:16px;margin:8px 0}.ck .y{color:var(--mint);font-weight:800}
 .mrow{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:10px 0}.mrow div{text-align:center;width:96px}.mrow small{display:block;font-size:13px;line-height:1.25}
-.ob{background:#fff;color:var(--ink);border-radius:32px;max-width:540px;margin:10px auto;padding:24px;box-shadow:0 10px 0 rgba(0,0,0,.2)}
-.ob label{display:block;font-weight:600;margin:14px 0 6px}.ob input{width:100%;background:var(--bg);border:3px solid var(--soft);font-size:20px}
-.avs{display:flex;gap:8px;flex-wrap:wrap}.avs button{font-size:34px;background:var(--bg);border:3px solid transparent;border-radius:18px;padding:2px 10px}.avs .on{border-color:var(--vio);background:#FFF1C4}
+
+/* awards */
+.lvl{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.ring{--p:0;width:110px;height:110px;border-radius:50%;background:conic-gradient(var(--sun) calc(var(--p)*1%),var(--panel2) 0);display:grid;place-items:center;flex:none}
+.ring div{width:84px;height:84px;border-radius:50%;background:var(--panel);display:grid;place-items:center;text-align:center;font-family:var(--display);font-weight:600;line-height:1}.ring b{font-size:30px;display:block}.ring small{font-size:12px;color:var(--mute)}
+.skybox{position:relative;height:220px;border-radius:24px;background:linear-gradient(180deg,#070B26,#1E1458);overflow:hidden;margin-top:12px}
+.skybox i{position:absolute;font-style:normal;font-size:14px;color:#4B4785;transform:translate(-50%,-50%)}
+.skybox i.on{color:#FFE08A;text-shadow:0 0 10px #FFC93C;font-size:18px}
+.skybox p{position:absolute;left:16px;bottom:10px;margin:0;color:#fff;font-weight:800;font-size:15px}
+.badges{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px}
+.bdg{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:14px;text-align:center;box-shadow:0 6px 0 var(--shade)}.bdg span{font-size:40px;display:block}.bdg b{font-family:var(--display);font-weight:600}.bdg small{display:block;color:var(--mute);font-size:13px;line-height:1.2}
+.bdg.off>*{opacity:.4;filter:grayscale(1)}
+
+/* me */
+.prof{display:flex;align-items:center;gap:18px;flex-wrap:wrap}.prof .av{font-size:64px;width:100px;height:100px;border-radius:50%;background:var(--panel2);display:grid;place-items:center;border:4px solid var(--sun)}
+.rowset{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:14px 0;border-bottom:1px solid var(--line)}.rowset:last-child{border-bottom:0}.rowset b{display:block}.rowset small{color:var(--mute);font-size:14px}
+.seg{display:inline-flex;background:var(--panel2);border-radius:99px;padding:4px;gap:4px;flex-wrap:wrap}.seg button{border:0;background:transparent;border-radius:99px;padding:6px 14px;font-weight:800;font-size:15px;color:var(--ink)}.seg button.on{background:var(--sun);color:#1E1147}
+.sw button{width:32px;height:32px;border-radius:50%;border:3px solid var(--panel);box-shadow:0 0 0 2px var(--line);margin:0 3px}
+.avs{display:flex;gap:6px;flex-wrap:wrap}.avs button{font-size:30px;background:var(--panel2);border:3px solid transparent;border-radius:16px;padding:2px 8px}.avs .on{border-color:var(--sun)}
+.price{background:linear-gradient(135deg,#FFC93C,#FF9F43);color:#1E1147;border-radius:28px;padding:22px;box-shadow:0 8px 0 #C77A1A}.price .n{font-family:var(--display);font-size:48px;font-weight:700;line-height:1}.price ul{padding-left:20px;margin:10px 0;font-weight:700}
+
+/* onboarding + learners */
+.ob{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center;min-height:calc(100vh - 140px)}
+.ob h1{font-size:clamp(38px,6vw,62px)}.ob h1 em{font-style:normal;color:var(--sun)}
+.feat{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}.feat span{background:var(--panel);border:1px solid var(--line);border-radius:99px;padding:6px 14px;font-weight:800;font-size:15px}
+.ob label{display:block;font-weight:800;margin:14px 0 6px}
+.ob input{width:100%;font:inherit;font-size:20px;padding:12px 16px;border-radius:16px;border:3px solid var(--line);background:var(--panel2);color:var(--ink)}
 .kids{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px;max-width:720px;margin:20px auto}
-.kc{background:#fff;color:var(--ink);border:0;border-radius:28px;padding:20px;text-align:center;box-shadow:0 8px 0 rgba(0,0,0,.2);transition:transform .15s}.kc:hover{transform:translateY(-4px)}.kc .av{font-size:64px;display:block;line-height:1.1}.kc b{font-size:22px;display:block}.kc small{opacity:.75}
-.kc.add{background:rgba(255,255,255,.12);color:#fff;border:3px dashed rgba(255,255,255,.6);box-shadow:none}
-.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:8px 0 14px}.tile{background:var(--bg);border-radius:16px;padding:8px 10px;font-size:14px;line-height:1.2}.tile b{font-size:24px;display:block;line-height:1.15}
-.wk{display:flex;gap:6px;align-items:flex-end;height:96px;margin:8px 0 2px}.wk div{flex:1;text-align:center;font-size:13px}.wk i{display:block;background:var(--vio);border-radius:6px 6px 0 0;margin:0 auto 2px;width:70%;min-height:3px}
-.ptabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}.ptabs button{border:2px solid var(--soft);background:#fff;border-radius:99px;padding:4px 12px}.ptabs .on{background:var(--vio);color:#fff;border-color:var(--vio)}
-.note{font-size:14px;opacity:.85;border-top:2px dashed var(--soft);margin-top:14px;padding-top:10px}
-.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:12px 22px;border-radius:99px;font-weight:600;z-index:40;box-shadow:0 6px 20px rgba(0,0,0,.3);text-align:center;max-width:92vw}
+.kc{background:var(--panel);border:1px solid var(--line);border-radius:28px;padding:22px;text-align:center;box-shadow:0 8px 0 var(--shade);transition:transform .15s}.kc:hover{transform:translateY(-4px)}
+.kc .av{font-size:66px;display:block;line-height:1.1}.kc b{font-family:var(--display);font-weight:600;font-size:22px;display:block}.kc small{color:var(--mute)}
+.kc.add{background:transparent;border:3px dashed var(--line);box-shadow:none}
+
+/* parent dialog */
+dialog{border:0;padding:0;width:min(600px,94vw);max-height:92vh;overflow:auto;background:var(--panel);color:var(--ink);border-radius:28px;box-shadow:0 20px 60px rgba(0,0,0,.4)}dialog::backdrop{background:rgba(7,11,38,.75)}
+.pbody{padding:20px 24px 24px}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0 14px}.tile{background:var(--panel2);border-radius:16px;padding:8px 10px;font-size:13px;line-height:1.2;color:var(--mute);font-weight:700}.tile b{font-family:var(--display);font-size:24px;display:block;color:var(--ink)}
+.wk{display:flex;gap:6px;align-items:flex-end;height:96px;margin:8px 0 2px}.wk div{flex:1;text-align:center;font-size:12px;color:var(--mute);font-weight:800}.wk i{display:block;background:var(--vio);border-radius:6px 6px 0 0;margin:0 auto 2px;width:70%;min-height:3px}
+.ptabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}.ptabs button{border:2px solid var(--line);background:var(--panel);border-radius:99px;padding:4px 12px;font-weight:800}.ptabs .on{background:var(--vio);color:#fff;border-color:var(--vio)}
+.note{font-size:14px;color:var(--mute);border-top:2px dashed var(--line);margin-top:14px;padding-top:10px}
+
+html.easy body,html.easy h1,html.easy h2,html.easy h3,html.easy .btn,html.easy .nav a{font-family:"Atkinson Hyperlegible",Verdana,sans-serif!important;letter-spacing:.02em}
+html.big main{zoom:1.15}
+/* front page */
+.lhero{display:grid;grid-template-columns:1.25fr .75fr;gap:24px;align-items:center;padding:24px 0 6px}
+.lhero h1{font-size:clamp(40px,6.5vw,66px)}.lhero h1 em{font-style:normal;color:var(--sun)}
+.lsec{margin:60px 0 0}
+.three{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:16px}
+.three .n{font-family:var(--display);font-weight:700;font-size:38px;color:var(--sun);line-height:1;display:block;margin-bottom:6px}
+.three h3{font-size:21px;margin-bottom:4px}.three p{margin:0;color:var(--mute);font-size:16px}
+.founder{display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:center}
+.fav{width:120px;height:120px;border-radius:50%;background:linear-gradient(135deg,var(--sun),#FF9F43);display:grid;place-items:center;font-family:var(--display);font-size:52px;color:#1E1147;font-weight:700;box-shadow:0 0 0 6px var(--panel2)}
+details{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:14px 18px;margin-top:10px}summary{font-weight:800;cursor:pointer}details p{margin:8px 0 0;color:var(--mute)}
+.lcta{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.tag{display:inline-block;background:var(--panel2);border-radius:99px;padding:3px 12px;font-weight:800;font-size:13px;color:var(--mute);margin:2px}
+/* create */
+.mk{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:16px}
+.mkc{border-radius:28px;padding:22px;color:#fff;min-height:210px;display:flex;flex-direction:column;justify-content:space-between;gap:10px;box-shadow:0 8px 0 var(--shade);transition:transform .15s}.mkc:hover{transform:translateY(-4px)}
+.mkc .em{font-size:56px;line-height:1}.mkc h2{font-size:28px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 14px}.chips button{background:var(--panel2);border:3px solid transparent;border-radius:16px;padding:8px 12px;font-weight:800;font-size:16px}.chips button.on{border-color:var(--sun);background:color-mix(in srgb,var(--sun) 22%,var(--panel2))}
+.spage{border-radius:24px;overflow:hidden;border:1px solid var(--line)}
+.price .n{color:#1E1147!important}
+.scene2{height:190px;display:grid;place-items:center;font-size:clamp(40px,11vw,64px);letter-spacing:8px;white-space:nowrap;text-shadow:0 6px 18px rgba(0,0,0,.25)}
+.ptext{padding:18px 20px;font-size:21px;line-height:1.6;background:var(--panel)}
+.dots{display:flex;gap:6px;justify-content:center;margin:12px 0}.dots i{width:10px;height:10px;border-radius:50%;background:var(--line)}.dots i.on{background:var(--sun)}
+.cell.ed{cursor:pointer;border:0;font:inherit}.cell.ed:hover{outline:3px solid var(--sun)}
+.code{font-family:ui-monospace,Consolas,monospace;font-size:26px;letter-spacing:3px;background:var(--panel2);padding:8px 16px;border-radius:12px;display:inline-block;font-weight:700}
+.toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%);background:var(--sun);color:#1E1147;padding:12px 22px;border-radius:99px;font-family:var(--display);font-weight:600;z-index:40;box-shadow:0 8px 24px rgba(0,0,0,.3);text-align:center;max-width:92vw}
 .cf{position:fixed;top:-30px;font-style:normal;font-size:28px;z-index:30;pointer-events:none;animation:fall 2s ease-in forwards}@keyframes fall{to{transform:translate(var(--dx),105vh) rotate(360deg)}}
-footer{text-align:center;padding:24px;opacity:.75;font-size:15px}
-@media(max-width:760px){.hero .wrap,.duo{grid-template-columns:1fr}.node{width:100%}.tiles{grid-template-columns:repeat(2,1fr)}.bar,#lvl{display:none}.chip{font-size:15px;padding:3px 10px}}
+@media(max-width:760px){
+  .hi{grid-template-columns:1fr}.hi .zuri-wrap{display:none}
+  .bento,.ob{grid-template-columns:1fr}.cont{grid-row:auto;min-height:200px}
+  .stop{width:100%}.tiles{grid-template-columns:repeat(2,1fr)}
+  .pill.st{display:none}.lhero,.founder{grid-template-columns:1fr}.fav{width:90px;height:90px;font-size:40px}.top{padding:8px 14px}.logo{font-size:22px}
+  .ob{min-height:0}.ob .zbig{width:110px;height:110px}.orb{width:44px!important;height:44px!important;top:64px;right:14px;opacity:.7}
+}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -104,12 +233,21 @@ footer{text-align:center;padding:24px;opacity:.75;font-size:15px}
 <ellipse class="eye" cx="78" cy="94" rx="10" ry="13" fill="#7CF5D0"/><ellipse class="eye" cx="122" cy="94" rx="10" ry="13" fill="#7CF5D0"/>
 <path d="M82 114q18 14 36 0" stroke="#7CF5D0" stroke-width="5" fill="none" stroke-linecap="round"/>
 <circle cx="48" cy="118" r="8" fill="#FF8A3D" opacity=".8"/><circle cx="152" cy="118" r="8" fill="#FF8A3D" opacity=".8"/><rect x="60" y="158" width="80" height="26" rx="13" fill="#4361EE"/></symbol></svg>
-<header>
-  <a href="#" class="logo" aria-label="DigiSoma home">Digi<b>Soma</b></a>
-  <div class="stats" id="hs"><button class="chip" id="me" aria-label="Switch learner"></button><span class="chip" title="Learning streak">🔥 <span id="streak">0</span></span><span class="chip">⭐ <span id="xp">0</span> XP</span><span class="chip" id="lvl"></span><div class="bar" title="Progress to next level"><i id="fill"></i></div><button class="chip" id="snd"></button><button class="chip" id="pzb" aria-label="Open Parent Zone">👨‍👩‍👧 Parents</button></div>
-</header>
+<div class="scene" aria-hidden="true"><div class="stars" id="stars"></div><div class="orb"></div>
+<svg class="land" viewBox="0 0 1440 180" preserveAspectRatio="none"><path class="h1" d="M0 120C200 70 380 90 560 110S940 60 1140 90 1380 110 1440 100V180H0Z"/><path class="h2" d="M0 150C240 120 470 140 720 150S1200 125 1440 140V180H0Z"/>
+<g class="t"><rect x="196" y="60" width="7" height="55"/><path d="M199 92l-26-22h8zM199 84l28-18h-8z"/><ellipse cx="200" cy="58" rx="64" ry="13"/><ellipse cx="186" cy="50" rx="34" ry="8"/>
+<rect x="1176" y="48" width="8" height="52"/><path d="M1180 80l-30-24h9zM1180 74l30-20h-9z"/><ellipse cx="1180" cy="46" rx="78" ry="14"/><ellipse cx="1200" cy="37" rx="40" ry="9"/>
+<rect x="752" y="102" width="5" height="40"/><ellipse cx="755" cy="100" rx="40" ry="9"/></g></svg></div>
+<header class="top"><a href="#home" class="logo" aria-label="DigiSoma home"><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#z"/></svg><span>Digi<b>Soma</b></span></a>
+  <div class="pills" id="pills"><span class="pill st" title="Learning streak">🔥 <span id="streak">0</span></span><span class="pill st" title="Stars">⭐ <span id="stc">0</span></span><a class="pill me" href="#me" id="mep" aria-label="My profile"><span id="mav">🦁</span><b id="mnm"></b></a></div></header>
+<nav class="nav" id="nav" aria-label="Main">
+  <a href="#home" data-t="home"><span aria-hidden="true">🏠</span>Home</a>
+  <a href="#learn" data-t="learn"><span aria-hidden="true">🗺️</span>Learn</a>
+  <a href="#create" data-t="create"><span aria-hidden="true">🎨</span>Create</a>
+  <a href="#awards" data-t="awards"><span aria-hidden="true">🏆</span>Awards</a>
+  <a href="#me" data-t="me"><span aria-hidden="true">😊</span>Me</a>
+</nav>
 <main id="app"></main>
-<footer>DigiSoma preview prototype · “Soma” means “learn” in Swahili · Built in Nairobi</footer>
 <dialog id="pz" aria-label="Parent Zone"></dialog>
 
 <script>
@@ -118,8 +256,8 @@ const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a
 const esc=s=>String(s).replace(/[&<>"']/g,c=>"&#"+c.charCodeAt(0)+";"),strip=s=>s.replace(/<[^>]+>/g,"");
 const calm=matchMedia("(prefers-reduced-motion: reduce)").matches,canTalk="speechSynthesis" in window;
 const TT=["Explorer","Maker","Inventor","Wizard","Legend"],AV=["🦁","🦒","🐘","🦓","🐆","🦜","🐢","🦩"];
-const AG=["Sprouts · 6–8","Builders · 9–12","Pioneers · 13–16"],HL=["Ready to train your first AI robot?","Build smart AI logic and beat online tricks!","Go from block code to real AI and Python!"];
-const TK=["Sprouts get easier maths and a 🔊 read-aloud helper.","Builders see the Python version of their robot code.","Pioneers get Python, harder maths and ⚡ bonus questions."];
+const AG=["Sprouts · 6–8","Builders · 9–12","Pioneers · 13–16"],AGs=["Sprouts","Builders","Pioneers"],HL=["Ready to train your first AI robot?","Build smart AI logic and beat online tricks!","Go from block code to real AI and Python!"];
+const TK=["Easier maths and a 🔊 read-aloud helper.","See the Python version of your robot code.","Python, harder maths and ⚡ bonus questions."];
 const WD=[["Kompyuta","Computer","💻"],["Akili bandia","Artificial intelligence (AI)","🧠"],["Programu","Program or app","📱"],["Nenosiri","Password","🔐"],["Mtandao","Internet or network","🌍"],["Roboti","Robot","🤖"],["Simu janja","Smartphone","📲"]];
 const D={
 code:{t:"Code & AI Lab",e:"🤖",c:"#4361EE",d:"Teach robots, understand AI",topics:[
@@ -132,10 +270,10 @@ code:{t:"Code & AI Lab",e:"🤖",c:"#4361EE",d:"Teach robots, understand AI",top
 {t:"Teach the AI",k:"train",learn:"Let’s build a mango-sorting AI! First you teach it with examples. Then we test it on mangoes it has never seen.",home:"Sort fruit at home into ripe and not ripe. What clues did you use? AI calls those clues “features”."},
 {t:"Learning from examples",k:"q",learn:"AI isn’t told every rule. It studies lots of examples, like cat photos, and finds patterns.",Q:[["How does AI learn to spot a cat?",["It’s born knowing","It studies lots of cat photos"],1,"Examples are what AI learns from."],["Next in the pattern: 🔴🔵🔴🔵 ?",["🔴","🔵","🟢"],0,"Spotting patterns is what AI does best."]],X:["The examples an AI learns from are called…",["Training data","Wi-Fi","A charger"],0,"Training data shapes everything the AI learns."]},
 {t:"Using AI wisely",k:"q",learn:"AI can be wrong. Check facts with a book or a grown-up, and keep private things private.",Q:[["An AI says something odd. You…",["Believe it","Check another source"],1,"AI makes mistakes, so double-check."],["Tell an AI your home address?",["Sure","No, keep it private"],1,"Private stays private, even with robots."]],X:["An AI learned only from photos of one country. It may…",["Work the same everywhere","Make more mistakes with other places and faces"],1,"That is called bias. Varied data makes fairer AI."]}]}]},
-math:{t:"Math Arena",e:"🧮",c:"#C2570C",d:"Numbers, puzzles, real life",topics:[
+math:{t:"Math Arena",e:"🧮",c:"#D9620F",d:"Numbers, puzzles, real life",topics:[
 {t:"Number Power",e:"🔢",d:"New puzzles every time, set to your age",L:[{t:"Add and subtract",k:"math",m:0},{t:"Times tables",k:"math",m:1}]},
 {t:"Math in Real Life",e:"🛒",d:"Money sense",L:[{t:"Shopping with shillings",k:"q",learn:"To find your change, subtract. Pay KSh 100 for something that costs KSh 60 and you get 100 − 60 = 40 back.",Q:[["3 mandazi at KSh 20 each. Total?",["KSh 40","KSh 60","KSh 80"],1,"3 × 20 = 60."],["Pay KSh 100 for KSh 65. Change?",["KSh 25","KSh 35","KSh 45"],1,"100 − 65 = 35."]],X:["You save KSh 50 a week. How long to reach KSh 400?",["6 weeks","8 weeks","10 weeks"],1,"400 ÷ 50 = 8."],home:"Next time at the duka, work out the change before the shopkeeper does!"}]}]},
-safe:{t:"Cyber Shield",e:"🛡️",c:"#0B7A5C",d:"Smart, kind and balanced online",topics:[
+safe:{t:"Cyber Shield",e:"🛡️",c:"#0E8A63",d:"Smart, kind and balanced online",topics:[
 {t:"Protect Yourself",e:"🔒",d:"Secrets, scams, passwords",L:[
 {t:"Strangers and secrets",k:"q",learn:"Online, anyone can pretend to be anyone. Keep your school, address and photos private.",Q:[["A gamer says, “Free gems! Send your address and password.”",["Send them","Block, and tell a grown-up"],1,"Real prizes never ask for passwords or addresses."],["Someone says, “Keep this secret from your parents.”",["OK","Tell a trusted grown-up now"],1,"Safe people never ask for secrets like that."]]},
 {t:"Scam or safe?",k:"scam",learn:"Scammers send messages that look real. Red flags: a rush, a prize, a secret, or a request for money, PINs or photos.",home:"With a grown-up, look through recent SMS messages together. Can you spot any scams?"},
@@ -143,7 +281,7 @@ safe:{t:"Cyber Shield",e:"🛡️",c:"#0B7A5C",d:"Smart, kind and balanced onlin
 {t:"Be Kind Online",e:"💬",d:"Bullying and balance",L:[
 {t:"If someone is mean",k:"q",learn:"If someone is unkind online: don’t reply, save proof, block them, tell a grown-up. It’s never your fault.",Q:[["First step if someone bullies you online?",["Be mean back","Don’t reply, tell a grown-up"],1,"Getting help is the brave move."],["Is bullying ever your fault?",["Yes","Never"],1,"Never."]]},
 {t:"Screen balance",k:"q",learn:"Try the 20-20-20 rule: every 20 minutes, look at something 20 feet away for 20 seconds. Sleep, play and friends matter too.",Q:[["The 20-20-20 rule helps your…",["Eyes","Shoes"],0,"Looking far away rests tired eyes."],["Screens right before bed…",["Help you sleep","Make sleep harder"],1,"Screen light keeps your brain awake."]],home:"Agree on a family “screens off” time before bed."}]}]},
-feel:{t:"Mind & Heart",e:"💛",c:"#C22E5F",d:"Understand and calm big feelings",topics:[
+feel:{t:"Mind & Heart",e:"💛",c:"#D1336A",d:"Understand and calm big feelings",topics:[
 {t:"Know Your Feelings",e:"🪞",d:"Name it to tame it",L:[{t:"Mood check-in",k:"feel",home:"At dinner, everyone shares one feeling from today."},
 {t:"Feelings detective",k:"q",learn:"Feelings have names: happy, sad, angry, scared, proud. Naming one makes it easier to handle.",Q:[["Your heart races before a test. You may feel…",["Nervous","Sleepy"],0,"Nerves make the heart beat faster."],["You lose a game and want to cry. That’s…",["Normal","Silly"],0,"All feelings are okay."]]}]},
 {t:"Calm Toolbox",e:"🧘",d:"Tools for big feelings",L:[{t:"Belly breathing",k:"breathe",home:"Teach belly breathing to someone in your family tonight."},
@@ -158,9 +296,11 @@ grow:{t:"Growing Up",e:"🌱",c:"#7B4DE0",d:"Changes, friends and your future",t
 };
 
 /* ---------- saved data: up to 3 learners in this browser ---------- */
-const SK="digisoma.v2";let DB={kids:[],cur:"",snd:1};
+const SK="digisoma.v3";let DB={kids:[],cur:"",snd:1,mode:"night"};
 try{Object.assign(DB,JSON.parse(localStorage.getItem(SK)||"{}"))}catch(e){}
 const save=()=>{try{localStorage.setItem(SK,JSON.stringify(DB))}catch(e){}};
+const applyA11y=()=>{document.documentElement.classList.toggle("big",!!DB.big);document.documentElement.classList.toggle("easy",!!DB.easy)};
+const setMode=m=>{DB.mode=m;document.documentElement.dataset.mode=m;$('meta[name="theme-color"]').content=m=="night"?"#0B1030":"#9FDBFF";save()};setMode(DB.mode||"night");applyA11y();
 const newKid=(n,av,a)=>({id:Date.now().toString(36)+(Math.random()*1e4|0),n,av,a,z:"",p:{},s:0,b:0,d:"",h:{},mn:{},m:"",dr:"",l:"",ms:{}});
 let S=DB.kids.find(k=>k.id==DB.cur)||null;
 const useKid=k=>{S=k;DB.cur=k?k.id:"";save();document.documentElement.style.setProperty("--z",k&&k.z||"#FFC93C")};useKid(S);
@@ -170,10 +310,7 @@ const xpOf=k=>Object.values(k.p).reduce((a,b)=>a+b*10,0),xp=()=>xpOf(S),stars=()
 const lessons=w=>D[w].topics.flatMap((t,i)=>t.L.map((_,l)=>st(w,i,l)));
 const streakOf=k=>k.d==today()||k.d==yday()?k.s:0;
 const allL=()=>{const o=[];Object.entries(D).forEach(([w,W])=>W.topics.forEach((T,t)=>T.L.forEach((N,l)=>o.push({w,t,l,N,W,T,open:!l||st(w,t,l-1)>0,done:st(w,t,l)}))));return o};
-function stats(){const h=$("#hs");h.hidden=!S;if(!S)return;const x=xp(),l=Math.floor(x/100);
-  $("#me").textContent=S.av+" "+S.n+" ▾";$("#xp").textContent=x;$("#streak").textContent=streakOf(S);$("#lvl").textContent="Lv "+(l+1)+" · "+TT[Math.min(l,4)];$("#fill").style.width=x%100+"%";
-  $("#snd").textContent=DB.snd?"🔊":"🔇";$("#snd").setAttribute("aria-label",DB.snd?"Sound is on. Turn off":"Sound is off. Turn on")}
-$("#me").onclick=()=>location.hash="kids";$("#snd").onclick=()=>{DB.snd=DB.snd?0:1;save();stats();sfx("tap")};
+function stats(){$("#pills").hidden=!S;if(!S)return;$("#mav").textContent=S.av;$("#mnm").textContent=S.n;$("#streak").textContent=streakOf(S);$("#stc").textContent=stars()}
 
 /* ---------- sound, speech, confetti, toast ---------- */
 let AC;const sfx=k=>{if(!DB.snd)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();const n=AC.currentTime;
@@ -181,84 +318,94 @@ let AC;const sfx=k=>{if(!DB.snd)return;try{AC=AC||new(window.AudioContext||windo
 const speak=t=>{try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.rate=.9;speechSynthesis.speak(u)}catch(e){}};
 document.addEventListener("click",e=>{const b=e.target.closest(".tts");if(b)speak(b.dataset.t)});
 const tb=t=>canTalk?`<button class="tts" data-t="${esc(strip(t))}" aria-label="Read aloud">🔊</button>`:"";
-const zsay=t=>`<div class="zrow"><svg viewBox="0 0 200 200" width="76" height="76" aria-hidden="true"><use href="#z"/></svg><div class="say">${t} ${tb(t)}</div></div>`;
+const zsay=t=>`<div class="zrow"><svg viewBox="0 0 200 200" width="72" height="72" aria-hidden="true"><use href="#z"/></svg><div class="say">${t} ${tb(t)}</div></div>`;
 function boom(){if(calm)return;for(let i=0;i<28;i++){const s=document.createElement("i");s.className="cf";s.textContent=["⭐","🎉","✨","💛"][i%4];s.style.cssText=`left:${Math.random()*100}vw;--dx:${Math.random()*200-100}px;animation-delay:${Math.random()*.4}s`;document.body.append(s);setTimeout(()=>s.remove(),2600)}}
 let tt;const toast=t=>{let e=$(".toast");if(!e){e=document.createElement("div");e.className="toast";e.setAttribute("role","status");document.body.append(e)}e.textContent=t;clearTimeout(tt);tt=setTimeout(()=>e.remove(),3500)};
-const crumbs=a=>`<nav class="cr" aria-label="Breadcrumb"><a href="#">🏠 Home</a>${a.map(([t,h])=>" › "+(h?`<a href="#${h}">${t}</a>`:`<b>${t}</b>`)).join("")}</nav>`;
+(()=>{let h="";for(let i=0;i<110;i++){const r=(i*9301+49297)%233280/233280,q=(i*4096+150889)%714025/714025;h+=`<i style="left:${(r*100).toFixed(1)}%;top:${(q*68).toFixed(1)}%;animation-delay:${(i%9)*.45}s;${i%7?"":"width:3px;height:3px;"}"></i>`}$("#stars").innerHTML=h})();
+const pl=(n,w)=>n+" "+w+(n==1?"":"s");
+const prog=f=>{const e=$("#lp");if(e)e.style.width=Math.round(f*100)+"%"};
 
-/* ---------- profiles ---------- */
+/* ---------- onboarding + learners ---------- */
 function onboard(){let av=AV[DB.kids.length%AV.length],a=1;
-  if(DB.kids.length>=3){app.innerHTML=`<div class="screen"><div class="ob c"><h2>3 learners is the limit</h2><p>The Explorer Pass covers up to 3 children. A grown-up can remove a profile in the Parent Zone.</p><a class="go" href="#kids">Back</a></div></div>`;return}
-  app.innerHTML=`<div class="screen"><div class="ob"><div class="zrow"><svg viewBox="0 0 200 200" width="90" height="90" aria-hidden="true"><use href="#z"/></svg><div class="say"><b>Karibu! I’m Zuri.</b> Let’s set up your learner profile.</div></div>
+  if(DB.kids.length>=3){app.innerHTML=`<div class="card c" style="max-width:520px;margin:40px auto"><h2>3 learners is the limit</h2><p class="mute">The Explorer Pass covers up to 3 children. A grown-up can remove a profile in the Parent Zone.</p><a class="btn" href="#kids">Back</a></div>`;return}
+  app.innerHTML=`<div class="ob"><div><svg class="zbig" viewBox="0 0 200 200" aria-hidden="true"><use href="#z"/></svg><p class="kick">Karibu! Welcome to DigiSoma</p><h1>Learn to build <em>Africa’s future.</em></h1><p class="mute" style="font-size:20px">Coding, AI, online safety and feelings, in short lessons and games made for kids aged 6 to 16.</p><div class="feat"><span>🤖 Code & AI</span><span>🛡️ Online safety</span><span>💛 Feelings</span><span>🧮 Maths</span><span>🚀 Future careers</span></div></div>
+  <div class="card"><h2>${DB.kids.length?"Add a learner":"Set up your learner"}</h2>
   <label for="on">What’s your first name?</label><input id="on" maxlength="14" autocomplete="off" placeholder="e.g. Amani">
   <label id="al">Pick your animal</label><div class="avs" role="radiogroup" aria-labelledby="al">${AV.map(x=>`<button type="button" role="radio" aria-checked="${x==av}" class="${x==av?"on":""}" data-v="${x}">${x}</button>`).join("")}</div>
   <label id="gl">How old are you?</label><div class="seg" role="radiogroup" aria-labelledby="gl">${AG.map((x,i)=>`<button type="button" role="radio" aria-checked="${i==a}" class="${i==a?"on":""}" data-a="${i}">${x}</button>`).join("")}</div>
-  <p class="step" id="tk">${TK[a]}</p><p class="step" style="margin-top:10px">Only a first name is saved, and only on this device. No email or photo needed.</p>
-  <p class="c"><button class="go" id="ok">Let’s go! 🚀</button>${DB.kids.length?`<a class="go alt" href="#kids">Cancel</a>`:""}</p><p id="oe" class="c" aria-live="polite"></p></div></div>`;
+  <p class="step" id="tk" style="margin-top:8px">${TK[a]}</p><p class="step" style="margin-top:6px;font-weight:600">Only a first name is saved, and only on this device. No email or photo.</p>
+  <p class="c"><button class="btn" id="ok">Let’s go! 🚀</button>${DB.kids.length?`<a class="btn s" href="#kids">Cancel</a>`:""}</p><p id="oe" class="c" aria-live="polite"></p></div></div>`;
   const pick=(sel,f)=>app.querySelectorAll(sel+" button").forEach(b=>b.onclick=()=>{app.querySelectorAll(sel+" button").forEach(x=>{x.classList.toggle("on",x==b);x.setAttribute("aria-checked",x==b)});f(b);sfx("tap")});
   pick(".avs",b=>av=b.dataset.v);pick(".seg",b=>{a=+b.dataset.a;$("#tk").textContent=TK[a]});
-  $("#on").focus();$("#on").onkeydown=e=>{if(e.key=="Enter")$("#ok").click()};
-  $("#ok").onclick=()=>{const n=$("#on").value.trim();if(!n){$("#oe").textContent="Type your first name so I know what to call you!";$("#on").focus();return}
-    const k=newKid(n,av,a);DB.kids.push(k);useKid(k);sfx("win");boom();location.hash="";route()}}
+  $("#on").onkeydown=e=>{if(e.key=="Enter")$("#ok").click()};
+  $("#ok").onclick=()=>{const n=$("#on").value.trim();if(!n){$("#oe").textContent="Type your first name so Zuri knows what to call you!";$("#on").focus();return}
+    const k=newKid(n,av,a);DB.kids.push(k);useKid(k);sfx("win");boom();location.hash="home";route()}}
 function kidsPage(){
-  app.innerHTML=`<div class="screen"><div class="wrap c"><svg viewBox="0 0 200 200" width="110" height="110" aria-hidden="true"><use href="#z"/></svg><h1>Who’s learning today?</h1><div class="kids">${DB.kids.map(k=>`<button class="kc" data-id="${k.id}"><span class="av" aria-hidden="true">${k.av}</span><b>${esc(k.n)}</b><small>${AG[k.a]}<br>⭐ ${xpOf(k)} XP · 🔥 ${streakOf(k)}</small></button>`).join("")}${DB.kids.length<3?`<a class="kc add" href="#new"><span class="av" aria-hidden="true">➕</span><b>Add a learner</b><small>Up to 3 per family</small></a>`:""}</div></div></div>`;
-  app.querySelectorAll(".kc[data-id]").forEach(b=>b.onclick=()=>{useKid(DB.kids.find(k=>k.id==b.dataset.id));sfx("tap");location.hash="";route()})}
+  app.innerHTML=`<div class="c" style="padding-top:20px"><svg class="zbig" viewBox="0 0 200 200" aria-hidden="true"><use href="#z"/></svg><h1>Who’s learning today?</h1><div class="kids">${DB.kids.map(k=>`<button class="kc" data-id="${k.id}"><span class="av" aria-hidden="true">${k.av}</span><b>${esc(k.n)}</b><small>${AGs[k.a]} · ⭐ ${Object.values(k.p).reduce((a,b)=>a+b,0)} · 🔥 ${streakOf(k)}</small></button>`).join("")}${DB.kids.length<3?`<a class="kc add" href="#new"><span class="av" aria-hidden="true">➕</span><b>Add a learner</b><small>Up to 3 per family</small></a>`:""}</div></div>`;
+  app.querySelectorAll(".kc[data-id]").forEach(b=>b.onclick=()=>{useKid(DB.kids.find(k=>k.id==b.dataset.id));sfx("tap");location.hash="home";route()})}
 
-/* ---------- LEVEL 1: home ---------- */
+/* ---------- HOME tab ---------- */
 function home(){
-  const all=allL(),total=all.filter(x=>x.done).length,sum=stars(),dn=Math.floor(Date.now()/864e5),wd=WD[dn%WD.length];
+  const all=allL(),dn=Math.floor(Date.now()/864e5),wd=WD[dn%WD.length],hr=new Date().getHours(),gr=hr<12?"Habari ya asubuhi":hr<16?"Habari ya mchana":"Habari ya jioni";
   if(S.ms.d!=today()){const c=all.filter(x=>x.open&&!x.done),p=c.length?c[dn%c.length]:all[dn%all.length];S.ms={d:today(),k:`${p.w}/${p.t}/${p.l}`,ok:0};save()}
   const [mw,mt,ml]=S.ms.k.split("/"),mL=D[mw].topics[mt].L[ml];
-  const B=[["🌟","First step","Finish 1 lesson",total>=1],["🚀","Rocket","Finish 5 lessons",total>=5],["🔥","On fire","3-day streak",S.b>=3],["⭐","Star collector","Earn 30 stars",sum>=30],["🏅","Champion","Finish 15 lessons",total>=15],["👑","Legend","Finish every lesson",total==all.length]];
-  const RM=[["🐣","Sprouts 6–8","Arrow coding, number sense, feelings, basic online safety"],["🛠️","Builders 9–12","Loops, how AI learns, spotting scams, growth mindset"],["🧠","Pioneers 13–16","From blocks to Python, AI bias and ethics, real projects for Africa"]];
+  const nx=S.l?S.l.split("/"):null,cw=nx?nx[0]:"code",cL=nx?D[cw].topics[nx[1]].L[nx[2]]:D.code.topics[0].L[0],cT=nx?D[cw].topics[nx[1]]:D.code.topics[0];
   const lines=["Fun fact: AI learns from examples, just like you!","Never share your password, not even with a best friend.","Big feelings are okay. Breathe with me.","Code is just instructions. You tell the computer what to do!","If something online feels weird, tell a grown-up you trust.","M-Pesa was invented right here in Kenya!","A loop means: do it again! 🔁"];let li=0;
-  app.innerHTML=`<div class="hero"><div class="wrap"><div><h1>Karibu, ${esc(S.n)}! ${S.av}</h1><div class="ages" role="group" aria-label="Age track">${AG.map((x,i)=>`<button data-a="${i}" class="${S.a==i?"on":""}" aria-pressed="${S.a==i}">${x}</button>`).join("")}</div><p class="tk">${TK[S.a]}</p><p>${HL[S.a]}</p><a class="cta" href="#${S.l||"code/0/0"}">${S.l?"Continue ▶":"Start playing ▶"}</a></div>
-  <div class="mascot"><div class="say" id="say" aria-live="polite">Jambo! I’m Zuri. Tap me for a tip.</div><br><svg class="bz" id="zuri" viewBox="0 0 200 200" role="button" tabindex="0" aria-label="Zuri the robot. Tap for a tip"><use href="#z"/></svg>
-  <div class="sw">${[["#FFC93C","yellow"],["#7CF5D0","mint"],["#FF9BB8","pink"],["#8FD3FF","blue"]].map(c=>`<button style="background:${c[0]}" data-c="${c[0]}" aria-label="Make Zuri ${c[1]}"></button>`).join("")}</div></div></div></div>
-  <section style="padding-top:0"><div class="wrap duo"><a class="mis" href="#${S.ms.k}"><span class="em" aria-hidden="true">${S.ms.ok?"✅":"🎯"}</span><span><small>Today’s mission</small><b>${S.ms.ok?"Mission complete! New one tomorrow.":mL.t}</b>${S.ms.ok?"Hongera! Your streak is safe.":`${D[mw].e} ${D[mw].t} · tap to play`}</span></a>
-  <div class="wotd"><span class="em" aria-hidden="true">${wd[2]}</span><span><small>Neno la siku · Word of the day</small><b>${wd[0]}</b>${wd[1]} ${tb(wd[0]+". "+wd[1])}</span></div></div></section>
-  <section style="padding-top:8px"><div class="wrap"><h2>Pick a world</h2><p class="sub">Open a world, pick a topic, play lessons, collect stars.</p><div class="worlds">${Object.entries(D).map(([w,W])=>{const L=lessons(w),n=L.filter(Boolean).length;return `<a class="w" href="#${w}" style="background:${W.c}"><span class="em" aria-hidden="true">${W.e}</span><h3>${W.t}</h3><span class="d">${W.d}</span><div class="pb"><i style="width:${n/L.length*100}%"></i></div><span class="prog">${n}/${L.length} lessons</span></a>`}).join("")}</div></div></section>
-  <section style="padding-top:0"><div class="wrap"><h2>My badges</h2><p class="sub">${total} lessons done · ${sum} stars</p><div class="badges">${B.map(b=>`<div class="b ${b[3]?"":"off"}"><span aria-hidden="true">${b[0]}</span><b>${b[1]}</b><small>${b[2]}</small></div>`).join("")}</div>
-  <h2>The road to future tech</h2><p class="sub">DigiSoma grows with your child.</p><div class="row">${RM.map((r,i)=>`<div class="card ${S.a==i?"now":""}"><span style="font-size:34px" aria-hidden="true">${r[0]}</span><h3 style="margin:0">${r[1]}</h3><small>${r[2]}</small></div>`).join("")}</div></div></section>
-  <section style="background:#fff"><div class="wrap"><div class="price"><b>Explorer Pass</b><div class="n">$5<small> / month</small></div><ul><li>All five worlds, new lessons weekly</li><li>Up to 3 child profiles</li><li>No ads, no chat with strangers</li><li>Weekly progress report for parents</li><li>Pay by M-Pesa or card</li></ul><button class="cta" id="try">Parent Zone · 7 days free</button></div></div></section>`;
+  const wk=[...Array(7)].map((_,i)=>{const d=new Date(Date.now()-(6-i)*864e5);return[d.toLocaleDateString("en",{weekday:"narrow"}),S.h[dk(d)]>0,i==6]});
+  app.innerHTML=`<section class="hi"><div><p class="kick">${gr} ${hr<12?"☀️":hr<16?"🌤️":"🌙"}</p><h1>${esc(S.n)} ${S.av}</h1><p class="mute" style="font-size:19px;margin:6px 0 0">${HL[S.a]}</p></div>
+  <div class="zuri-wrap"><div class="bub" id="say" aria-live="polite">Jambo! Tap me for a tip.</div><svg class="zbig" id="zuri" viewBox="0 0 200 200" role="button" tabindex="0" aria-label="Zuri the robot. Tap for a tip"><use href="#z"/></svg></div></section>
+  <div class="bento">
+   <a class="cont" href="#play/${S.l||"code/0/0"}" style="background:linear-gradient(135deg,${D[cw].c},color-mix(in srgb,${D[cw].c} 55%,#1E1147))"><span class="em" aria-hidden="true">${cT.e}</span><div><small>${S.l?"Continue learning":"Start your first lesson"}</small><h2>${cL.t}</h2><span style="opacity:.9">${D[cw].e} ${D[cw].t} · ${cT.t}</span></div><span class="btn" style="align-self:flex-start;margin:0">Play ▶</span></a>
+   <a class="card mini" href="#play/${S.ms.k}"><span class="em" aria-hidden="true">${S.ms.ok?"✅":"🎯"}</span><span><small>Today’s mission</small><b>${S.ms.ok?"Mission complete!":mL.t}</b><span class="mute" style="font-size:15px">${S.ms.ok?"Come back tomorrow for a new one.":`${D[mw].e} ${D[mw].t}`}</span></span></a>
+   <div class="card"><div class="mini"><span class="em" aria-hidden="true">🔥</span><span><small>Streak</small><b>${streakOf(S)} day${streakOf(S)==1?"":"s"}</b></span></div><div class="week" aria-label="Days learned this week">${wk.map(d=>`<div class="${d[2]?"td":""}"><i class="${d[1]?"on":""}">${d[1]?"⭐":""}</i>${d[0]}</div>`).join("")}</div></div>
+  </div>
+  <div class="card mini" style="margin-top:16px;background:linear-gradient(135deg,#FFC93C,#FF9F43);color:#1E1147;border:0"><span class="em" aria-hidden="true">${wd[2]}</span><span><small style="color:#6B3E00">Neno la siku · Word of the day</small><b>${wd[0]} ${tb(wd[0]+". "+wd[1])}</b>${wd[1]}</span></div>
+  <div class="sec"><h2>Your worlds</h2><a href="#learn" class="mute" style="font-weight:800">See the map →</a></div>
+  <div class="shelf">${Object.entries(D).map(([w,W])=>{const L=lessons(w),n=L.filter(Boolean).length;return `<a class="wt" href="#learn/${w}" style="background:${W.c}"><span class="em" aria-hidden="true">${W.e}</span><span><b>${W.t}</b><div class="pb"><i style="width:${n/L.length*100}%"></i></div><small style="font-weight:800">${n}/${L.length} lessons</small></span></a>`}).join("")}</div>`;
   const tip=()=>{const t=lines[li++%lines.length];$("#say").textContent=t;sfx("tap");if(S.a==0)speak(t)};
-  $("#zuri").onclick=tip;$("#zuri").onkeydown=e=>{if(e.key=="Enter"||e.key==" "){e.preventDefault();tip()}};
-  app.querySelectorAll(".sw button").forEach(b=>b.onclick=()=>{S.z=b.dataset.c;document.documentElement.style.setProperty("--z",S.z);save();sfx("tap")});
-  app.querySelectorAll(".ages button").forEach(b=>b.onclick=()=>{S.a=+b.dataset.a;save();sfx("tap");home()});
-  $("#try").onclick=parent}
-/* ---------- LEVEL 2: world ---------- */
-function world(w){const W=D[w];
-  app.innerHTML=crumbs([[W.t]])+`<div class="wrap page"><h2 style="color:${W.c}">${W.e} ${W.t}</h2><p class="sub">${W.d}. Pick a topic.</p><div class="worlds">${W.topics.map((T,i)=>{const n=T.L.filter((_,l)=>st(w,i,l)).length;return `<a class="w" href="#${w}/${i}" style="background:${W.c}"><span class="em" aria-hidden="true">${T.e}</span><h3>${T.t}</h3><span class="d">${T.d}</span><div class="pb"><i style="width:${n/T.L.length*100}%"></i></div><span class="prog">${n}/${T.L.length} lessons done</span></a>`}).join("")}</div></div>`}
-/* ---------- LEVEL 3: topic ---------- */
+  $("#zuri").onclick=tip;$("#zuri").onkeydown=e=>{if(e.key=="Enter"||e.key==" "){e.preventDefault();tip()}}}
+
+/* ---------- LEARN tab: map of worlds, then a world's lesson trail ---------- */
+function learn(){
+  app.innerHTML=`<p class="kick">Your learning map</p><h1>Where to today?</h1><p class="sub">Five worlds to explore. Finish lessons to light up stars.</p>
+  <div class="map">${Object.entries(D).map(([w,W])=>{const L=lessons(w),n=L.filter(Boolean).length,s=L.reduce((a,b)=>a+b,0);return `<a class="stop" href="#learn/${w}"><span class="ball" style="background:${W.c}" aria-hidden="true">${W.e}</span><span class="tx"><b>${W.t}</b><small>${W.d}</small><div class="pb k"><i style="width:${n/L.length*100}%;background:${W.c}"></i></div><small style="font-weight:800">${n}/${L.length} lessons · ⭐ ${s}</small></span></a>`}).join("")}</div>`}
 const ICON={q:"📖",robot:"🎮",train:"🧪",scam:"📱",pass:"🔐",math:"🧮",feel:"🪞",breathe:"🫧",order:"🧩",dream:"🌠"};
-function topic(w,t){const W=D[w],T=W.topics[t];
-  app.innerHTML=crumbs([[W.t,w],[T.t]])+`<div class="wrap page"><h2 style="color:${W.c}">${T.e} ${T.t}</h2><p class="sub">Finish a lesson to unlock the next one.</p><div class="path" style="--c:${W.c}">${T.L.map((N,l)=>{const lock=l>0&&!st(w,t,l-1),s=st(w,t,l),tg=lock?"div":"a";return `<${tg} ${lock?"":`href="#${w}/${t}/${l}"`} class="node${lock?" lock":""}"><span class="em" aria-hidden="true">${lock?"🔒":ICON[N.k]}</span><span><b>${N.t}</b><small>${lock?"Locked: finish the lesson before":s?`<span aria-label="${s} of 3 stars">${"⭐".repeat(s)+"☆".repeat(3-s)}</span>`:"Start"}</small></span></${tg}>`}).join("")}</div></div>`}
-/* ---------- LEVEL 4: lesson ---------- */
+const ZZ=[0,70,100,70,0,-70,-100,-70];
+function world(w){const W=D[w],all=allL().filter(x=>x.w==w),cur=all.find(x=>x.open&&!x.done);let k=0;
+  app.innerHTML=`<div class="banner" style="background:linear-gradient(135deg,${W.c},color-mix(in srgb,${W.c} 55%,#1E1147))"><span class="em" aria-hidden="true">${W.e}</span><div><a href="#learn">← All worlds</a><h1 style="font-size:clamp(28px,5vw,42px)">${W.t}</h1><span style="opacity:.9">${W.d}</span></div></div>
+  ${W.topics.map((T,t)=>{const n=T.L.filter((_,l)=>st(w,t,l)).length;return `<div class="unit"><span class="em" aria-hidden="true">${T.e}</span><div><b>${T.t}</b><small>${T.d}</small></div><span class="ct">${n}/${T.L.length} ✓</span></div>
+   <div class="trail">${T.L.map((N,l)=>{const lock=l>0&&!st(w,t,l-1),s=st(w,t,l),isCur=cur&&cur.t==t&&cur.l==l,tg=lock?"div":"a",dx=ZZ[k++%8];
+    return `<${tg} ${lock?"":`href="#play/${w}/${t}/${l}"`} class="lnode${lock?" lock":""}${isCur?" cur":""}" style="transform:translateX(${dx}px)" aria-label="${N.t}${lock?", locked":s?`, ${s} of 3 stars`:""}">${isCur?`<span class="go">${s?"Replay":"Start"}</span>`:""}<span class="o" style="background:${s?W.c:`color-mix(in srgb,${W.c} 70%,#fff)`}">${lock?"🔒":s?"✓":ICON[N.k]}</span><b>${N.t}</b><small>${lock?"":s?"⭐".repeat(s)+"☆".repeat(3-s):""}</small></${tg}>`}).join("")}</div>`}).join("")}`;
+  const c=$(".lnode.cur");if(c&&!calm)setTimeout(()=>c.scrollIntoView({block:"center",behavior:"smooth"}),150)}
+
+/* ---------- LESSON (focus mode) ---------- */
 function lesson(w,t,l){const W=D[w],T=W.topics[t],N=T.L[l],t0=Date.now();
-  if(l>0&&!st(w,t,l-1)){toast("🔒 Finish the lesson before this one first!");return topic(w,t)}
+  if(l>0&&!st(w,t,l-1)){toast("🔒 Finish the lesson before this one first!");location.hash="learn/"+w;return}
   S.l=`${w}/${t}/${l}`;save();
-  app.innerHTML=crumbs([[W.t,w],[T.t,w+"/"+t],[N.t]])+`<div class="page"><div class="lc"><div class="dh" style="background:${W.c}"><h3>${N.t}</h3></div><div id="st"></div></div></div>`;
-  const box=$("#st");
-  const fin=s=>{const old=st(w,t,l),lv0=Math.floor(xp()/100);if(s>old)S.p[key(w,t,l)]=s;
+  app.innerHTML=`<div class="lbar"><a class="x" href="#learn/${w}" aria-label="Close lesson">✕</a><div class="lprog" role="progressbar" aria-label="Lesson progress"><i id="lp" style="background:${W.c}"></i></div><span style="font-size:28px" aria-hidden="true">${ICON[N.k]}</span></div>
+  <div class="lc"><div class="dh" style="background:${W.c}"><small>${W.e} ${W.t} · ${T.t}</small><h2>${N.t}</h2></div><div id="st"></div></div>`;
+  const box=$("#st");prog(.08);
+  const fin=s=>{const old=st(w,t,l),lv0=Math.floor(xp()/100);if(s>old){S.p[key(w,t,l)]=s;S.sg=S.sg||{};S.sg[today()]=(S.sg[today()]||0)+s-old}
     const d=today();if(S.d!=d){S.s=S.d==yday()?S.s+1:1;S.d=d}S.b=Math.max(S.b||0,S.s);S.h[d]=(S.h[d]||0)+1;S.mn[d]=(S.mn[d]||0)+Math.max(1,Math.min(30,Math.round((Date.now()-t0)/6e4)));
     [S.h,S.mn].forEach(o=>Object.keys(o).sort().slice(0,-30).forEach(k=>delete o[k]));
-    let mis=0;if(S.ms.k==S.l&&!S.ms.ok){S.ms.ok=1;mis=1}save();stats();boom();sfx("win");
+    let mis=0;if(S.ms.k==S.l&&!S.ms.ok){S.ms.ok=1;mis=1}save();stats();boom();sfx("win");prog(1);
     const lv1=Math.floor(xp()/100);if(lv1>lv0)setTimeout(()=>{sfx("up");toast(`🎉 Level up! You are now Level ${lv1+1}: ${TT[Math.min(lv1,4)]}`)},700);else if(mis)setTimeout(()=>toast("🎯 Today’s mission complete!"),700);
     const nx=T.L[l+1];
-    box.innerHTML=`<div class="big" aria-label="${s} of 3 stars">${"⭐".repeat(s)}${"☆".repeat(3-s)}</div><h3 class="c">${s==3?"Brilliant, "+esc(S.n)+"!":s==2?"Great job!":"You finished it!"}</h3><p class="c">${s>old&&old?"New best! ":""}Best score: ${st(w,t,l)} of 3 stars</p>${N.home?`<div class="homecard"><b>🏡 Try at home:</b> ${N.home}</div>`:""}<p class="c"><a class="go" href="#${nx?`${w}/${t}/${l+1}`:`${w}/${t}`}">${nx?"Next lesson ▶":"Back to topic"}</a><button class="go alt" id="ag">Play again</button></p>`;$("#ag").onclick=route};
+    box.innerHTML=`<div class="big" aria-label="${s} of 3 stars">${"⭐".repeat(s)}${"☆".repeat(3-s)}</div><h2 class="c">${s==3?"Brilliant, "+esc(S.n)+"!":s==2?"Great job!":"You finished it!"}</h2><p class="c mute">${s>old&&old?"New best! ":""}+${Math.max(0,s-old)*10} XP · best score ${st(w,t,l)} of 3 stars</p>${N.home?`<div class="homecard"><b>🏡 Try at home:</b> ${N.home}</div>`:""}<p class="c"><a class="btn" href="#${nx?`play/${w}/${t}/${l+1}`:`learn/${w}`}">${nx?"Next lesson ▶":"Back to the map"}</a><button class="btn s" id="ag">Play again</button></p>`;$("#ag").onclick=route};
   const Q=N.Q?N.Q.concat(S.a==2&&N.X?[N.X]:[]):0;
-  const go={q:()=>quiz(Q,fin,box),math:()=>quiz(mg(N.m),fin,box),robot:()=>robot(N.lv,fin,box),feel:()=>feel(fin,box),breathe:()=>breathe(fin,box),order:()=>order(fin,box),dream:()=>dream(fin,box),train:()=>train(fin,box),scam:()=>scam(fin,box),pass:()=>pass(fin,box)}[N.k];
-  if(N.learn){box.innerHTML=zsay(N.learn)+`<button class="go" id="gt">Got it, let’s play!</button>`;$("#gt").onclick=()=>{sfx("tap");go()}}else go()}
+  const go={q:()=>quiz(Q,fin,box),math:()=>quiz(mg(N.m),fin,box),robot:()=>robot(RB[N.lv],fin,box),feel:()=>feel(fin,box),breathe:()=>breathe(fin,box),order:()=>order(fin,box),dream:()=>dream(fin,box),train:()=>train(fin,box),scam:()=>scam(fin,box),pass:()=>pass(fin,box)}[N.k];
+  const start=()=>{prog(.3);go()};
+  if(N.learn){box.innerHTML=zsay(N.learn)+`<p class="c"><button class="btn" id="gt">Got it, let’s play!</button></p>`;$("#gt").onclick=()=>{sfx("tap");start()}}else start()}
 
 /* ---------- activities ---------- */
 function quiz(it,fin,box){let i=0,ok=0;
-  const go=()=>{if(i>=it.length)return fin(Math.max(1,Math.round(3*ok/it.length)));
+  const go=()=>{if(i>=it.length)return fin(Math.max(1,Math.round(3*ok/it.length)));prog(.3+.65*i/it.length);
     const[q,o,a,w]=it[i],ord=shuffle(o.map((_,j)=>j)),bonus=S.a==2&&i==it.length-1&&it.length>2&&!/^What is/.test(q);
-    box.innerHTML=`<p class="step">${bonus?"⚡ Pioneer bonus · ":""}Question ${i+1} of ${it.length}</p><h3>${q} ${tb(q)}</h3><div class="opts">${ord.map(j=>`<button class="opt" data-j="${j}">${o[j]}</button>`).join("")}</div><div id="fb" aria-live="polite"></div>`;
+    box.innerHTML=`<p class="step">${bonus?"⚡ Pioneer bonus · ":""}Question ${i+1} of ${it.length}</p><h3 style="font-size:24px;margin:4px 0">${q} ${tb(q)}</h3><div class="opts">${ord.map(j=>`<button class="opt" data-j="${j}">${o[j]}</button>`).join("")}</div><div id="fb" aria-live="polite"></div>`;
     let lock=0;const bs=[...box.querySelectorAll(".opt")];
     bs.forEach(b=>b.onclick=()=>{if(lock)return;lock=1;const r=+b.dataset.j==a;sfx(r?"ok":"no");
       if(r){ok++;b.classList.add("good")}else{b.classList.add("bad");bs.find(x=>+x.dataset.j==a).classList.add("good")}
-      $("#fb").innerHTML=`<p><b>${r?"Yes! ":"Good try. "}</b>${w}</p><button class="go" id="nx">${i+1<it.length?"Next":"Finish"}</button>`;$("#nx").focus();$("#nx").onclick=()=>{i++;go()}})};
+      $("#fb").innerHTML=`<p><b>${r?"Yes! ":"Good try. "}</b>${w}</p><p class="c"><button class="btn" id="nx">${i+1<it.length?"Next":"Finish"}</button></p>`;$("#nx").focus();$("#nx").onclick=()=>{i++;go()}})};
   go()}
 function mg(m){const R=[[10,6],[40,11],[90,13]][S.a],rn=n=>2+Math.random()*n|0;
   return[...Array(4)].map(()=>{let a,b,r,sg;
@@ -271,7 +418,7 @@ const RB=[{g:4,o:[0,0],s:[3,2],r:[],best:5,tx:"Guide me to the ⭐! Each arrow m
 {g:5,o:[0,4],s:[4,0],r:[[3,4],[3,3],[4,2],[1,2],[0,0],[3,1]],best:8,gi:"🏪",ri:"📦",tx:"Mama Akinyi needs mangoes 🥭 at her stall 🏪. Deliver them without hitting the crates 📦!"},
 {g:5,o:[0,4],s:[4,0],r:[[2,4],[0,3],[3,3],[1,2],[2,1],[4,2]],best:3,loop:1,gi:"🌻",ri:"🪴",tx:"Help me climb the steps to the rooftop garden 🌻! The moves repeat, so tap 🔁 Repeat to write less code."}];
 const PY={"⬆️":"up","⬇️":"down","⬅️":"left","➡️":"right"};
-function robot(lv,fin,box){const L=RB[lv],N=L.g,A={"⬆️":[0,-1],"⬇️":[0,1],"⬅️":[-1,0],"➡️":[1,0]};let q=[],lp=null,p=[...L.o],busy=0,cur=-1;
+function robot(L,fin,box){const N=L.g,A={"⬆️":[0,-1],"⬇️":[0,1],"⬅️":[-1,0],"➡️":[1,0]};let q=[],lp=null,p=[...L.o],busy=0,cur=-1;
   const at=(x,y)=>L.r.some(c=>c[0]==x&&c[1]==y);
   const cnt=()=>q.reduce((n,t)=>n+(typeof t=="string"?1:1+t.b.length),0);
   const flat=()=>q.flatMap((t,i)=>typeof t=="string"?[[t,i]]:Array.from({length:t.r},()=>t.b.map(a=>[a,i])).flat());
@@ -280,7 +427,7 @@ function robot(lv,fin,box){const L=RB[lv],N=L.g,A={"⬆️":[0,-1],"⬇️":[0,1
   const draw=(m,win)=>{let g="";for(let y=0;y<N;y++)for(let x=0;x<N;x++){const me=p[0]==x&&p[1]==y,gl=L.s[0]==x&&L.s[1]==y;g+=`<div class="cell${L.o[0]==x&&L.o[1]==y?" st":""}">${me?"🤖":gl?(L.gi||"⭐"):at(x,y)?(L.ri||"🪨"):""}</div>`}
     const code=q.length?q.map((t,i)=>typeof t=="string"?`<span class="${i==cur?"hl":""}">${t}</span>`:`<span class="loop ${i==cur?"hl":""}">🔁×${t.r} [ ${t.b.join(" ")}${t==lp?" …":" ]"}</span>`).join(""):"<small>Tap the arrows to write your code</small>";
     const lctl=L.loop?(lp?`<button class="ar lp" id="lc" aria-label="Change how many times to repeat">×${lp.r} times ↻</button><button class="ar lp" id="le">Close loop ]</button>`:`<button class="ar lp" id="lo">🔁 Repeat</button>`):"";
-    box.innerHTML=zsay(L.tx)+`<div class="grid" style="grid-template-columns:repeat(${N},1fr);max-width:${N*70}px" role="img" aria-label="Map, ${N} by ${N} squares">${g}</div><div class="pad">${Object.keys(A).map(a=>`<button class="ar" data-a="${a}" aria-label="Add a ${PY[a]} step">${a}</button>`).join("")}${lctl}</div>${lp?`<p class="c step">Arrows now go inside the loop. Tap “Close loop” when done.</p>`:""}<div class="q" aria-label="Your code">${code}</div><div class="pad"><button class="go" id="run">▶ Run code</button><button class="go alt" id="un">↶ Undo</button><button class="go alt" id="clr">↺ Clear</button></div><div class="c" aria-live="polite">${m?`<p>${m}</p>`:""}${win&&S.a?`<pre># The same code in Python\n${py()}</pre>`:""}${win?`<button class="go" id="cn">Continue ▶</button>`:""}</div>`;
+    box.innerHTML=zsay(L.tx)+`<div class="grid" style="grid-template-columns:repeat(${N},1fr);max-width:${N*70}px" role="img" aria-label="Map, ${N} by ${N} squares">${g}</div><div class="pad">${Object.keys(A).map(a=>`<button class="ar" data-a="${a}" aria-label="Add a ${PY[a]} step">${a}</button>`).join("")}${lctl}</div>${lp?`<p class="c step">Arrows now go inside the loop. Tap “Close loop” when done.</p>`:""}<div class="q" aria-label="Your code">${code}</div><div class="pad"><button class="btn v" id="run">▶ Run code</button><button class="btn s" id="un">↶ Undo</button><button class="btn s" id="clr">↺ Clear</button></div><div class="c" aria-live="polite">${m?`<p>${m}</p>`:""}${win&&S.a?`<pre># The same code in Python\n${py()}</pre>`:""}${win?`<button class="btn" id="cn">Continue ▶</button>`:""}</div>`;
     box.querySelectorAll(".ar[data-a]").forEach(b=>b.onclick=()=>{if(busy)return;if(cnt()>=16)return draw("That’s a lot of code! Try running it.");(lp?lp.b:q).push(b.dataset.a);sfx("tap");reset();draw()});
     if($("#lo"))$("#lo").onclick=()=>{if(busy)return;lp={r:2,b:[]};q.push(lp);sfx("tap");reset();draw()};
     if($("#lc"))$("#lc").onclick=()=>{lp.r=lp.r>=5?2:lp.r+1;sfx("tap");draw()};
@@ -292,81 +439,215 @@ function robot(lv,fin,box){const L=RB[lv],N=L.g,A={"⬆️":[0,-1],"⬇️":[0,1
       const[a,ti]=steps[i];cur=ti;const d=A[a],x=p[0]+d[0],y=p[1]+d[1],off=x<0||y<0||x>=N||y>=N;
       if(off||at(x,y)){clearInterval(t);busy=0;sfx("bump");return draw(`💥 Bump! The highlighted block ${off?"takes me off the map":"hits a "+(L.ri?"crate or pot":"rock")}. Fix it and try again. Finding mistakes is called <b>debugging</b>.`)}
       p=[x,y];i++;sfx("tap");
-      if(p[0]==L.s[0]&&p[1]==L.s[1]){clearInterval(t);busy=0;cur=-1;const c=cnt();return draw(`🎉 You did it with ${c} blocks${c<=L.best?", the shortest code!":L.loop?". Now try 🔁 Repeat to use fewer blocks!":". Can you find a shorter path?"} A list of steps is called an <b>algorithm</b>.`,1)}
+      if(p[0]==L.s[0]&&p[1]==L.s[1]){clearInterval(t);busy=0;cur=-1;prog(.9);const c=cnt();return draw(`🎉 You did it with ${c} blocks${c<=L.best?", the shortest code!":L.loop?". Now try 🔁 Repeat to use fewer blocks!":". Can you find a shorter path?"} A list of steps is called an <b>algorithm</b>.`,1)}
       draw("Running…")},calm?250:420)};
   draw()}
 function order(fin,box){const T=[["👀","See","A camera spots a smile"],["🧠","Think","The AI decides: smile means happy"],["💃","Act","The robot does a victory spin"]];let n=0,bad=0;
   box.innerHTML=`<p>Tap the 3 steps in the right order! ${tb("Tap the 3 steps in the right order!")}</p><div class="opts">${shuffle(T.map((_,i)=>i)).map(i=>`<button class="opt" data-i="${i}">${T[i][0]} ${T[i][2]}</button>`).join("")}</div><p class="c" id="fb" aria-live="polite"></p>`;
   box.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{const i=+b.dataset.i;if(b.disabled)return;
-    if(i==n){sfx("ok");b.classList.add("good");b.disabled=1;b.textContent=`${n+1}. ${T[i][1]}: ${T[i][2]}`;n++;if(n==3){$("#fb").innerHTML=`<b>See → Think → Act.</b> That’s how real AI works!<br><button class="go" id="nx">Continue ▶</button>`;$("#nx").onclick=()=>fin(bad?2:3)}}
+    if(i==n){sfx("ok");b.classList.add("good");b.disabled=1;b.textContent=`${n+1}. ${T[i][1]}: ${T[i][2]}`;n++;prog(.3+.2*n);if(n==3){$("#fb").innerHTML=`<b>See → Think → Act.</b> That’s how real AI works!<br><button class="btn" id="nx">Continue ▶</button>`;$("#nx").onclick=()=>fin(bad?2:3)}}
     else{bad++;sfx("no");b.classList.add("bad");setTimeout(()=>b.classList.remove("bad"),600)}})}
 function train(fin,box){const TR=[.08,.92,.25,.8,.15,.7],TE=[.18,.85,.6,.35],lab=[];let i=0;
   const col=v=>`hsl(${Math.round(115-90*v)},72%,${Math.round(40+14*v)}%)`;
   const mango=(v,z)=>`<svg width="${z}" height="${z}" viewBox="0 0 100 100" aria-hidden="true"><path d="M52 20c-2-9 7-15 16-11-7 1-11 5-13 11z" fill="#2E7D32"/><ellipse cx="50" cy="58" rx="31" ry="37" transform="rotate(-20 50 58)" fill="${col(v)}"/><ellipse cx="39" cy="45" rx="7" ry="12" fill="#fff" opacity=".28" transform="rotate(-20 39 45)"/></svg>`;
-  const step=()=>{if(i<TR.length){box.innerHTML=zsay(i?"And this one? Is it ripe?":"Teach me! Is this mango ripe? Look at its colour.")+`<p class="step c">Training example ${i+1} of ${TR.length}</p><div class="c">${mango(TR[i],130)}</div><div class="pad"><button class="go" data-r="1">😋 Ripe</button><button class="go alt" data-r="0">🌱 Not ripe yet</button></div>`;
+  const step=()=>{if(i<TR.length){prog(.3+.4*i/TR.length);box.innerHTML=zsay(i?"And this one? Is it ripe?":"Teach me! Is this mango ripe? Look at its colour.")+`<p class="step c">Training example ${i+1} of ${TR.length}</p><div class="c">${mango(TR[i],130)}</div><div class="pad"><button class="btn" data-r="1">😋 Ripe</button><button class="btn s" data-r="0">🌱 Not ripe yet</button></div>`;
       box.querySelectorAll("[data-r]").forEach(b=>b.onclick=()=>{lab[i++]=+b.dataset.r;sfx("tap");step()});return}
-    box.innerHTML=zsay("Asante! This is my <b>training data</b>. Now test me on new mangoes I have never seen.")+`<div class="mrow">${TR.map((v,k)=>`<div>${mango(v,60)}<small>${lab[k]?"Ripe":"Not ripe"}</small></div>`).join("")}</div><p class="c"><button class="go" id="tt">Test my AI ▶</button></p>`;
+    box.innerHTML=zsay("Asante! This is my <b>training data</b>. Now test me on new mangoes I have never seen.")+`<div class="mrow">${TR.map((v,k)=>`<div>${mango(v,60)}<small>${lab[k]?"Ripe":"Not ripe"}</small></div>`).join("")}</div><p class="c"><button class="btn v" id="tt">Test my AI ▶</button></p>`;
     $("#tt").onclick=test};
-  const test=()=>{const pred=TE.map(v=>{let b=0;TR.forEach((t,k)=>{if(Math.abs(t-v)<Math.abs(TR[b]-v))b=k});return lab[b]});
+  const test=()=>{prog(.8);const pred=TE.map(v=>{let b=0;TR.forEach((t,k)=>{if(Math.abs(t-v)<Math.abs(TR[b]-v))b=k});return lab[b]});
     const good=TR.filter((v,k)=>(v>=.5)==!!lab[k]).length,right=TE.filter((v,k)=>(v>=.5)==!!pred[k]).length;
     box.innerHTML=`<p class="step c">Testing my AI on 4 new mangoes…</p><div class="mrow" id="tr"></div><div id="tm" aria-live="polite"></div>`;let k=0;
     const reveal=()=>{if(k<TE.length){const r=(TE[k]>=.5)==!!pred[k];$("#tr").insertAdjacentHTML("beforeend",`<div>${mango(TE[k],70)}<small>AI says: <b>${pred[k]?"Ripe":"Not ripe"}</b> ${r?"✅":"❌"}</small></div>`);sfx(r?"ok":"no");k++;setTimeout(reveal,calm?100:650);return}
-      $("#tm").innerHTML=`<p class="c"><b>Your AI got ${right} of 4 right!</b></p><p>${good==6?"You taught it well, so it learned well.":"Some of your labels were mixed up, and the AI copied those mistakes."} An AI is only as good as the examples it learns from.${S.a==2?" This is called <b>supervised learning</b>: your labels are the training data, and this AI copies the label of the most similar example (a nearest-neighbour model).":""}</p><p class="c"><button class="go" id="cn">Continue ▶</button><button class="go alt" id="rt">Teach it again</button></p>`;
+      $("#tm").innerHTML=`<p class="c"><b>Your AI got ${right} of 4 right!</b></p><p>${good==6?"You taught it well, so it learned well.":"Some of your labels were mixed up, and the AI copied those mistakes."} An AI is only as good as the examples it learns from.${S.a==2?" This is called <b>supervised learning</b>: your labels are the training data, and this AI copies the label of the most similar example (a nearest-neighbour model).":""}</p><p class="c"><button class="btn" id="cn">Continue ▶</button><button class="btn s" id="rt">Teach it again</button></p>`;
       $("#cn").onclick=()=>fin(good==6?3:good>=4?2:1);$("#rt").onclick=()=>{i=0;lab.length=0;step()}};reveal()};
   step()}
 const MS=[["💚 M-PESA","Confirmed. You have received KSh 4,500 from JOHN K. Sorry, I sent it by mistake! Please send it back to 0712 345 678.",1,"Scammers send fake “mistake” messages from normal phone numbers. Check your real balance and show a grown-up before sending anything."],["👩🏾 Mum","I’ll pick you up at 4pm after football 💛",0,"A normal message from someone you know."],["+254 7xx xxx xxx","CONGRATS!!! You won a free phone 🎁 Tap bit.ly/fr33-ph0ne and enter your parent’s M-Pesa PIN to claim. Hurry, 10 minutes left!",1,"A prize, a rush and a PIN request: three red flags. Nobody needs a PIN to give you a gift."],["🏫 School","Reminder: Sports Day is on Friday. Please wear your house T-shirt.",0,"Expected news from a sender you know."],["🙂 NewFriend_12","Hi! I’m 12 too. Let’s be best friends. Don’t tell your parents about our chats, ok? Send me a photo of you.",1,"Asking for secrets and photos is a big red flag. Don’t reply, block, and tell a trusted grown-up."]];
 function scam(fin,box){const M=shuffle([...MS]);let i=0,ok=0;
-  const go=()=>{if(i>=M.length)return fin(ok==M.length?3:ok>=M.length-1?2:1);const[f,t,bad,why]=M[i];
-    box.innerHTML=`<p class="step c">Message ${i+1} of ${M.length} · Safe, or a scam?</p><div class="phone"><div class="pt">📶 Messages</div><div class="from">${f}</div><div class="msgb">${t}</div></div><div class="pad"><button class="go" data-b="0">✅ Safe</button><button class="go red" data-b="1">🚩 Scam or unsafe</button></div><div id="fb" aria-live="polite"></div>`;
+  const go=()=>{if(i>=M.length)return fin(ok==M.length?3:ok>=M.length-1?2:1);prog(.3+.65*i/M.length);const[f,t,bad,why]=M[i];
+    box.innerHTML=`<p class="step c">Message ${i+1} of ${M.length} · Safe, or a scam?</p><div class="phone"><div class="pt">📶 Messages</div><div class="from">${f}</div><div class="msgb">${t}</div></div><div class="pad"><button class="btn" data-b="0">✅ Safe</button><button class="btn r" data-b="1">🚩 Scam or unsafe</button></div><div id="fb" aria-live="polite"></div>`;
     let lock=0;box.querySelectorAll("[data-b]").forEach(b=>b.onclick=()=>{if(lock)return;lock=1;const r=+b.dataset.b==bad;if(r)ok++;sfx(r?"ok":"no");
-      $("#fb").innerHTML=`<p><b>${r?"Spot on! ":"Good try. "}</b>${bad?"🚩 This one is a scam or unsafe. ":"✅ This one is safe. "}${why}</p><p class="c"><button class="go" id="nx">${i+1<M.length?"Next message":"Finish"}</button></p>`;$("#nx").focus();$("#nx").onclick=()=>{i++;go()}})};go()}
+      $("#fb").innerHTML=`<p><b>${r?"Spot on! ":"Good try. "}</b>${bad?"🚩 This one is a scam or unsafe. ":"✅ This one is safe. "}${why}</p><p class="c"><button class="btn v" id="nx">${i+1<M.length?"Next message":"Finish"}</button></p>`;$("#nx").focus();$("#nx").onclick=()=>{i++;go()}})};go()}
 function pass(fin,box){const need=[8,10,12][S.a],W=["Simba","Chai","Moto","Jua","Kiboko","Nyota","Mvua","Embe","Twiga","Pilau"];
-  box.innerHTML=zsay("Build a super-strong password! This is practice only, so never type a real password here.")+`<label for="pw" class="step">Type a practice password</label><input id="pw" class="pw" autocomplete="off" spellcheck="false" autocapitalize="off"><div class="meter"><i id="mt"></i></div><p id="ml" class="c" aria-live="polite"></p><ul class="ck" id="ck"></ul><p class="c"><button class="go alt" id="idea">💡 Give me an idea</button><button class="go" id="pd" disabled>Finish ✔</button></p>`;
+  box.innerHTML=zsay("Build a super-strong password! This is practice only, so never type a real password here.")+`<label for="pw" class="step">Type a practice password</label><input id="pw" class="pw" autocomplete="off" spellcheck="false" autocapitalize="off"><div class="meter"><i id="mt"></i></div><p id="ml" class="c" aria-live="polite"></p><ul class="ck" id="ck"></ul><p class="c"><button class="btn s" id="idea">💡 Give me an idea</button><button class="btn" id="pd" disabled>Finish ✔</button></p>`;
   const R=[[`At least ${need} characters`,v=>v.length>=need],["Small letters (a–z)",v=>/[a-z]/.test(v)],["Capital letters (A–Z)",v=>/[A-Z]/.test(v)],["A number (0–9)",v=>/\d/.test(v)],["A symbol like ! ? #",v=>/[^A-Za-z0-9\s]/.test(v)],["Not a common password",v=>v.length>3&&!/(password|123456|qwerty|abc123|111111|baraka|letmein)/i.test(v)]];
   let was=0;const up=()=>{const v=$("#pw").value,ok=R.map(r=>r[1](v)),n=ok.filter(Boolean).length;$("#ck").innerHTML=R.map((r,j)=>`<li class="${ok[j]?"y":""}">${ok[j]?"✔":"○"} ${r[0]}</li>`).join("");
     $("#mt").style.width=n/6*100+"%";$("#mt").style.background=n<3?"var(--pink)":n<5?"var(--sun)":"var(--mint)";$("#ml").innerHTML=v?`<b>${["Very weak","Very weak","Weak","Weak","Okay","Strong","Super strong 💪"][n]}</b>`:"<b>Start typing…</b>";
-    if(n==6&&!was)sfx("ok");was=n==6;$("#pd").disabled=n<6};
+    prog(.3+.6*n/6);if(n==6&&!was)sfx("ok");was=n==6;$("#pd").disabled=n<6};
   $("#pw").oninput=up;up();
   $("#idea").onclick=()=>{const p=shuffle([...W]).slice(0,3);$("#pw").value=p.join(["!","#","?","-"][Math.random()*4|0])+(Math.random()*90+10|0);up();$("#ml").innerHTML+="<br><small>Three random words plus a number and a symbol: long, strong and easy to remember.</small>"};
   $("#pd").onclick=()=>fin(3)}
 const CL="If a feeling stays big for a long time, talk to a trusted grown-up. In Kenya you can also call Childline on 116 for free, any time.";
 function feel(fin,box){const M=[["😄","Happy","Awesome! Notice what made you feel this way."],["🙂","Okay","Okay is fine. Maybe do one small thing you enjoy."],["😢","Sad","It’s okay to feel sad. Breathe slowly and tell someone you trust."],["😠","Angry","Anger is a signal. Pause, breathe, then say what you need."],["😰","Worried","Worries get smaller when shared. Breathe, then talk to a grown-up."],["😴","Tired","Your body may need rest, water or a snack."]];
   box.innerHTML=zsay("How are you feeling right now? Every feeling is okay.")+`<div class="moods">${M.map((m,i)=>`<button data-i="${i}" aria-label="${m[1]}">${m[0]}<small>${m[1]}</small></button>`).join("")}</div><div id="fb" aria-live="polite"></div>`;
-  box.querySelectorAll("[data-i]").forEach(b=>b.onclick=()=>{const k=+b.dataset.i,m=M[k];S.m=m[0]+" "+m[1]+" ("+today()+")";save();sfx("tap");$("#fb").innerHTML=`<p><b>${m[1]}.</b> ${m[2]}</p><div class="breath">Breathe</div>${k>1&&k<5?`<p class="help">${CL}</p>`:""}<p class="c"><button class="go" id="fd">Done ✔</button></p>`;$("#fd").onclick=()=>fin(3)})}
-function breathe(fin,box){box.innerHTML=zsay("Watch the circle. Breathe in through your nose as it grows, and out slowly as it shrinks. Do 4 slow breaths.")+`<div class="breath">Breathe</div><p class="help">${CL}</p><p class="c"><button class="go" id="bd">I did 4 breaths ✔</button></p>`;$("#bd").onclick=()=>fin(3)}
+  box.querySelectorAll("[data-i]").forEach(b=>b.onclick=()=>{const k=+b.dataset.i,m=M[k];S.m=m[0]+" "+m[1]+" ("+today()+")";save();sfx("tap");prog(.7);$("#fb").innerHTML=`<p><b>${m[1]}.</b> ${m[2]}</p><div class="breath">Breathe</div>${k>1&&k<5?`<p class="help">${CL}</p>`:""}<p class="c"><button class="btn" id="fd">Done ✔</button></p>`;$("#fd").onclick=()=>fin(3)})}
+function breathe(fin,box){box.innerHTML=zsay("Watch the circle. Breathe in through your nose as it grows, and out slowly as it shrinks. Do 4 slow breaths.")+`<div class="breath">Breathe</div><p class="help">${CL}</p><p class="c"><button class="btn" id="bd">I did 4 breaths ✔</button></p>`;$("#bd").onclick=()=>fin(3)}
 function dream(fin,box){const M=[["🌾","Farming","AI can spot sick crops in phone photos, so farmers save their harvest."],["🏥","Health","AI helps doctors read scans faster and find illness early."],["🎮","Games","AI makes game characters smart and levels more fun."],["⚡","Clean energy","AI helps solar and wind power waste less energy."],["💸","Money","Apps like M-Pesa use smart code to keep payments safe."]];
   box.innerHTML=zsay("What would you love to help with one day?")+`<div class="moods">${M.map((m,i)=>`<button data-i="${i}" aria-label="${m[1]}">${m[0]}<small>${m[1]}</small></button>`).join("")}</div><div id="fb" aria-live="polite"></div>`;
-  box.querySelectorAll("[data-i]").forEach(b=>b.onclick=()=>{const m=M[+b.dataset.i];S.dr=m[0]+" "+m[1];save();sfx("tap");$("#fb").innerHTML=`<p><b>${m[1]}.</b> ${m[2]} Coding and maths are your superpowers for this!</p><p class="c"><button class="go" id="fd">Save my dream ✔</button></p>`;$("#fd").onclick=()=>fin(3)})}
+  box.querySelectorAll("[data-i]").forEach(b=>b.onclick=()=>{const m=M[+b.dataset.i];S.dr=m[0]+" "+m[1];save();sfx("tap");prog(.7);$("#fb").innerHTML=`<p><b>${m[1]}.</b> ${m[2]} Coding and maths are your superpowers for this!</p><p class="c"><button class="btn" id="fd">Save my dream ✔</button></p>`;$("#fd").onclick=()=>fin(3)})}
+
+/* ---------- FRONT PAGE for parents, schools and partners ---------- */
+const CONTACT=""; /* Allan: put your email here, e.g. "hello@digisoma.co.ke", to show a contact button */
+function landing(){const go=S?"#home":"#new";
+  app.innerHTML=`<section class="lhero"><div><p class="kick">Karibu · “Soma” means “learn” in Swahili</p><h1>Africa’s children shouldn’t just use technology. <em>They should build it.</em></h1>
+   <p class="mute" style="font-size:20px;max-width:34em">DigiSoma is a fun, safe learning app where children aged 6 to 16 learn coding, AI, online safety and emotional wellbeing through short lessons, games and stories rooted in African life.</p>
+   <div class="lcta"><a class="btn" href="${go}">${S?"Continue learning ▶":"Start learning free ▶"}</a><button class="btn s" type="button" onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})">How it works</button></div></div>
+   <div class="c"><svg class="zbig" viewBox="0 0 200 200" style="width:220px;height:220px" aria-hidden="true"><use href="#z"/></svg><p class="mute" style="margin:0;font-weight:800">Meet Zuri, your child’s learning buddy</p></div></section>
+  <section class="lsec" id="how"><p class="kick">How it works</p><h2>Ten minutes a day. Real skills for life.</h2>
+   <div class="three"><div class="card"><span class="n">1</span><h3>Pick an age group</h3><p>Sprouts (6–8), Builders (9–12) or Pioneers (13–16). The maths, the language and the challenge level change with each one.</p></div>
+   <div class="card"><span class="n">2</span><h3>Learn by playing</h3><p>Guide a robot with code, teach an AI to sort mangoes, spot scam SMS messages, breathe through big feelings, and earn stars.</p></div>
+   <div class="card"><span class="n">3</span><h3>Grow, create and share</h3><p>Children write their own Zuri stories, build mazes for friends, and try activities at home that need no screen at all.</p></div></div></section>
+  <section class="lsec"><p class="kick">Five worlds to explore</p><h2>Everything a young African innovator needs</h2>
+   <div class="shelf" style="margin-top:14px">${Object.values(D).map(W=>`<div class="wt" style="background:${W.c}"><span class="em" aria-hidden="true">${W.e}</span><span><b>${W.t}</b><br><small style="font-weight:700;opacity:.9">${W.d}</small></span></div>`).join("")}</div></section>
+  <section class="lsec"><p class="kick">Safe by design</p><h2>Built for children from day one</h2>
+   <div class="three"><div class="card"><span class="n">🛡️</span><h3>No ads, no strangers</h3><p>There is no chat with other users and no advertising.</p></div>
+   <div class="card"><span class="n">🔒</span><h3>Very little data</h3><p>We ask for a first name and an age group only. No email, phone number or photo from children.</p></div>
+   <div class="card"><span class="n">👨‍👩‍👧</span><h3>Parents stay in charge</h3><p>A PIN-protected Parent Zone shows real progress, minutes spent learning and a weekly report you can share.</p></div>
+   <div class="card"><span class="n">💛</span><h3>Wellbeing first</h3><p>Feelings lessons always point children to a trusted grown-up and to Childline Kenya on 116.</p></div></div></section>
+  <section class="lsec card founder"><div class="fav" aria-hidden="true">A</div><div><p class="kick">From the founder</p><h2>Why I’m building DigiSoma</h2>
+   <p style="font-size:18px">Hi, I’m <b>Allan</b>, an AI and data engineer. I love using AI and data for social change, and I care deeply about children’s wellbeing.</p>
+   <p class="mute" style="font-size:17px">Children across Africa are growing up surrounded by technology built somewhere else. I want them to understand it, question it, stay safe and well while using it, and grow the confidence to build the technology Africa needs. DigiSoma is how I’m starting.</p><p style="margin:0;font-weight:800">Allan, founder of DigiSoma · Nairobi, Kenya</p></div></section>
+  <section class="lsec"><p class="kick">For schools and partners</p><h2>Bring DigiSoma to your learners</h2>
+   <div class="card" style="margin-top:14px"><p style="margin-top:0">We’re mapping every lesson to the skills in Kenya’s Competency-Based Curriculum, and we’re looking for schools, coding clubs and partners to pilot DigiSoma with us.</p>
+   <span class="tag">Digital literacy</span><span class="tag">Coding and computational thinking</span><span class="tag">AI literacy</span><span class="tag">Online safety</span><span class="tag">Social and emotional learning</span><span class="tag">Financial literacy</span>
+   <div class="lcta">${CONTACT?`<a class="btn v" href="mailto:${CONTACT}">✉️ Talk to us about a pilot</a><span class="mute" style="align-self:center">${CONTACT}</span>`:`<span class="btn s" style="cursor:default">Pilot sign-ups opening soon</span>`}</div></div></section>
+  <section class="lsec"><p class="kick">Simple pricing</p><h2>One plan for the whole family</h2>
+   <div class="three"><div class="price"><b>Explorer Pass</b><div class="n">$5<small style="font-size:18px"> / month</small></div><ul><li>All five worlds, new lessons weekly</li><li>Up to 3 child profiles</li><li>Weekly parent report</li><li>Pay by M-Pesa or card</li></ul><b>Try it free for 7 days</b></div>
+   <div><details open><summary>What age is DigiSoma for?</summary><p>Children aged 6 to 16, in three groups: Sprouts, Builders and Pioneers.</p></details>
+   <details><summary>Does it work on a phone?</summary><p>Yes. It runs in the browser on phones, tablets and computers, and lessons are small so they load on slow connections.</p></details>
+   <details><summary>Is it safe for my child?</summary><p>There’s no chat, no ads and no strangers, and children only give a first name. Parents see everything in the PIN-protected Parent Zone.</p></details>
+   <details><summary>Is this the finished app?</summary><p>Not yet. This is an early preview: progress is saved only on this device and payments aren’t switched on.</p></details></div></div></section>
+  <p class="c" style="margin-top:40px"><a class="btn" href="${go}">${S?"Back to learning ▶":"Start learning free ▶"}</a></p>
+  <p class="c mute" style="font-size:14px">DigiSoma preview · Built in Nairobi with 💛</p>`}
+
+/* ---------- CREATE tab: Zuri's Story maker + Maze maker ---------- */
+function createPage(){
+  app.innerHTML=`<p class="kick">Make something of your own</p><h1>Create</h1><p class="sub">Creators don’t just play games, they make them.</p>
+  <div class="mk"><a class="mkc" href="#create/story" style="background:linear-gradient(135deg,#D1336A,#7B4DE0)"><span class="em" aria-hidden="true">📚</span><div><h2>Zuri’s Story</h2><p style="margin:4px 0 0">Make a story starring you and Zuri, set somewhere in Kenya.</p></div><span class="btn" style="align-self:flex-start;margin:0">Make a story ▶</span></a>
+  <a class="mkc" href="#create/maze" style="background:linear-gradient(135deg,#0E8A63,#4361EE)"><span class="em" aria-hidden="true">🧩</span><div><h2>Maze maker</h2><p style="margin:4px 0 0">Build a robot maze, solve it with code, then share the code with a friend.</p></div><span class="btn" style="align-self:flex-start;margin:0">Build a maze ▶</span></a></div>
+  <div class="card" style="margin-top:16px"><h2>Play a friend’s maze</h2><p class="mute" style="margin:4px 0 10px">Type the maze code your friend gave you.</p><input id="mc" class="pw" style="max-width:260px;display:inline-block;text-transform:uppercase" placeholder="e.g. AB-1X2Y3" autocomplete="off" aria-label="Maze code"><button class="btn v" id="mp">Play ▶</button><p id="me2" aria-live="polite"></p></div>`;
+  $("#mc").onkeydown=e=>{if(e.key=="Enter")$("#mp").click()};
+  $("#mp").onclick=()=>{const c=$("#mc").value.trim().toUpperCase();if(!decodeMaze(c)){$("#me2").textContent="Hmm, that code doesn’t work. Check it and try again.";return}location.hash="maze/"+c}}
+const focusShell=(back,color,sub,title)=>{app.innerHTML=`<div class="lbar"><a class="x" href="${back}" aria-label="Close">✕</a><div class="lprog"><i id="lp" style="background:${color}"></i></div></div><div class="lc"><div class="dh" style="background:${color}"><small>${sub}</small><h2>${title}</h2></div><div id="st"></div></div>`;return $("#st")};
+const PL={nairobi:["Nairobi","🏙️","a busy matatu ride through Nairobi","#FF9F43,#E8505B","🚌 🏙️ 🌇"],mombasa:["Mombasa","🏖️","a sunny day on the beach in Mombasa","#5BC0EB,#2E86DE","🌊 🐚 ⛵"],mara:["Maasai Mara","🦁","a safari across the Maasai Mara","#F6D365,#E58E26","🦒 🌳 🦓"],kisumu:["Kisumu","🛶","a boat trip on Lake Victoria near Kisumu","#38ADA9,#1E6F8F","🛶 🐟 🌅"],farm:["Rift Valley farm","🌽","a busy morning on a farm in the Rift Valley","#78E08F,#38A169","🌽 🐄 🚜"]};
+const TP={loops:["The Magic Loop","🔁",[["{N} and Zuri set off on {T}.","{P}"],["“Let’s plant 5 trees,” said {N}. “Dig, plant, water. Dig, plant, water…” Zuri beeped: “Those are the same steps again and again!”","🌱 🌱 🌱"],["“When steps repeat, coders use a loop,” said Zuri. “Repeat 5 times: dig, plant, water.”","🔁"],["{N} tried it. The loop did all the work, and five little trees stood in a row.","🌳🌳🌳🌳🌳"],["“Loops save so much time!” said {N}. Can you find a loop at home today? Maybe in a song or a dance!","🎵 💃"]]],
+ safety:["The Gem Trick","🛡️",[["{N} and Zuri were on {T}, playing a game on a tablet.","{P}"],["A message popped up: “You won 1,000 gems! Send me your password.” {N} frowned. Something felt wrong.","⚠️ 💎"],["“Real prizes never ask for passwords,” said Zuri. “That’s a trick called a scam.”","🚩"],["{N} did not reply. Together they blocked the sender and told a trusted grown-up, who said, “Well done!”","🛡️ 👍"],["Remember: if something online feels strange, stop, don’t reply, and tell a grown-up you trust.","💛"]]],
+ ai:["The Mango Teacher","🧠",[["{N} and Zuri were on {T} when Zuri said, “I want to learn to spot ripe mangoes!”","{P}"],["“How do you learn?” asked {N}. “From examples,” said Zuri. “Show me lots of mangoes and tell me which ones are ripe.”","🥭 🟢 🟡"],["{N} showed Zuri ten mangoes. The yellow ones were ripe. The green ones were not. Zuri studied each one.","🔍"],["Then Zuri saw a brand-new mango. “Yellow… so it’s ripe!” it said. And it was right!","✅ 🥭"],["“That’s how AI learns: from examples,” said {N}. “And if the examples are wrong, the AI learns the wrong thing too.”","🧠"]]],
+ kind:["The Kindness Superpower","🤝",[["{N} and Zuri were on {T}.","{P}"],["They saw a girl sitting alone, looking sad. Nobody had asked her to join in.","😔"],["“Being kind is a superpower,” whispered Zuri. {N} took a deep breath and walked over.","💪"],["“Hi, I’m {N}. Want to join us?” The girl smiled the biggest smile. Her name was Wanjiku.","😊"],["Soon everyone was laughing together. One small kind act can change someone’s whole day.","🤝 💛"]]],
+ feel:["The Fluttery Tummy","💛",[["{N} and Zuri were on {T}, but {N}’s tummy felt tight and fluttery.","{P}"],["“Tomorrow is the big test,” said {N}. “I feel worried.”","🦋"],["“Worried is a feeling, and all feelings are okay,” said Zuri. “Let’s try belly breathing: in for 4, out for 4.”","🫧"],["{N} breathed in and out slowly, four times. The fluttery feeling got smaller and smaller.","🌬️"],["“Talking helps too,” said Zuri. That evening {N} told a trusted grown-up, and felt much lighter.","💛"]]]};
+function storyMaker(){let pl="nairobi",tp="loops";
+  const box=focusShell("#create","linear-gradient(135deg,#D1336A,#7B4DE0)","Create","Zuri’s Story");prog(.1);
+  const pick=()=>{box.innerHTML=zsay(`Let’s make a story about you, ${esc(S.n)}! Where should it happen, and what should it be about?`)+`<p class="step">Choose a place</p><div class="chips" id="cp">${Object.entries(PL).map(([k,v])=>`<button class="${k==pl?"on":""}" data-k="${k}" aria-pressed="${k==pl}">${v[1]} ${v[0]}</button>`).join("")}</div>
+    <p class="step">Choose what it’s about</p><div class="chips" id="ct">${Object.entries(TP).map(([k,v])=>`<button class="${k==tp?"on":""}" data-k="${k}" aria-pressed="${k==tp}">${v[1]} ${v[0]}</button>`).join("")}</div><p class="c"><button class="btn" id="mk">✨ Make my story</button></p>`;
+    box.querySelectorAll("#cp button").forEach(b=>b.onclick=()=>{pl=b.dataset.k;sfx("tap");pick()});box.querySelectorAll("#ct button").forEach(b=>b.onclick=()=>{tp=b.dataset.k;sfx("tap");pick()});$("#mk").onclick=()=>{sfx("win");read(0)}};
+  const read=i=>{const P=PL[pl],T=TP[tp],pages=T[2],n=pages.length,[tx,sc]=pages[i];const text=tx.replaceAll("{N}",esc(S.n)).replaceAll("{T}",P[2]);prog(.2+.8*(i+1)/n);
+    box.innerHTML=`<h3 class="c" style="font-size:24px;margin-bottom:10px">${esc(S.n)} and Zuri: ${T[0]}</h3><div class="spage"><div class="scene2" style="background:linear-gradient(135deg,${P[3]})" aria-hidden="true">${sc=="{P}"?P[4]:sc}</div><div class="ptext">${text} ${tb(text)}</div></div><div class="dots" aria-label="Page ${i+1} of ${n}">${pages.map((_,j)=>`<i class="${j==i?"on":""}"></i>`).join("")}</div>
+     <p class="c">${i?`<button class="btn s" id="pv">◀ Back</button>`:""}${i<n-1?`<button class="btn" id="nx">Next page ▶</button>`:`<button class="btn" id="dn">The end 🎉</button>`}</p>`;
+    if(S.a==0&&canTalk)speak(strip(text));
+    if($("#pv"))$("#pv").onclick=()=>read(i-1);if($("#nx"))$("#nx").onclick=()=>{sfx("tap");read(i+1)};
+    if($("#dn"))$("#dn").onclick=()=>{S.sy=(S.sy||0)+1;save();boom();sfx("win");prog(1);box.innerHTML=`<div class="big">📚✨</div><h2 class="c">What a story, ${esc(S.n)}!</h2><p class="c mute">Tell it to someone at home tonight, or make another one.</p><p class="c"><button class="btn" id="ag">Make another story</button><a class="btn s" href="#create">Back to Create</a></p>`;$("#ag").onclick=()=>{prog(.1);pick()}}};
+  pick()}
+/* mazes: 5x5, start/goal/rocks, encoded as a short share code */
+const encMaze=m=>{let mask=0;m.r.forEach(([x,y])=>mask+=2**(y*5+x));return((m.o[1]*5+m.o[0])*25+m.s[1]*5+m.s[0]).toString(36).toUpperCase().padStart(2,"0")+"-"+mask.toString(36).toUpperCase()};
+const decodeMaze=c=>{const m=/^([0-9A-Z]{2})-([0-9A-Z]{1,6})$/.exec(c||"");if(!m)return null;const a=parseInt(m[1],36),mask=parseInt(m[2],36);if(a>=625||mask>=2**25)return null;const oi=Math.floor(a/25),si=a%25;if(oi==si)return null;const r=[];for(let i=0;i<25;i++)if(Math.floor(mask/2**i)%2&&i!=oi&&i!=si)r.push([i%5,Math.floor(i/5)]);const L={g:5,o:[oi%5,Math.floor(oi/5)],s:[si%5,Math.floor(si/5)],r};const b=bfs(L);return b>0?Object.assign(L,{best:b}):null};
+const bfs=L=>{const seen=new Set([L.o+""]),q=[[...L.o,0]],rock=new Set(L.r.map(String));while(q.length){const[x,y,d]=q.shift();if(x==L.s[0]&&y==L.s[1])return d;for(const[dx,dy]of[[1,0],[-1,0],[0,1],[0,-1]]){const nx=x+dx,ny=y+dy,k=nx+","+ny;if(nx<0||ny<0||nx>4||ny>4||seen.has(k)||rock.has(k))continue;seen.add(k);q.push([nx,ny,d+1])}}return -1};
+function mazeMaker(){const L={g:5,o:[0,4],s:[4,0],r:[[1,3],[2,1],[3,3]]};let mode="rock";
+  const box=focusShell("#create","linear-gradient(135deg,#0E8A63,#4361EE)","Create","Maze maker");prog(.15);
+  const draw=()=>{const b=bfs(L),rk=(x,y)=>L.r.some(c=>c[0]==x&&c[1]==y);let g="";for(let y=0;y<5;y++)for(let x=0;x<5;x++)g+=`<button class="cell ed" data-x="${x}" data-y="${y}" aria-label="Square ${x+1}, ${y+1}">${L.o[0]==x&&L.o[1]==y?"🤖":L.s[0]==x&&L.s[1]==y?"⭐":rk(x,y)?"🪨":""}</button>`;
+    box.innerHTML=zsay("Tap squares to build your maze. Then test it: you must solve your own maze before you can share it!")+`<div class="chips c" style="justify-content:center">${[["rock","🪨 Rocks"],["start","🤖 Move start"],["goal","⭐ Move goal"]].map(([k,t])=>`<button class="${mode==k?"on":""}" data-m="${k}" aria-pressed="${mode==k}">${t}</button>`).join("")}</div>
+     <div class="grid" style="grid-template-columns:repeat(5,1fr);max-width:340px">${g}</div><p class="c" aria-live="polite"><b>${b>0?`✅ Zuri can reach the star. Shortest path: ${b} steps.`:"❌ No way through! Remove some rocks."}</b></p><p class="c"><button class="btn v" id="tm" ${b>0?"":"disabled"}>▶ Test my maze</button><button class="btn s" id="cl">Clear rocks</button></p>`;
+    box.querySelectorAll("[data-m]").forEach(e=>e.onclick=()=>{mode=e.dataset.m;sfx("tap");draw()});
+    box.querySelectorAll(".cell.ed").forEach(e=>e.onclick=()=>{const x=+e.dataset.x,y=+e.dataset.y,isO=L.o[0]==x&&L.o[1]==y,isS=L.s[0]==x&&L.s[1]==y;sfx("tap");
+      if(mode=="rock"){if(isO||isS)return;const i=L.r.findIndex(c=>c[0]==x&&c[1]==y);i<0?L.r.push([x,y]):L.r.splice(i,1)}
+      else if(!isO&&!isS){L.r=L.r.filter(c=>!(c[0]==x&&c[1]==y));L[mode=="start"?"o":"s"]=[x,y]}draw()});
+    $("#cl").onclick=()=>{L.r=[];draw()};
+    $("#tm").onclick=()=>{prog(.5);robot(Object.assign({},L,{best:b,tx:"Now solve your own maze! Write the code to reach the ⭐."}),()=>share(),box)}};
+  const share=()=>{const c=encMaze(L);S.mk=(S.mk||0)+1;save();boom();sfx("win");prog(1);
+    box.innerHTML=`<div class="big">🧩🎉</div><h2 class="c">Your maze works!</h2><p class="c mute">Give this code to a friend or sibling. They type it in Create → Play a friend’s maze.</p><p class="c"><span class="code">${c}</span></p><p class="c"><button class="btn v" id="cp">📋 Copy code</button><button class="btn s" id="ed">Edit maze</button><a class="btn s" href="#create">Done</a></p><p class="c" id="cm" aria-live="polite"></p>`;
+    $("#cp").onclick=async()=>{try{await navigator.clipboard.writeText(c);$("#cm").textContent="Copied!"}catch(e){$("#cm").textContent="Copy didn’t work here. Write the code down instead!"}};$("#ed").onclick=()=>{prog(.15);draw()}};
+  draw()}
+function mazePlay(code){const L=decodeMaze(code);if(!L){toast("That maze code doesn’t work.");location.hash="create";return}
+  const box=focusShell("#create","linear-gradient(135deg,#0E8A63,#4361EE)","Friend’s maze · "+code,"Solve the maze");prog(.3);
+  robot(Object.assign(L,{tx:"A friend built this maze for you. Can you guide me to the ⭐?"}),s=>{boom();sfx("win");prog(1);box.innerHTML=`<div class="big">${"⭐".repeat(s)}</div><h2 class="c">You solved it!</h2><p class="c mute">${s==3?"And with the shortest code. Brilliant!":"Can you find an even shorter path?"}</p><p class="c"><a class="btn" href="#create/maze">Build your own maze</a><a class="btn s" href="#create">Back to Create</a></p>`},box)}
+
+/* ---------- AWARDS tab ---------- */
+function awards(){const all=allL(),total=all.filter(x=>x.done).length,sum=stars(),x=xp(),lv=Math.floor(x/100),max=all.length*3;
+  const B=[["🌟","First step","Finish 1 lesson",total>=1],["🚀","Rocket","Finish 5 lessons",total>=5],["🔥","On fire","3-day streak",S.b>=3],["🗓️","Week warrior","7-day streak",S.b>=7],["⭐","Star collector","Earn 30 stars",sum>=30],["🤖","Robot master","All robot levels",[0,1,2].every(l=>st("code",0,l))&&st("code",1,1)>0],["🛡️","Cyber hero","Finish Cyber Shield",lessons("safe").every(Boolean)],["🏅","Champion","Finish 15 lessons",total>=15],["📚","Storyteller","Make a Zuri story",(S.sy||0)>=1],["🧩","Maze maker","Build and test a maze",(S.mk||0)>=1],["👑","Legend","Finish every lesson",total==all.length]];
+  let sky="";for(let i=0;i<max;i++){const r=(i*7919%997)/997,q=(i*104729%991)/991;sky+=`<i class="${i<sum?"on":""}" style="left:${6+r*88}%;top:${8+q*72}%">★</i>`}
+  app.innerHTML=`<p class="kick">Your trophy room</p><h1>Awards</h1>
+  <div class="card lvl" style="margin-top:14px"><div class="ring" style="--p:${x%100}"><div><span><b>${lv+1}</b><small>LEVEL</small></span></div></div><div style="flex:1;min-width:200px"><h2>${TT[Math.min(lv,4)]}</h2><p class="mute" style="margin:2px 0 8px">${x} XP · ${100-x%100} XP to level ${lv+2}</p><p style="margin:0">Each star you earn is worth 10 XP. Replay lessons to win missing stars!</p></div></div>
+  <div class="sec"><h2>Your star sky</h2><span class="mute" style="font-weight:800">${sum} of ${max} stars lit</span></div>
+  <div class="skybox" role="img" aria-label="${sum} of ${max} stars lit">${sky}<p>Every lesson star lights up your sky ✨</p></div>
+  <div class="sec"><h2>Badges</h2><span class="mute" style="font-weight:800">${B.filter(b=>b[3]).length} of ${B.length}</span></div>
+  <div class="badges">${B.map(b=>`<div class="bdg ${b[3]?"":"off"}"><span aria-hidden="true">${b[0]}</span><b>${b[1]}</b><small>${b[2]}</small></div>`).join("")}</div>`}
+
+/* ---------- ME tab ---------- */
+function mePage(){
+  app.innerHTML=`<p class="kick">My profile</p>
+  <div class="card prof"><div class="av" aria-hidden="true">${S.av}</div><div style="flex:1"><h1 style="font-size:40px">${esc(S.n)}</h1><p class="mute" style="margin:0">${AG[S.a]} · ⭐ ${stars()} stars · 🔥 ${streakOf(S)}-day streak</p></div><a class="btn s" href="#kids">Switch learner</a></div>
+  <div class="card" style="margin-top:16px"><h2>Settings</h2>
+   <div class="rowset"><span><b>Age group</b><small>${TK[S.a]}</small></span><div class="seg" id="sa">${AGs.map((x,i)=>`<button class="${S.a==i?"on":""}" data-v="${i}" aria-pressed="${S.a==i}">${x}</button>`).join("")}</div></div>
+   <div class="rowset"><span><b>Colour mode</b><small>Night savanna or sunrise savanna</small></span><div class="seg" id="sm"><button class="${DB.mode=="night"?"on":""}" data-v="night" aria-pressed="${DB.mode=="night"}">🌙 Night</button><button class="${DB.mode=="day"?"on":""}" data-v="day" aria-pressed="${DB.mode=="day"}">☀️ Day</button></div></div>
+   <div class="rowset"><span><b>Sounds</b><small>Fun beeps for right answers and wins</small></span><div class="seg" id="ss"><button class="${DB.snd?"on":""}" data-v="1" aria-pressed="${!!DB.snd}">🔊 On</button><button class="${DB.snd?"":"on"}" data-v="0" aria-pressed="${!DB.snd}">🔇 Off</button></div></div>
+   <div class="rowset"><span><b>Text size</b><small>Make everything bigger and easier to read</small></span><div class="seg" id="sb"><button class="${DB.big?"":"on"}" data-v="0" aria-pressed="${!DB.big}">Normal</button><button class="${DB.big?"on":""}" data-v="1" aria-pressed="${!!DB.big}">Large</button></div></div>
+   <div class="rowset"><span><b>Easy-read letters</b><small>Clearer letter shapes that help many readers, including children with dyslexia</small></span><div class="seg" id="se"><button class="${DB.easy?"":"on"}" data-v="0" aria-pressed="${!DB.easy}">Off</button><button class="${DB.easy?"on":""}" data-v="1" aria-pressed="${!!DB.easy}">On</button></div></div>
+   <div class="rowset"><span><b>My animal</b></span><div class="avs" id="sv">${AV.map(x=>`<button class="${x==S.av?"on":""}" data-v="${x}" aria-label="Choose ${x}">${x}</button>`).join("")}</div></div>
+   <div class="rowset"><span><b>Zuri’s colour</b></span><div class="sw">${[["#FFC93C","yellow"],["#7CF5D0","mint"],["#FF9BB8","pink"],["#8FD3FF","blue"]].map(c=>`<button style="background:${c[0]}" data-c="${c[0]}" aria-label="Make Zuri ${c[1]}"></button>`).join("")}</div></div>
+  </div>
+  <div class="card" style="margin-top:16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px;align-items:center">
+   <div><p class="kick">For grown-ups</p><h2>Parent Zone</h2><p class="mute">See each child’s real progress, minutes spent learning, feelings shared and what to practise next.</p><button class="btn v" id="pzb">👨‍👩‍👧 Open Parent Zone</button></div>
+   <div class="price"><b>Explorer Pass</b><div class="n">$5<small style="font-size:18px"> / month</small></div><ul><li>All five worlds, new lessons weekly</li><li>Up to 3 child profiles</li><li>No ads, no chat with strangers</li><li>Pay by M-Pesa or card</li></ul><b>7 days free</b></div>
+  </div>
+  <p class="c" style="margin-top:20px"><a class="btn s" href="#welcome">ℹ️ About DigiSoma</a></p><p class="c mute" style="font-size:14px;margin-top:10px">DigiSoma preview · “Soma” means “learn” in Swahili · Built in Nairobi</p>`;
+  const seg=(id,f)=>app.querySelectorAll(id+" button").forEach(b=>b.onclick=()=>{f(b.dataset.v);save();sfx("tap");mePage();stats()});
+  seg("#sa",v=>S.a=+v);seg("#sb",v=>{DB.big=+v;applyA11y()});seg("#se",v=>{DB.easy=+v;applyA11y()});seg("#sm",v=>setMode(v));seg("#ss",v=>DB.snd=+v);seg("#sv",v=>S.av=v);
+  app.querySelectorAll(".sw button").forEach(b=>b.onclick=()=>{S.z=b.dataset.c;document.documentElement.style.setProperty("--z",S.z);save();sfx("tap")});
+  $("#pzb").onclick=parent}
 
 /* ---------- Parent Zone: grown-up gate, then each child's real saved progress ---------- */
-function parent(){if(!S)return;const a=6+Math.random()*7|0,b=12+Math.random()*7|0;
-  pz.innerHTML=`<div class="dh" style="background:var(--vio)"><h3>👨‍👩‍👧 Parent Zone</h3></div><div class="pbody"><p>Grown-ups only. What is <b>${a} × ${b}</b>?</p><input id="ga" inputmode="numeric" aria-label="Answer" style="background:var(--bg);width:140px;margin-right:6px"><button class="go" id="gb">Open</button><button class="go alt" id="gx">Close</button><p id="ge" aria-live="polite"></p></div>`;
-  pz.showModal();$("#ga").focus();$("#gx").onclick=()=>pz.close();$("#ga").onkeydown=e=>{if(e.key=="Enter")$("#gb").click()};
-  $("#gb").onclick=()=>{if(+$("#ga").value!=a*b){$("#ge").textContent="That’s not right. Try again.";return}view(S.id)}}
+function parent(){if(!S)return;
+  const shell=h=>{pz.innerHTML=`<div class="dh" style="background:var(--vio)"><h2>👨‍👩‍👧 Parent Zone</h2></div><div class="pbody">${h}</div>`;if(!pz.open)pz.showModal()};
+  const setup=()=>{shell(`<p><b>Create a 4-digit Parent PIN.</b> You’ll use it to open the Parent Zone. Keep it secret from the kids!</p><input id="p1" class="pw" inputmode="numeric" maxlength="4" type="password" aria-label="New PIN" placeholder="PIN" style="width:150px;display:inline-block"> <input id="p2" class="pw" inputmode="numeric" maxlength="4" type="password" aria-label="Repeat PIN" placeholder="Repeat" style="width:150px;display:inline-block"><p><button class="btn v" id="ps">Save PIN</button><button class="btn s" id="gx">Close</button></p><p id="ge" aria-live="polite"></p>`);
+    $("#p1").focus();$("#gx").onclick=()=>pz.close();$("#ps").onclick=()=>{const a=$("#p1").value,b=$("#p2").value;if(!/^\d{4}$/.test(a)){$("#ge").textContent="The PIN must be 4 numbers.";return}if(a!=b){$("#ge").textContent="The two PINs don’t match. Try again.";return}DB.pin=a;save();view(S.id)}};
+  const ask=()=>{shell(`<p>Grown-ups only. Enter your Parent PIN.</p><input id="ga" class="pw" inputmode="numeric" maxlength="4" type="password" aria-label="Parent PIN" style="width:150px;display:inline-block"><button class="btn v" id="gb">Open</button><button class="btn s" id="gx">Close</button><p id="ge" aria-live="polite"></p><p><button class="tts" id="fg" style="font-size:14px;padding:4px 12px">Forgot PIN?</button></p>`);
+    $("#ga").focus();$("#gx").onclick=()=>pz.close();$("#ga").onkeydown=e=>{if(e.key=="Enter")$("#gb").click()};
+    $("#gb").onclick=()=>{if($("#ga").value!==DB.pin){$("#ge").textContent="That PIN isn’t right. Try again.";$("#ga").value="";return}view(S.id)};
+    $("#fg").onclick=()=>{const a=13+Math.random()*12|0,b=14+Math.random()*12|0;shell(`<p>To reset the PIN, solve this grown-up sum: <b>${a} × ${b}</b></p><input id="gr" class="pw" inputmode="numeric" style="width:150px;display:inline-block" aria-label="Answer"><button class="btn v" id="gb2">Reset PIN</button><p id="ge" aria-live="polite"></p>`);
+      $("#gb2").onclick=()=>{if(+$("#gr").value!=a*b){$("#ge").textContent="Not quite. Try again.";return}DB.pin="";save();setup()}}};
+  DB.pin?ask():setup()}
 function view(id){const K=DB.kids.find(k=>k.id==id),me=S;S=K;
-  const all=allL(),done=all.filter(x=>x.done).length,wk=[...Array(7)].map((_,i)=>{const d=new Date(Date.now()-(6-i)*864e5),k=dk(d);return[d.toLocaleDateString("en",{weekday:"short"}),K.mn[k]||0,K.h[k]||0]}),mins=wk.reduce((s,d)=>s+d[1],0),mx=Math.max(10,...wk.map(d=>d[1]));
+  const all=allL(),done=all.filter(x=>x.done).length,wk=[...Array(7)].map((_,i)=>{const d=new Date(Date.now()-(6-i)*864e5),k=dk(d);return[d.toLocaleDateString("en",{weekday:"short"}),K.mn[k]||0]}),mins=wk.reduce((s,d)=>s+d[1],0),mx=Math.max(10,...wk.map(d=>d[1]));
   const weak=all.filter(x=>x.done==1).map(x=>`${x.W.e} ${x.N.t}`),next=all.find(x=>x.open&&!x.done);
+  const last7=[...Array(7)].map((_,i)=>dk(new Date(Date.now()-i*864e5))),wkL=last7.reduce((a,k)=>a+(K.h[k]||0),0),wkS=last7.reduce((a,k)=>a+((K.sg||{})[k]||0),0),days=last7.filter(k=>K.h[k]).length;
+  const plan=[];all.filter(x=>x.done==1).slice(0,1).forEach(x=>plan.push(x));Object.keys(D).forEach(w=>{const x=all.find(y=>y.w==w&&y.open&&!y.done);if(x&&plan.length<3&&!plan.includes(x))plan.push(x)});
+  const report=`DigiSoma weekly report for ${K.n} (${AGs[K.a]})\n• Learned on ${days} of the last 7 days, ${pl(mins,"minute")} in total\n• ${pl(wkL,"lesson")} played, ${pl(wkS,"new star")} earned\n• ${done} of ${all.length} lessons finished overall\n• This week’s plan: ${plan.map(x=>x.N.t).join(", ")||"replay favourite lessons"}`;
   const body=`<div class="ptabs" role="tablist">${DB.kids.map(k=>`<button role="tab" aria-selected="${k.id==id}" class="${k.id==id?"on":""}" data-k="${k.id}">${k.av} ${esc(k.n)}</button>`).join("")}</div>
-  <h3 style="margin:0 0 2px">${K.av} ${esc(K.n)} · ${AG[K.a]}</h3>
-  <div class="tiles"><div class="tile"><b>${done}/${all.length}</b>lessons done</div><div class="tile"><b>${mins} min</b>learning this week</div><div class="tile"><b>${streakOf(K)}</b>day streak</div><div class="tile"><b>${stars()}</b>stars earned</div></div>
-  <b>Minutes learning, last 7 days</b><div class="wk" role="img" aria-label="Minutes learning per day for the last 7 days">${wk.map(d=>`<div><small>${d[1]||""}</small><i style="height:${d[1]/mx*64}px"></i>${d[0]}</div>`).join("")}</div><p class="step">For ages 6–16, short daily sessions of 15–30 minutes with breaks work well.</p>
-  <p style="margin-top:12px"><b>Progress by world</b></p>${Object.entries(D).map(([w,W])=>{const L=lessons(w),k=L.filter(Boolean).length;return `<div style="margin-bottom:8px"><b>${W.e} ${W.t}</b> <small>${k}/${L.length}</small><div class="pb dk"><i style="width:${k/L.length*100}%;background:${W.c}"></i></div></div>`}).join("")}
+  <h3 style="font-size:22px">${K.av} ${esc(K.n)} · ${AG[K.a]}</h3>
+  <div class="tiles"><div class="tile"><b>${done}/${all.length}</b>lessons done</div><div class="tile"><b>${mins} min</b>this week</div><div class="tile"><b>${streakOf(K)}</b>day streak</div><div class="tile"><b>${stars()}</b>stars</div></div>
+  <b>Minutes learning, last 7 days</b><div class="wk" role="img" aria-label="Minutes learning per day for the last 7 days">${wk.map(d=>`<div><small>${d[1]||""}</small><i style="height:${d[1]/mx*64}px"></i>${d[0]}</div>`).join("")}</div><p class="step" style="font-weight:600">Short daily sessions of 15–30 minutes, with breaks, work well for ages 6–16.</p>
+  <p style="margin-top:12px"><b>Progress by world</b></p>${Object.entries(D).map(([w,W])=>{const L=lessons(w),k=L.filter(Boolean).length;return `<div style="margin-bottom:8px"><b>${W.e} ${W.t}</b> <small class="mute">${k}/${L.length}</small><div class="pb k"><i style="width:${k/L.length*100}%;background:${W.c}"></i></div></div>`}).join("")}
+  <div class="card" style="background:var(--panel2);box-shadow:none;margin:12px 0"><b>📅 This week</b><p style="margin:6px 0">${esc(K.n)} learned on <b>${days} of the last 7 days</b>, played <b>${pl(wkL,"lesson")}</b> and earned <b>${pl(wkS,"new star")}</b>.</p><b>This week’s plan</b><ol style="margin:6px 0 8px;padding-left:22px">${plan.map(x=>`<li>${x.W.e} ${x.N.t}${x.done==1?" (practice again)":""}</li>`).join("")||"<li>Replay favourite lessons for 3 stars</li>"}</ol><button class="btn v" id="cpr" style="font-size:16px;padding:8px 16px">📋 Copy report for WhatsApp</button><span id="cpm" class="mute" aria-live="polite"></span></div>
   <p><b>Up next:</b> ${next?`${next.W.e} ${next.N.t}`:"everything is finished. Amazing!"}<br><b>Could use practice:</b> ${weak.length?weak.slice(0,3).join(", ")+". Replaying together helps.":"nothing yet. Great going!"}<br><b>Last feeling shared:</b> ${K.m||"none yet"}<br><b>Dream:</b> ${K.dr||"not chosen yet"}</p>
-  <div class="card now" style="background:var(--bg)"><b>Explorer Pass: $5 / month</b><br><small>Up to 3 children. 7 days free. Pay by M-Pesa or card. Cancel any time.</small></div>
-  <p><button class="go" id="trial">Start free trial</button><button class="go alt" id="rs">Reset progress</button><button class="go red" id="rm">Remove ${esc(K.n)}</button><button class="go alt" id="cx">Close</button></p><p id="pm" aria-live="polite"></p>
+  <p><button class="btn" id="trial">Start 7-day free trial</button><button class="btn s" id="pin">Change PIN</button><button class="btn s" id="rs">Reset progress</button><button class="btn r" id="rm">Remove ${esc(K.n)}</button><button class="btn s" id="cx">Close</button></p><p id="pm" aria-live="polite"></p>
   <p class="note"><b>Prototype note.</b> Progress is saved only in this browser. Before launch, DigiSoma still needs: a data-protection review (including Kenya’s Data Protection Act and verifiable parental consent), content review by teachers and child psychologists, secure parent accounts, and real M-Pesa and card billing.</p>`;
   S=me;pz.querySelector(".pbody").innerHTML=body;
   pz.querySelectorAll("[data-k]").forEach(b=>b.onclick=()=>view(b.dataset.k));
+  $("#cpr").onclick=async()=>{try{await navigator.clipboard.writeText(report);$("#cpm").textContent=" Copied! Paste it into WhatsApp or SMS."}catch(e){$("#cpm").textContent=" Copy isn’t allowed here."}};
+  $("#pin").onclick=()=>{DB.pin="";save();parent()};
   $("#cx").onclick=()=>pz.close();$("#trial").onclick=()=>$("#pm").textContent="Preview only: payments will go live in the real app.";
   const twice=(el,msg,f)=>{let sure=0;el.onclick=()=>{if(!sure){sure=1;el.textContent=msg;return}f()}};
   twice($("#rs"),"Tap again to erase "+K.n+"’s progress",()=>{Object.assign(K,{p:{},s:0,b:0,d:"",h:{},mn:{},m:"",dr:"",l:"",ms:{}});save();pz.close();route()});
-  twice($("#rm"),"Tap again to remove "+K.n,()=>{DB.kids=DB.kids.filter(k=>k!=K);if(S==K)useKid(DB.kids[0]||null);save();pz.close();location.hash=DB.kids.length?"":"new";route()})}
-$("#pzb").onclick=parent;
+  twice($("#rm"),"Tap again to remove "+K.n,()=>{DB.kids=DB.kids.filter(k=>k!=K);if(S==K)useKid(DB.kids[0]||null);save();pz.close();location.hash=DB.kids.length?"kids":"new";route()})}
 
 /* ---------- router ---------- */
-function route(){const h=location.hash.slice(1),[w,t,l]=h.split("/"),W=D[w];window.scrollTo(0,0);try{speechSynthesis.cancel()}catch(e){}stats();
-  if(h=="new"||!DB.kids.length)return onboard();if(h=="kids"||!S)return kidsPage();
-  if(!W)return home();const T=W.topics[t];if(!T)return world(w);if(!T.L[l])return topic(w,t);lesson(w,+t,+l)}
+function route(){const h=location.hash.slice(1)||"home",[a,w,t,l]=h.split("/");window.scrollTo(0,0);try{speechSynthesis.cancel()}catch(e){}
+  const tab=a=="play"?"learn":a=="maze"?"create":a;document.querySelectorAll("#nav a").forEach(x=>{const on=x.dataset.t==tab;x.classList.toggle("on",on);on?x.setAttribute("aria-current","page"):x.removeAttribute("aria-current")});
+  const noKid=!DB.kids.length||a=="new"||a=="kids"||!S;document.body.classList.toggle("focus",a=="play"||a=="maze"||(a=="create"&&w)||noKid);stats();
+  if(a=="welcome"||(!DB.kids.length&&a!="new")){document.body.classList.add("focus");return landing()}
+  if(a=="new")return onboard();if(a=="kids"||!S)return kidsPage();
+  if(a=="play"){const T=D[w]&&D[w].topics[t];if(T&&T.L[l])return lesson(w,+t,+l);location.hash="learn";return}
+  if(a=="learn")return D[w]?world(w):learn();
+  if(a=="create")return w=="story"?storyMaker():w=="maze"?mazeMaker():createPage();
+  if(a=="maze")return mazePlay(w);if(a=="awards")return awards();if(a=="me")return mePage();home()}
 window.onhashchange=route;route();
 </script>
 </body>
