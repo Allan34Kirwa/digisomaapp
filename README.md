@@ -7,8 +7,9 @@ DigiSoma ("soma" means "learn" in Swahili) is a fun, safe learning app where chi
 **Live preview:** https://allan34kirwa.github.io/digisomaapp/
 
 ## What's inside
-- **100-lesson curriculum:** 5 worlds × 4 units × 5 lessons (about 30 weeks at 3–4 lessons a week)
-- **Five worlds:** Code & AI Lab, Math Arena, Cyber Shield, Mind & Heart, Growing Up
+- **120-lesson curriculum:** 6 worlds × 4 units × 5 lessons (about 36 weeks at 3–4 lessons a week)
+- **DigiSoma Lab:** 8 build missions across Kenya where children build real AI tools and hardware (drawing recogniser, decision tree, duka chatbot, catch predictor, scam guard, solar lamp circuit, smart farm watering, AI ethics council)
+- **Six worlds:** Code & AI Lab, Math Arena, Cyber Shield, Mind & Heart, Growing Up, Hardware Hub
 - **Akili** the robot buddy ("akili" means intelligence in Swahili) and **Soma**, a private, rule-based helper chat bot
 - **Animated mini-videos** with captions and narration
 - **Three age groups:** Sprouts (6–8), Builders (9–12), Pioneers (13–16)
