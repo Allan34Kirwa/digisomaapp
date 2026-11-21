@@ -214,7 +214,19 @@ details{background:var(--panel);border:1px solid var(--line);border-radius:20px;
 .dots{display:flex;gap:6px;justify-content:center;margin:12px 0}.dots i{width:10px;height:10px;border-radius:50%;background:var(--line)}.dots i.on{background:var(--sun)}
 .cell.ed{cursor:pointer;border:0;font:inherit}.cell.ed:hover{outline:3px solid var(--sun)}
 .code{font-family:ui-monospace,Consolas,monospace;font-size:26px;letter-spacing:3px;background:var(--panel2);padding:8px 16px;border-radius:12px;display:inline-block;font-weight:700}
-.booknav{display:none}
+body.bookmode main{padding-bottom:0}
+.book{display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain;height:calc(100vh - 60px - 28px - 92px);perspective:1600px}
+.book::-webkit-scrollbar{display:none}
+.leaf{flex:0 0 100%;scroll-snap-align:start;scroll-snap-stop:always;overflow-y:auto;padding:6px 8px 24px;margin:0!important;scrollbar-width:thin}
+.leaf.lhero{align-content:center}
+.leaf.turn{animation:pageturn .65s cubic-bezier(.2,.7,.3,1)}
+@keyframes pageturn{from{transform:rotateY(-14deg) translateX(40px);transform-origin:left center;opacity:.35}}
+.booknav{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 14px;margin-top:6px;min-height:72px;background:color-mix(in srgb,var(--panel) 90%,transparent);border:1px solid var(--line);border-radius:22px;box-shadow:0 6px 0 var(--shade);backdrop-filter:blur(6px)}
+@media(min-width:761px){body.bookmode .somafab{bottom:112px}}
+.booknav .dots{flex:1;justify-content:center;margin:0;display:flex;gap:8px;flex-wrap:wrap}.booknav .dots button{width:13px;height:13px;border-radius:50%;border:0;padding:0;background:var(--line);cursor:pointer;transition:transform .15s}.booknav .dots button:hover{transform:scale(1.3)}.booknav .dots button.on{background:var(--sun);width:30px;border-radius:99px}
+.bookpg{font-weight:800;color:var(--mute);font-size:14px;white-space:nowrap}
+.bookhint{font-size:13px;color:var(--mute);font-weight:700}
+@media(max-width:760px){.bookpg,.bookhint,#bp span{display:none}.booknav{border-radius:0;margin:0;box-shadow:none}.booknav .dots{gap:5px;flex-wrap:nowrap}.booknav .dots button{width:9px;height:9px}.booknav .dots button.on{width:20px}}
 .akbtn{background:none;border:0;padding:0;cursor:pointer;border-radius:50%;display:inline-block}.akbtn:hover .zbig{filter:drop-shadow(0 0 22px rgba(255,201,60,.8))}
 .akplay{display:flex;flex-direction:column;align-items:center}.akplay .bub{max-width:300px;min-height:52px}.akct{display:inline-block;margin-top:8px!important;background:var(--panel2);border-radius:99px;padding:3px 12px;font-weight:800;font-size:13px;color:var(--mute)}
 .zbig.ak-wave{animation:akwave .9s ease-in-out}.zbig.ak-dance{animation:akdance 1s ease-in-out}.zbig.ak-spin{animation:akspin .9s ease-in-out}.zbig.ak-jump{animation:akjump .7s ease-out}.zbig.ak-shake{animation:akshake .6s}
@@ -813,11 +825,15 @@ function landing(){const go=S?"#home":"#new",goT=S?"Continue learning ▶":"Star
   const trick=()=>{const k=tri++%TR.length,[a,t]=TR[k],sv=$("#aksvg");seen.add(k);$("#akb").textContent=t;$("#akct").textContent=seen.size<TR.length?`Tricks found: ${seen.size} of ${TR.length}`:"🏆 You found all 8 of Akili’s tricks!";
     sv.classList.remove("ak-wave","ak-dance","ak-spin","ak-jump","ak-shake");void sv.getBoundingClientRect();if(a=="colour"){zc++;document.documentElement.style.setProperty("--z",ZC[zc%ZC.length]);sv.classList.add("ak-jump")}else sv.classList.add("ak-"+a);
     sfx(seen.size==TR.length&&k==TR.length-1?"win":"ok");if(seen.size==TR.length&&k==TR.length-1)boom();if(DB.snd)speak(t.replace(/^\S+\s/,""))};
-  app.innerHTML=`<div class="book" id="book">${L.join("")}</div><nav class="booknav" aria-label="Pages"><button class="btn s" id="bp" aria-label="Previous page">◀</button><div class="dots" id="bd"></div><button class="btn" id="bn">Next ▶</button></nav>`;
+  app.innerHTML=`<div class="book" id="book">${L.join("")}</div><nav class="booknav" aria-label="Pages"><button class="btn s" id="bp" aria-label="Previous page">◀<span> Back</span></button><span class="bookpg" id="bpg"></span><div class="dots" id="bd"></div><span class="bookhint">Tip: use ← → keys</span><button class="btn" id="bn">Next ▶</button></nav>`;
   const bk=$("#book"),n=L.length,cur=()=>Math.round(bk.scrollLeft/Math.max(1,bk.clientWidth));
-  const upd=()=>{const i=cur();$("#bd").innerHTML=Array.from({length:n},(_,j)=>`<i class="${j==i?"on":""}"></i>`).join("");$("#bd").setAttribute("aria-label",`Page ${i+1} of ${n}`);$("#bp").style.visibility=i?"visible":"hidden";$("#bn").textContent=i<n-1?"Next ▶":(S?"Learn ▶":"Start ▶")};
+  const leaves=[...bk.children],titles=leaves.map(l=>{const k=l.querySelector(".kick");return k?k.textContent.split("·")[0].trim():"Next"}),wide=()=>innerWidth>760;let last=0;
+  const to=i=>{i=Math.max(0,Math.min(n-1,i));bk.scrollTo({left:i*bk.clientWidth,behavior:calm?"auto":"smooth"})};
+  const upd=()=>{const i=cur();$("#bd").innerHTML=Array.from({length:n},(_,j)=>`<button type="button" class="${j==i?"on":""}" data-pg="${j}" aria-label="Go to page ${j+1}: ${esc(titles[j])}" ${j==i?'aria-current="page"':""}></button>`).join("");$("#bd").querySelectorAll("[data-pg]").forEach(b=>b.onclick=()=>to(+b.dataset.pg));
+    $("#bpg").textContent=`Page ${i+1} of ${n}`;$("#bp").style.visibility=i?"visible":"hidden";$("#bn").textContent=i<n-1?(wide()?`Next: ${titles[i+1]} ▶`:"Next ▶"):(S?"Start learning ▶":"Start learning free ▶");
+    if(i!=last){if(!calm){const l=leaves[i];l.classList.remove("turn");void l.offsetWidth;l.classList.add("turn")}leaves[i].scrollTop=0;last=i;sfx("tap")}};
   bk.addEventListener("scroll",()=>requestAnimationFrame(upd),{passive:true});upd();$("#akbtn").onclick=trick;
-  const to=i=>bk.scrollTo({left:i*bk.clientWidth,behavior:calm?"auto":"smooth"});
+  let wl=0;bk.addEventListener("wheel",e=>{if(Math.abs(e.deltaX)>Math.abs(e.deltaY))return;const l=leaves[cur()],atEnd=l.scrollTop+l.clientHeight>=l.scrollHeight-2,atTop=l.scrollTop<=0,now=Date.now();if(now-wl<900)return;if(e.deltaY>30&&atEnd&&cur()<n-1){wl=now;to(cur()+1)}else if(e.deltaY<-30&&atTop&&cur()>0){wl=now;to(cur()-1)}},{passive:true});
   $("#bp").onclick=()=>to(cur()-1);$("#bn").onclick=()=>{const i=cur();i<n-1?to(i+1):location.hash=go.slice(1)}}
 
 /* ---------- CREATE tab: Akili's Story maker + Maze maker ---------- */
@@ -1332,6 +1348,7 @@ $("#smsgs").addEventListener("click",e=>{if(e.target.closest("a"))somaOpen(false
 document.addEventListener("keydown",e=>{if(e.key=="Escape"&&$("#somap").classList.contains("open"))somaOpen(false)});
 
 /* ---------- router ---------- */
+document.addEventListener("keydown",e=>{if(!document.body.classList.contains("bookmode")||/INPUT|TEXTAREA|SELECT/.test(e.target.tagName)||(pz&&pz.open))return;if(e.key=="ArrowRight"){e.preventDefault();const b=$("#bn");if(b&&!/Start/.test(b.textContent))b.click()}if(e.key=="ArrowLeft"){e.preventDefault();const b=$("#bp");if(b&&b.style.visibility!="hidden")b.click()}});
 function route(){stopVid();document.body.classList.remove("bookmode");const h=location.hash.slice(1)||"welcome",[a,w,t,l]=h.split("/");applyEng();window.scrollTo(0,0);try{speechSynthesis.cancel()}catch(e){}
   const tab=a=="play"?"learn":a=="maze"?"create":a;try{if(pz.open)pz.close()}catch(e){}document.querySelectorAll("#nav a").forEach(x=>{const on=x.dataset.t==tab;x.classList.toggle("on",on);on?x.setAttribute("aria-current","page"):x.removeAttribute("aria-current")});
   document.body.classList.toggle("focus",a=="play"||a=="maze"||a=="new"||a=="kids"||((a=="create"||a=="lab")&&!!w&&!!S));stats();
