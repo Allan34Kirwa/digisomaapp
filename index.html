@@ -215,6 +215,13 @@ details{background:var(--panel);border:1px solid var(--line);border-radius:20px;
 .cell.ed{cursor:pointer;border:0;font:inherit}.cell.ed:hover{outline:3px solid var(--sun)}
 .code{font-family:ui-monospace,Consolas,monospace;font-size:26px;letter-spacing:3px;background:var(--panel2);padding:8px 16px;border-radius:12px;display:inline-block;font-weight:700}
 .booknav{display:none}
+.akbtn{background:none;border:0;padding:0;cursor:pointer;border-radius:50%;display:inline-block}.akbtn:hover .zbig{filter:drop-shadow(0 0 22px rgba(255,201,60,.8))}
+.akplay{display:flex;flex-direction:column;align-items:center}.akplay .bub{max-width:300px;min-height:52px}.akct{display:inline-block;margin-top:8px!important;background:var(--panel2);border-radius:99px;padding:3px 12px;font-weight:800;font-size:13px;color:var(--mute)}
+.zbig.ak-wave{animation:akwave .9s ease-in-out}.zbig.ak-dance{animation:akdance 1s ease-in-out}.zbig.ak-spin{animation:akspin .9s ease-in-out}.zbig.ak-jump{animation:akjump .7s ease-out}.zbig.ak-shake{animation:akshake .6s}
+@keyframes akwave{25%{transform:rotate(-14deg)}50%{transform:rotate(12deg)}75%{transform:rotate(-8deg)}}
+@keyframes akdance{20%{transform:translateX(-14px) rotate(-8deg)}40%{transform:translateX(14px) rotate(8deg)}60%{transform:translateY(-16px)}80%{transform:translateX(-8px) scale(1.05)}}
+@keyframes akspin{to{transform:rotate(360deg)}}@keyframes akjump{40%{transform:translateY(-40px) scale(1.08)}70%{transform:translateY(0) scale(.95,1.05)}}
+@keyframes akshake{20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
 [data-mode="day"] .lhero h1 em,[data-mode="day"] .ob h1 em{color:#D9620F}
 .bigidea .n{font-size:34px}.bigidea small{display:block;margin-top:8px;font-weight:800;color:var(--vio);font-size:13px}
 [data-mode="night"] .bigidea small{color:#B9A6FF}
@@ -228,7 +235,7 @@ details{background:var(--panel);border:1px solid var(--line);border-radius:20px;
   .book{display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;height:calc(100dvh - 58px - 68px);overscroll-behavior-x:contain}
   .book::-webkit-scrollbar{display:none}
   .leaf{flex:0 0 100%;scroll-snap-align:start;scroll-snap-stop:always;overflow-y:auto;padding:18px 16px 28px;margin:0!important}
-  .leaf.lhero{display:block}.leaf.lhero h1{font-size:clamp(32px,9vw,42px)}.leaf.lhero .zbig{width:110px!important;height:110px!important}
+  .leaf.lhero{display:flex;flex-direction:column}.leaf.lhero .akplay{order:-1;margin-bottom:8px}.akplay .bub{font-size:15px;min-height:0;margin-bottom:4px}.akplay p:not(.akct){display:none}.leaf.lhero h1{font-size:clamp(32px,9vw,42px)}.leaf.lhero .zbig{width:110px!important;height:110px!important}
   .booknav{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:25;min-height:68px;align-items:center;justify-content:space-between;gap:8px;padding:8px 12px calc(8px + env(safe-area-inset-bottom));background:var(--panel);border-top:1px solid var(--line)}
   .booknav .dots{margin:0;flex:1;flex-wrap:wrap}.booknav .btn{font-size:16px;padding:8px 16px;margin:0}
   .swipe{display:inline-block;margin-top:14px;font-weight:800;color:var(--mute);animation:nudge 1.6s ease-in-out infinite}
@@ -263,7 +270,10 @@ body.focus .somafab{bottom:20px}
 .snote{font-size:12px;color:var(--mute);padding:0 14px 6px}
 .btn.sm{font-size:15px;padding:7px 14px;margin:3px}
 @media(max-width:899px){.nav a.dk{display:none}}
-@media(max-width:760px){body.bookmode .nav{display:none}}
+@media(min-width:900px){body:not(.focus) main{margin-left:calc(104px + max(0px,(100vw - 104px - 1080px)/2))}}
+@media(min-width:1000px){body.somaopen main{max-width:none;margin-left:104px;margin-right:412px;transition:margin .25s}body.somaopen.focus main{margin-left:16px}body.somaopen .top{margin-right:412px}body.somaopen .somafab{display:none}}
+@media(max-width:760px){.nav a{min-width:0;flex:1;padding:6px 2px;font-size:12px}.nav a span{font-size:23px}
+  body.bookmode .booknav{bottom:calc(64px + env(safe-area-inset-bottom))}body.bookmode .book{height:calc(100dvh - 58px - 68px - 66px)}body.bookmode .somafab{bottom:142px}}
 .xeng{display:none;background:rgba(106,60,224,.1);border:2px dashed var(--vio);border-radius:14px;padding:10px 14px;font-size:15px;margin:10px 0}body.engineer .xeng{display:block}
 .xpanel{background:var(--panel);border:1px solid var(--line);border-radius:28px;box-shadow:0 8px 0 var(--shade);padding:22px}
 .xmhead{border-radius:28px;padding:20px 22px;color:#fff;display:flex;gap:16px;align-items:center;flex-wrap:wrap;box-shadow:0 8px 0 var(--shade)}.xmhead .em{font-size:52px;line-height:1}
@@ -334,16 +344,16 @@ input[type=range]{width:100%;accent-color:var(--vio)}
 <aside class="soma" id="somap" aria-label="Soma helper chat" aria-hidden="true"><div class="sh"><svg aria-hidden="true"><use href="#soma"/></svg><span><b>Soma</b><small>Your DigiSoma helper</small></span><button class="x" id="somax" aria-label="Close Soma">✕</button></div>
 <div class="smsgs" id="smsgs" aria-live="polite"></div><div class="squick" id="squick"></div><p class="snote">Soma uses ready-made answers and doesn’t send your messages anywhere. Never type personal details.</p>
 <form class="sform" id="sform"><input id="sin" maxlength="140" autocomplete="off" placeholder="Ask Soma anything…" aria-label="Message Soma"><button class="btn v" type="submit">Send</button></form></aside>
-<header class="top"><a href="#home" class="logo" aria-label="About DigiSoma"><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#z"/></svg><span>Digi<b>Soma</b></span></a>
+<header class="top"><a href="#welcome" class="logo" aria-label="About DigiSoma"><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#z"/></svg><span>Digi<b>Soma</b></span></a>
   <div class="pills" id="pills"><span class="pill st" title="Learning streak">🔥 <span id="streak">0</span></span><span class="pill st" title="Stars">⭐ <span id="stc">0</span></span><a class="pill me" href="#me" id="mep" aria-label="My profile"><span id="mav">🦁</span><b id="mnm"></b></a></div></header>
 <nav class="nav" id="nav" aria-label="Main">
+  <a href="#welcome" data-t="welcome"><span aria-hidden="true">ℹ️</span>About</a>
   <a href="#home" data-t="home"><span aria-hidden="true">🏠</span>Home</a>
   <a href="#learn" data-t="learn"><span aria-hidden="true">🗺️</span>Learn</a>
   <a href="#lab" data-t="lab"><span aria-hidden="true">🧪</span>Lab</a>
   <a href="#create" data-t="create"><span aria-hidden="true">🎨</span>Create</a>
   <a href="#awards" data-t="awards" class="dk"><span aria-hidden="true">🏆</span>Awards</a>
   <a href="#me" data-t="me"><span aria-hidden="true">😊</span>Me</a>
-  <a href="#welcome" data-t="welcome" class="dk"><span aria-hidden="true">ℹ️</span>About</a>
 </nav>
 <main id="app"></main>
 <dialog id="pz" aria-label="Parent Zone"></dialog>
@@ -469,7 +479,7 @@ grow:{t:"Growing Up",e:"🌱",c:"#7B4DE0",d:"Body, friends, future and changing 
 {t:"Solving conflicts",k:"q",learn:"When friends disagree: cool down, take turns to talk, listen, and find a solution you both like.",Q:[["You and a friend want different games. A fair fix is…",["Take turns choosing","Shout until you win"],0,"Taking turns is fair."],["The first step when you’re very angry with a friend?",["Cool down","Say something mean"],0,"Calm first, talk second."]]},
 {t:"Respect differences",k:"q",learn:"Friends can be different from you in religion, language, culture and ideas. Respect means being kind even when you disagree.",Q:[["Your friend believes something different from you. Respect means…",["Listening kindly","Laughing at them"],0,"Kindness, even when you disagree."],["Learning about other cultures is…",["Interesting and fun","A waste of time"],0,"Africa has so many amazing cultures!"]]}]},
 {t:"Future You",e:"🚀",d:"Careers and African innovators",L:[
-{t:"Jobs of the future",k:"vid",v:[["🚀","Many jobs of the future don’t even exist yet!"],["🤖","AI engineers build smart systems that help people."],["📊","Data engineers, like DigiSoma’s founder Allan, use data to solve problems."],["🌾","Agri-tech experts help farmers grow more food."],["🌍","Africa needs creators, coders and dreamers. That could be you!"]]},
+{t:"Jobs of the future",k:"vid",v:[["🚀","Many jobs of the future don’t even exist yet!"],["🤖","AI engineers build smart systems that help people."],["📊","AI & Data Engineers, like DigiSoma’s founder Allan, use data to solve problems."],["🌾","Agri-tech experts help farmers grow more food."],["🌍","Africa needs creators, coders and dreamers. That could be you!"]]},
 {t:"Your big dream",k:"dream"},
 {t:"African tech heroes",k:"q",learn:"Africa builds amazing tech! M-Pesa, made in Kenya, lets people send money by phone. Ushahidi, also from Kenya, maps reports during emergencies. Zipline drones carry medicine to clinics in Rwanda.",Q:[["Which Kenyan invention lets people send money with a phone?",["M-Pesa","Bluetooth","Email"],0,"M-Pesa changed how millions of people pay."],["Drones in Rwanda deliver…",["Pizza","Medicine to clinics","Homework"],1,"Fast deliveries help clinics far from cities."]],X:["Ushahidi helps people during emergencies by…",["Mapping reports people send in","Selling phones"],0,"Many small reports on a map show where help is needed."],home:"Ask a grown-up how M-Pesa changed the way your family pays for things."},
 {t:"Careers in tech",k:"q",learn:"Tech careers include software developer, data scientist, AI engineer, cybersecurity expert, game designer and robotics engineer.",Q:[["Who keeps computers safe from hackers?",["A cybersecurity expert","A chef"],0,"Cybersecurity experts are digital guards."],["Who finds patterns in data to answer questions?",["A data scientist","A pilot"],0,"Data scientists are data detectives."]],X:["Which skill helps in almost every tech career?",["Problem solving","Memorising phone numbers"],0,"Tech is all about solving problems."]},
@@ -741,7 +751,7 @@ function landing(){const go=S?"#home":"#new",goT=S?"Continue learning ▶":"Star
   `<section class="leaf lhero"><div><p class="kick">About DigiSoma · “Soma” means “learn” in Swahili</p><h1>Africa’s children shouldn’t just use technology. <em>They should build it.</em></h1>
    <p class="mute" style="font-size:19px;max-width:34em">DigiSoma is a fun, safe and child-friendly learning platform that gives children in Kenya and across Africa the knowledge, skills and confidence to understand technology, create with it, question it and one day build it.</p>
    <div class="lcta"><a class="btn" href="${go}">${goT}</a></div><span class="swipe">Swipe to read our story ➜</span></div>
-   <div class="c"><svg class="zbig" viewBox="0 0 200 200" style="width:200px;height:200px" aria-hidden="true"><use href="#z"/></svg><p style="margin:0;font-weight:800">Meet Akili, our robot buddy</p><p class="mute" style="margin:0;font-size:15px">“Akili” means intelligence in Swahili</p></div></section>`,
+   <div class="c akplay"><div class="bub" id="akb" aria-live="polite">Psst! Tap me. I know some tricks! 🤖</div><button type="button" class="akbtn" id="akbtn" aria-label="Tap Akili the robot for a surprise"><svg class="zbig" id="aksvg" viewBox="0 0 200 200" style="width:200px;height:200px" aria-hidden="true"><use href="#z"/></svg></button><p style="margin:0;font-weight:800">Meet Akili, our robot buddy</p><p class="mute" style="margin:0;font-size:15px">“Akili” means intelligence in Swahili</p><p class="akct" id="akct">Tricks found: 0 of 8</p></div></section>`,
   `<section class="leaf lsec"><p class="kick">Why DigiSoma exists</p><h2>Our purpose</h2>
    <div class="card" style="margin-top:14px"><p style="font-size:19px;margin-top:0">Technology and AI are shaping every part of life, but most of it is built far from Africa, and too many African children only ever <b>consume</b> it.</p>
    <p class="mute" style="font-size:17px">DigiSoma exists to close the digital skills and AI literacy gap. We give children engaging, practical and age-appropriate learning from an early age, so they move from using technology to understanding how it works, creating with it, questioning it and building solutions for their own communities.</p>
@@ -785,7 +795,7 @@ function landing(){const go=S?"#home":"#new",goT=S?"Continue learning ▶":"Star
    <div class="card"><span class="n">💛</span><h3>Wellbeing first</h3><p>Feelings lessons always point children to a trusted grown-up and to Childline Kenya on 116.</p></div></div>
    <p style="margin:18px 0 0;font-weight:800">Every child learns one simple habit for using AI and the internet:</p><div class="ppv"><span>✋ Pause</span><span>🔒 Protect</span><span>🔎 Verify</span></div></section>`,
   `<section class="leaf lsec"><div class="card founder"><div class="fav" aria-hidden="true">A</div><div><p class="kick">Meet the founder</p><h2>Why I’m building DigiSoma</h2>
-   <p style="font-size:18px">Hi, I’m <b>Allan</b>, an AI and data engineer based in Nairobi. I love using AI and data for social change, and I care deeply about children’s wellbeing.</p>
+   <p style="font-size:18px">Hi, I’m <b>Allan</b>, an AI & Data Engineer based in Nairobi. I love using AI and data for social change, and I care deeply about children’s wellbeing.</p>
    <p class="mute" style="font-size:17px">Children across Africa are growing up surrounded by technology built somewhere else. I want them to understand it, question it, stay safe and well while using it, and grow the confidence to build the technology Africa needs. DigiSoma is more than a learning app to me: I want it to be the place where Africa’s next programmers, AI practitioners, engineers and entrepreneurs take their first steps.</p><p style="margin:0;font-weight:800">Allan, founder of DigiSoma · Nairobi, Kenya</p></div></div></section>`,
   `<section class="leaf lsec"><p class="kick">For schools and partners</p><h2>Bring DigiSoma to your learners</h2>
    <div class="card" style="margin-top:14px"><p style="margin-top:0">We’re mapping every lesson to the skills in Kenya’s Competency-Based Curriculum, and we’re looking for schools, coding clubs and partners to pilot DigiSoma with us.</p>
@@ -799,10 +809,14 @@ function landing(){const go=S?"#home":"#new",goT=S?"Continue learning ▶":"Star
    <details><summary>Is it safe for my child?</summary><p>There’s no chat with strangers, no ads, and children only give a first name. Parents see everything in the PIN-protected Parent Zone.</p></details>
    <details><summary>Is this the finished app?</summary><p>Not yet. This is an early preview: progress is saved only on this device and payments aren’t switched on.</p></details></div></div>
    <p class="c" style="margin-top:26px"><a class="btn" href="${go}">${goT}</a></p><p class="c mute" style="font-size:14px">DigiSoma preview · Built in Nairobi with 💛</p></section>`];
+  const TR=[["wave","👋 Jambo! I’m Akili. My name means “intelligence” in Swahili, and AI is “akili bandia”."],["dance","💃 Dance mode! Beep boop, beep boop! Robots follow steps, and so do dancers."],["colour","🎨 Ta-da! New colour! You can change my colour in your Me settings."],["spin","🔁 Spin! That was a loop: I repeated one step 360 times. Well, almost!"],["jump","🔢 I count in binary: 1, 10, 11, 100. That’s 1, 2, 3, 4!"],["shake","🔌 I’m made of circuits, sensors and code. In the Lab, you can build things like me!"],["wave","😂 Why was the robot so tired? It had a hard drive!"],["dance","🌍 Did you know? M-Pesa was invented right here in Kenya. Africa builds tech!"]],ZC=["#FFC93C","#7CF5D0","#FF9BB8","#8FD3FF","#B9A6FF"];let tri=0,seen=new Set(),zc=0;
+  const trick=()=>{const k=tri++%TR.length,[a,t]=TR[k],sv=$("#aksvg");seen.add(k);$("#akb").textContent=t;$("#akct").textContent=seen.size<TR.length?`Tricks found: ${seen.size} of ${TR.length}`:"🏆 You found all 8 of Akili’s tricks!";
+    sv.classList.remove("ak-wave","ak-dance","ak-spin","ak-jump","ak-shake");void sv.getBoundingClientRect();if(a=="colour"){zc++;document.documentElement.style.setProperty("--z",ZC[zc%ZC.length]);sv.classList.add("ak-jump")}else sv.classList.add("ak-"+a);
+    sfx(seen.size==TR.length&&k==TR.length-1?"win":"ok");if(seen.size==TR.length&&k==TR.length-1)boom();if(DB.snd)speak(t.replace(/^\S+\s/,""))};
   app.innerHTML=`<div class="book" id="book">${L.join("")}</div><nav class="booknav" aria-label="Pages"><button class="btn s" id="bp" aria-label="Previous page">◀</button><div class="dots" id="bd"></div><button class="btn" id="bn">Next ▶</button></nav>`;
   const bk=$("#book"),n=L.length,cur=()=>Math.round(bk.scrollLeft/Math.max(1,bk.clientWidth));
   const upd=()=>{const i=cur();$("#bd").innerHTML=Array.from({length:n},(_,j)=>`<i class="${j==i?"on":""}"></i>`).join("");$("#bd").setAttribute("aria-label",`Page ${i+1} of ${n}`);$("#bp").style.visibility=i?"visible":"hidden";$("#bn").textContent=i<n-1?"Next ▶":(S?"Learn ▶":"Start ▶")};
-  bk.addEventListener("scroll",()=>requestAnimationFrame(upd),{passive:true});upd();
+  bk.addEventListener("scroll",()=>requestAnimationFrame(upd),{passive:true});upd();$("#akbtn").onclick=trick;
   const to=i=>bk.scrollTo({left:i*bk.clientWidth,behavior:calm?"auto":"smooth"});
   $("#bp").onclick=()=>to(cur()-1);$("#bn").onclick=()=>{const i=cur();i<n-1?to(i+1):location.hash=go.slice(1)}}
 
@@ -1296,7 +1310,7 @@ function somaReply(t){const s=t.toLowerCase(),nm=S?esc(S.n):"rafiki";
   if(/^(hi|hello|hey|jambo|habari|mambo|sasa|niaje|hujambo|good (morning|afternoon|evening))\b/.test(s))return `Jambo, ${nm}! 👋 I’m Soma, your DigiSoma helper. Ask me what a word means, what to learn next, or for a joke!`;
   if(/joke|funny|laugh/.test(s))return JOKES[Math.random()*JOKES.length|0];
   if(/fact|did you know/.test(s))return "Did you know? "+FACTS[Math.random()*FACTS.length|0];
-  if(/who (made|built|created)|founder|allan/.test(s))return "DigiSoma was founded by <b>Allan</b>, an AI and data engineer in Nairobi who uses AI and data for social change and cares deeply about children’s wellbeing. Read more in <a href='#welcome'>About DigiSoma</a>.";
+  if(/who (made|built|created)|founder|allan/.test(s))return "DigiSoma was founded by <b>Allan</b>, an AI & Data Engineer in Nairobi who uses AI and data for social change and cares deeply about children’s wellbeing. Read more in <a href='#welcome'>About DigiSoma</a>.";
   if(/price|cost|pay|m-?pesa plan|subscri|how much/.test(s))return "The Explorer Pass is <b>$5 a month</b> for up to 3 children, with a 7-day free trial. Families will be able to pay by M-Pesa or card. (Payments aren’t switched on in this preview yet.)";
   if(/\bsafe|privacy|private|my data\b/.test(s))return "DigiSoma has no ads and no chat with strangers. Children only give a first name and age group, and progress stays on this device. Grown-ups use a PIN-protected Parent Zone. 🛡️";
   for(const[re,ans]of GL)if(re.test(s))return ans;
@@ -1309,7 +1323,7 @@ function somaReply(t){const s=t.toLowerCase(),nm=S?esc(S.n):"rafiki";
   if(/help|how|stuck/.test(s))return "I can help! Try asking me: “What is a loop?”, “What should I learn next?”, “How many stars do I have?” or “Tell me a joke”. In a lesson, read Akili’s tip and tap 🔊 to hear it.";
   return "Hmm, I’m still learning that one! 🤔 Try asking: “What is AI?”, “What should I learn next?” or “Tell me a fun fact”.";}
 function somaAsk(t){t=(t||"").trim();if(!t)return;somaSay(esc(t),1);sfx("tap");setTimeout(()=>{somaSay(somaReply(t));somaChips(["What should I learn next?","What is AI?","Tell me a joke","Fun fact"])},calm?50:450)}
-function somaOpen(o){const p=$("#somap");p.classList.toggle("open",o);p.setAttribute("aria-hidden",!o);$("#somafab").setAttribute("aria-expanded",o);
+function somaOpen(o){const p=$("#somap");p.classList.toggle("open",o);document.body.classList.toggle("somaopen",o);p.setAttribute("aria-hidden",!o);$("#somafab").setAttribute("aria-expanded",o);
   if(o&&!somaInit){somaInit=1;somaSay(`Jambo${S?", "+esc(S.n):""}! 👋 I’m <b>Soma</b>, your DigiSoma helper. I can explain tech words, suggest lessons, tell jokes and help when you’re stuck.`);somaChips(["What should I learn next?","What is a loop?","Is DigiSoma safe?","Tell me a joke"])}
   if(o)setTimeout(()=>$("#sin").focus(),250)}
 $("#somafab").onclick=()=>somaOpen(!$("#somap").classList.contains("open"));$("#somax").onclick=()=>somaOpen(false);
@@ -1318,7 +1332,7 @@ $("#smsgs").addEventListener("click",e=>{if(e.target.closest("a"))somaOpen(false
 document.addEventListener("keydown",e=>{if(e.key=="Escape"&&$("#somap").classList.contains("open"))somaOpen(false)});
 
 /* ---------- router ---------- */
-function route(){stopVid();document.body.classList.remove("bookmode");const h=location.hash.slice(1)||"home",[a,w,t,l]=h.split("/");applyEng();window.scrollTo(0,0);try{speechSynthesis.cancel()}catch(e){}
+function route(){stopVid();document.body.classList.remove("bookmode");const h=location.hash.slice(1)||"welcome",[a,w,t,l]=h.split("/");applyEng();window.scrollTo(0,0);try{speechSynthesis.cancel()}catch(e){}
   const tab=a=="play"?"learn":a=="maze"?"create":a;try{if(pz.open)pz.close()}catch(e){}document.querySelectorAll("#nav a").forEach(x=>{const on=x.dataset.t==tab;x.classList.toggle("on",on);on?x.setAttribute("aria-current","page"):x.removeAttribute("aria-current")});
   document.body.classList.toggle("focus",a=="play"||a=="maze"||a=="new"||a=="kids"||((a=="create"||a=="lab")&&!!w&&!!S));stats();
   if(a=="welcome")return landing();

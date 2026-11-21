@@ -24,4 +24,4 @@ DigiSoma ("soma" means "learn" in Swahili) is a fun, safe learning app where chi
 ## Status
 Early prototype. Progress is saved only in the browser, and payments are not live.
 
-Built in Nairobi by Allan, an AI and data engineer using AI and data for social change.
+Built in Nairobi by Allan, an AI & Data Engineer using AI and data for social change.
