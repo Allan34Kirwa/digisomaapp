@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="DigiSoma Lab: children in Kenya build real AI tools on missions for their communities.">
+<meta name="theme-color" content="#0F1B3D">
+<title>DigiSoma Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Lexend:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* Concept: a maker's lab. Children are junior AI engineers on missions across Kenya.
+   Look: bold "maker" cards with thick navy outlines and offset shadows, kitenge-inspired zigzag bands, saffron/teal/magenta on warm paper. */
+:root{--navy:#0F1B3D;--navy2:#1D2C63;--teal:#0FA88F;--saffron:#FFB703;--magenta:#D63A6E;--sky:#3BB7E0;--paper:#FBF6EC;--card:#fff;--ink:#0F1B3D;--mute:#535C7A;--line:#E3DACA;
+  --disp:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;--body:"Lexend","Segoe UI",system-ui,sans-serif;color-scheme:light}
+*{box-sizing:border-box}[hidden]{display:none!important}
+html,body{margin:0}body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55}
+h1,h2,h3{font-family:var(--disp);font-weight:800;line-height:1.05;margin:0;letter-spacing:-.01em;text-wrap:balance}
+a{color:inherit;text-decoration:none}button{font:inherit;cursor:pointer;color:inherit}
+:focus-visible{outline:4px solid var(--sky);outline-offset:3px;border-radius:10px}
+.zig{height:14px;background:linear-gradient(135deg,var(--navy) 33%,transparent 33%) 0 0/22px 22px,linear-gradient(225deg,var(--navy) 33%,transparent 33%) 0 0/22px 22px,var(--saffron)}
+.zig.t{background:linear-gradient(135deg,var(--navy) 33%,transparent 33%) 0 0/22px 22px,linear-gradient(225deg,var(--navy) 33%,transparent 33%) 0 0/22px 22px,var(--teal)}
+header{position:sticky;top:0;z-index:20;background:var(--navy);color:#fff}
+.bar{max-width:1120px;margin:0 auto;display:flex;align-items:center;gap:14px;padding:10px 18px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:8px;font-family:var(--disp);font-weight:800;font-size:24px}.logo svg{width:34px;height:34px}.logo i{font-style:normal;color:var(--saffron)}
+.logo small{font-family:var(--body);font-size:11px;font-weight:700;background:var(--teal);color:#fff;border-radius:6px;padding:2px 6px;letter-spacing:.06em}
+nav.tabs{display:flex;gap:6px;margin-left:auto}
+nav.tabs a{padding:7px 14px;border-radius:12px;font-weight:700;font-size:15px;color:#D8DDF0}
+nav.tabs a.on{background:var(--saffron);color:var(--navy)}
+.eng{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700;color:#D8DDF0;background:var(--navy2);border:0;border-radius:12px;padding:7px 12px}
+.eng b{display:inline-block;width:34px;height:20px;border-radius:99px;background:#46557F;position:relative;transition:background .2s}.eng b:after{content:"";position:absolute;top:3px;left:3px;width:14px;height:14px;border-radius:50%;background:#fff;transition:transform .2s}
+.eng[aria-pressed="true"] b{background:var(--teal)}.eng[aria-pressed="true"] b:after{transform:translateX(14px)}
+main{max-width:1120px;margin:0 auto;padding:26px 18px 90px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--saffron);color:var(--navy);border:3px solid var(--navy);box-shadow:4px 4px 0 var(--navy);border-radius:14px;padding:10px 20px;font-family:var(--disp);font-weight:800;font-size:18px;margin:4px;transition:transform .08s,box-shadow .08s}
+.btn:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--navy)}.btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--navy)}
+.btn.w{background:#fff}.btn.t{background:var(--teal);color:#fff}.btn.m{background:var(--magenta);color:#fff}.btn.n{background:var(--navy);color:#fff;box-shadow:4px 4px 0 var(--saffron)}
+.btn.sm{font-size:15px;padding:6px 12px;box-shadow:3px 3px 0 var(--navy)}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:4px 4px 0 var(--navy)}
+.card{background:var(--card);border:3px solid var(--navy);border-radius:20px;box-shadow:6px 6px 0 var(--navy);padding:20px}
+.kick{font-family:var(--body);font-weight:700;text-transform:uppercase;letter-spacing:.1em;font-size:13px;color:var(--magenta);margin:0 0 6px}
+.mute{color:var(--mute)}.c{text-align:center}
+h1{font-size:clamp(36px,6vw,64px)}h2{font-size:clamp(26px,3.6vw,38px)}h3{font-size:22px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px}.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}
+.pill{display:inline-block;border:2px solid var(--navy);border-radius:99px;padding:3px 12px;font-weight:700;font-size:14px;background:#fff;margin:2px}
+/* hero */
+.hero{background:var(--navy);color:#fff;border-radius:28px;padding:34px;display:grid;grid-template-columns:1.25fr .75fr;gap:24px;align-items:center;position:relative;overflow:hidden;box-shadow:8px 8px 0 var(--saffron)}
+.hero h1 em{font-style:normal;color:var(--saffron)}.hero p{color:#D8DDF0;font-size:19px}
+.hero .glow{position:absolute;right:-80px;top:-80px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(15,168,143,.55),transparent 70%)}
+.akb{width:100%;max-width:260px;filter:drop-shadow(0 14px 30px rgba(15,168,143,.45));animation:bob 3.2s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-10px)}}
+.eye{transform-origin:center;transform-box:fill-box;animation:blink 4s infinite}@keyframes blink{0%,94%,100%{transform:scaleY(1)}97%{transform:scaleY(.1)}}
+.steps5{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:16px}
+.st5{background:#fff;border:3px solid var(--navy);border-radius:16px;padding:14px;box-shadow:4px 4px 0 var(--navy)}.st5 b{font-family:var(--disp);font-size:20px;display:block}.st5 span{font-size:28px}.st5 small{color:var(--mute);font-size:14px;line-height:1.35;display:block;margin-top:4px}
+/* map */
+.mapw{position:relative;background:#E8F6F3;border:3px solid var(--navy);border-radius:24px;box-shadow:6px 6px 0 var(--navy);overflow:hidden}
+.mapw svg{display:block;width:100%;height:auto}.mapw text{font-family:var(--body)}
+.mnode{cursor:pointer}.mnode circle.r{transition:r .15s}.mnode:hover circle.r,.mnode:focus circle.r{r:34}
+.mnode:focus{outline:none}.mnode:focus-visible circle.r{stroke:var(--sky);stroke-width:6}
+.mlist{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-top:22px}
+.mcard{display:flex;gap:14px;align-items:flex-start;background:#fff;border:3px solid var(--navy);border-radius:20px;box-shadow:5px 5px 0 var(--navy);padding:16px;transition:transform .1s}.mcard:hover{transform:translate(-2px,-2px)}
+.mcard .ic{flex:none;width:62px;height:62px;border-radius:16px;border:3px solid var(--navy);display:grid;place-items:center;font-size:30px}
+.mcard b{font-family:var(--disp);font-size:21px;line-height:1.1;display:block}.mcard small{color:var(--mute);font-size:14px}
+.badge{display:inline-block;font-size:12px;font-weight:700;border-radius:8px;padding:2px 8px;border:2px solid var(--navy);margin-top:6px}
+/* mission shell */
+.mhead{border-radius:24px;border:3px solid var(--navy);box-shadow:6px 6px 0 var(--navy);padding:20px 22px;color:#fff;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.mhead .ic{font-size:52px;line-height:1}.mhead a{font-weight:700;font-size:14px;color:#fff;opacity:.9}
+.stepper{display:flex;gap:6px;margin:18px 0;flex-wrap:wrap}.stepper span{flex:1;min-width:90px;text-align:center;border:3px solid var(--navy);border-radius:12px;padding:6px 8px;font-weight:700;font-size:14px;background:#fff}
+.stepper span.on{background:var(--saffron)}.stepper span.done{background:var(--teal);color:#fff}
+.panel{background:#fff;border:3px solid var(--navy);border-radius:22px;box-shadow:6px 6px 0 var(--navy);padding:22px}
+.say{display:flex;gap:12px;align-items:flex-start;margin-bottom:14px}.say svg{flex:none;width:64px;height:64px}.say div{background:#EEF7F5;border:2px solid var(--navy);border-radius:4px 18px 18px 18px;padding:10px 14px}
+.who{display:flex;gap:12px;align-items:center;background:#FFF3D1;border:2px solid var(--navy);border-radius:16px;padding:12px 14px;margin:10px 0}.who span{font-size:40px}
+.lcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:10px 0}
+.lcard{border:3px solid var(--navy);border-radius:18px;padding:14px;background:#fff}.lcard span{font-size:34px}.lcard b{font-family:var(--disp);font-size:19px;display:block;margin:4px 0}.lcard p{margin:0;font-size:15px;color:var(--mute)}
+.engnote{display:none;background:#E9EDFB;border:2px dashed var(--navy2);border-radius:14px;padding:10px 14px;font-size:15px;margin:10px 0}.engnote b{color:var(--navy2)}
+body.engineer .engnote{display:block}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.row.c{justify-content:center}
+/* tool: drawing */
+.draw{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:start}
+canvas.pad{width:260px;height:260px;border:3px solid var(--navy);border-radius:18px;background:#fff;touch-action:none;cursor:crosshair;box-shadow:4px 4px 0 var(--navy)}
+.classes{display:grid;gap:12px}.cls{border:3px solid var(--navy);border-radius:16px;padding:10px 12px;background:#fff}.cls .row{gap:6px}
+.cls input{font:inherit;font-weight:700;border:2px solid var(--line);border-radius:10px;padding:4px 8px;width:150px}
+.thumbs{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;min-height:44px}.thumbs img{width:44px;height:44px;border:2px solid var(--navy);border-radius:8px;background:#fff}
+.result{border:3px solid var(--navy);border-radius:16px;padding:12px 14px;background:#FFF3D1;margin-top:12px}
+.meterb{height:16px;border:2px solid var(--navy);border-radius:99px;overflow:hidden;background:#fff}.meterb i{display:block;height:100%;background:var(--teal)}
+/* tool: tree */
+.leaves{display:grid;grid-template-columns:repeat(auto-fill,minmax(78px,1fr));gap:8px;margin:10px 0}.lf{border:2px solid var(--navy);border-radius:12px;background:#fff;text-align:center;padding:4px;font-size:12px;font-weight:700}.lf svg{width:56px;height:56px}
+.lf.ok{background:#DDF5EF}.lf.no{background:#FBE0E8}
+.tree{border:3px solid var(--navy);border-radius:16px;padding:12px;background:#F6F8FF}.tq{font-family:var(--disp);font-weight:800;font-size:19px}
+.br{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}.brb{border:2px dashed var(--navy2);border-radius:14px;padding:10px;background:#fff}.brb>b{display:block;margin-bottom:6px}
+.chips{display:flex;gap:6px;flex-wrap:wrap}.chip{border:2px solid var(--navy);background:#fff;border-radius:99px;padding:5px 12px;font-weight:700;font-size:14px}.chip.on{background:var(--saffron)}.chip.t{background:var(--teal);color:#fff}
+/* tool: chat */
+.intents{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+.intent{border:3px solid var(--navy);border-radius:16px;padding:12px;background:#fff}.intent h3{font-size:18px;margin-bottom:6px}
+.intent textarea{width:100%;font:inherit;font-size:15px;border:2px solid var(--line);border-radius:10px;padding:6px 8px;resize:vertical;min-height:54px}
+.kw{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}
+.addkw{display:flex;gap:6px;margin-top:6px}.addkw input{flex:1;font:inherit;font-size:14px;border:2px solid var(--line);border-radius:10px;padding:4px 8px;min-width:0}
+.phone{max-width:380px;margin:0 auto;border:3px solid var(--navy);border-radius:28px;background:#ECE5DD;padding:12px;box-shadow:5px 5px 0 var(--navy)}
+.phead{background:var(--teal);color:#fff;border-radius:16px;padding:8px 12px;font-weight:700;display:flex;gap:8px;align-items:center}
+.msgs{height:300px;overflow-y:auto;padding:10px 4px;display:flex;flex-direction:column;gap:8px}
+.bub{max-width:85%;padding:8px 12px;border-radius:14px;font-size:15px;border:1.5px solid rgba(15,27,61,.15)}.bub.u{align-self:flex-end;background:#DCF8C6}.bub.b{align-self:flex-start;background:#fff}.bub small{display:block;color:var(--mute);font-size:12px;margin-top:2px}
+.pform{display:flex;gap:6px}.pform input{flex:1;font:inherit;border:2px solid var(--navy);border-radius:99px;padding:8px 12px;min-width:0}
+/* tool: line */
+.plot{width:100%;max-width:560px;border:3px solid var(--navy);border-radius:18px;background:#fff;touch-action:none;display:block;margin:0 auto}
+.handle{cursor:ns-resize}
+/* tool: guard */
+.msgl{display:grid;gap:8px}.mrow{display:flex;gap:10px;align-items:center;justify-content:space-between;border:2px solid var(--navy);border-radius:14px;padding:8px 10px;background:#fff;flex-wrap:wrap}.mrow p{margin:0;flex:1;min-width:180px;font-size:15px}
+.score{width:120px;height:14px;border:2px solid var(--navy);border-radius:99px;overflow:hidden;background:#fff;flex:none}.score i{display:block;height:100%}
+input[type=range]{width:100%;accent-color:var(--magenta)}
+/* council */
+.opts{display:grid;gap:10px;margin:12px 0}.opt{text-align:left;border:3px solid var(--navy);border-radius:14px;background:#fff;padding:12px 14px;font-weight:500;box-shadow:3px 3px 0 var(--navy)}.opt:hover{background:#FFF3D1}.opt.on{background:var(--saffron)}.opt.good{background:#DDF5EF}.opt.bad{background:#FBE0E8}
+.persp{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:10px}.persp div{border:2px solid var(--navy);border-radius:14px;padding:10px 12px;background:#F6F8FF;font-size:15px}.persp b{display:block}
+/* lab */
+.lab{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px}
+.tool{background:#fff;border:3px solid var(--navy);border-radius:20px;box-shadow:5px 5px 0 var(--navy);overflow:hidden}.tool .top{padding:14px 16px;color:#fff;display:flex;gap:10px;align-items:center}.tool .top span{font-size:34px}.tool .top b{font-family:var(--disp);font-size:20px;line-height:1.1}
+.tool .bd{padding:14px 16px}.tool.locked{opacity:.55}
+.stars{font-size:22px;letter-spacing:2px}
+.cert{border:6px double var(--saffron);border-radius:22px;padding:26px;text-align:center;background:#fff}
+dialog{border:3px solid var(--navy);border-radius:22px;box-shadow:8px 8px 0 var(--navy);padding:22px;max-width:min(520px,92vw)}dialog::backdrop{background:rgba(15,27,61,.6)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--navy);color:#fff;border:3px solid var(--saffron);border-radius:16px;padding:10px 18px;font-weight:700;z-index:50;max-width:92vw;text-align:center}
+.cf{position:fixed;top:-30px;font-style:normal;font-size:26px;z-index:40;pointer-events:none;animation:fall 2s ease-in forwards}@keyframes fall{to{transform:translate(var(--dx),105vh) rotate(360deg)}}
+footer{max-width:1120px;margin:0 auto;padding:0 18px 40px;color:var(--mute);font-size:14px}
+@media(max-width:820px){
+  .hero,.grid2,.draw{grid-template-columns:1fr}.hero{padding:24px}.hero .akw{display:none}
+  .steps5{grid-template-columns:1fr 1fr}.br{grid-template-columns:1fr}
+  nav.tabs{position:fixed;left:0;right:0;bottom:0;margin:0;background:var(--navy);justify-content:space-around;padding:8px 6px calc(8px + env(safe-area-inset-bottom));z-index:30;border-top:3px solid var(--saffron)}
+  nav.tabs a{font-size:14px}.eng span i{display:none}.bar{padding:8px 14px}
+  canvas.pad{width:100%;max-width:300px;height:auto;aspect-ratio:1;margin:0 auto;display:block}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<svg style="display:none"><symbol id="ak" viewBox="0 0 200 200"><line x1="100" y1="22" x2="100" y2="48" stroke="#0F1B3D" stroke-width="7" stroke-linecap="round"/><circle cx="100" cy="18" r="12" fill="#D63A6E" stroke="#0F1B3D" stroke-width="4"/><rect x="35" y="45" width="130" height="115" rx="44" fill="#FFB703" stroke="#0F1B3D" stroke-width="6"/><rect x="52" y="68" width="96" height="58" rx="26" fill="#0F1B3D"/><ellipse class="eye" cx="80" cy="96" rx="10" ry="13" fill="#5FF0D5"/><ellipse class="eye" cx="120" cy="96" rx="10" ry="13" fill="#5FF0D5"/><path d="M84 113q16 12 32 0" stroke="#5FF0D5" stroke-width="5" fill="none" stroke-linecap="round"/><rect x="62" y="160" width="76" height="24" rx="10" fill="#0FA88F" stroke="#0F1B3D" stroke-width="5"/><path d="M35 92h-12M165 92h12" stroke="#0F1B3D" stroke-width="8" stroke-linecap="round"/></symbol></svg>
+<header><div class="bar"><a class="logo" href="#about" aria-label="DigiSoma Lab, about"><svg aria-hidden="true"><use href="#ak"/></svg>Digi<i>Soma</i> <small>LAB</small></a>
+<nav class="tabs" aria-label="Main"><a href="#missions" data-t="missions">🗺️ Missions</a><a href="#lab" data-t="lab">🧪 My Lab</a><a href="#about" data-t="about">ℹ️ About</a></nav>
+<button class="eng" id="eng" aria-pressed="false" title="Engineer mode shows the real technical words"><span>🔬<i style="font-style:normal"> Engineer mode</i></span><b aria-hidden="true"></b></button></div><div class="zig"></div></header>
+<main id="app"></main>
+<footer><div class="zig t" style="margin-bottom:14px;border-radius:4px"></div>DigiSoma Lab preview · Every AI tool here runs inside your browser. Nothing you draw or type leaves this device. · Built in Nairobi.</footer>
+<dialog id="dlg"></dialog>
+<script>
+const $=s=>document.querySelector(s),app=$("#app"),dlg=$("#dlg");
+const esc=s=>String(s).replace(/[&<>"']/g,c=>"&#"+c.charCodeAt(0)+";");
+const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const calm=matchMedia("(prefers-reduced-motion: reduce)").matches;
+let DB={name:"",m:{},eng:0};try{Object.assign(DB,JSON.parse(localStorage.getItem("digisoma.lab")||"{}"))}catch(e){}
+const save=()=>{try{localStorage.setItem("digisoma.lab",JSON.stringify(DB))}catch(e){}};
+const setEng=v=>{DB.eng=v;document.body.classList.toggle("engineer",!!v);$("#eng").setAttribute("aria-pressed",!!v);save()};setEng(DB.eng);
+$("#eng").onclick=()=>{setEng(DB.eng?0:1);toast(DB.eng?"🔬 Engineer mode on: you’ll see the real AI words.":"Engineer mode off.")}
+let tt;const toast=t=>{let e=$(".toast");if(!e){e=document.createElement("div");e.className="toast";e.setAttribute("role","status");document.body.append(e)}e.textContent=t;clearTimeout(tt);tt=setTimeout(()=>e.remove(),3200)};
+function boom(){if(calm)return;for(let i=0;i<26;i++){const s=document.createElement("i");s.className="cf";s.textContent=["⭐","✨","🧪","💡"][i%4];s.style.cssText=`left:${Math.random()*100}vw;--dx:${Math.random()*200-100}px;animation-delay:${Math.random()*.4}s`;document.body.append(s);setTimeout(()=>s.remove(),2600)}}
+const ak=(t,sz=64)=>`<div class="say"><svg viewBox="0 0 200 200" style="width:${sz}px;height:${sz}px" aria-hidden="true"><use href="#ak"/></svg><div>${t}</div></div>`;
+const eng=t=>`<div class="engnote">🔬 <b>Engineer note:</b> ${t}</div>`;
+
+/* ---------------- MISSIONS ---------------- */
+const M=[
+{id:"see",town:"Nairobi",x:505,y:392,c:"#3BB7E0",e:"✏️",t:"Teach Akili to see",tool:"Drawing recogniser",idea:"Learning from data",
+ who:["👩🏾‍🎨","Wanjiru, art club captain","Our school art club has hundreds of drawings to sort for the exhibition. Can you build an AI that sorts them by itself?"],
+ learn:[["👀","Computers see numbers","A drawing is a grid of tiny squares called pixels. To a computer, each pixel is just a number: dark or light."],["📚","Examples, not rules","We won’t tell Akili the rules for a mango. We’ll show examples, and it will find the patterns itself."],["🔍","Closest match wins","For a new drawing, Akili finds the examples it looks most like, and picks the label they share."]],
+ eng:"This tool is a <b>k-nearest-neighbours classifier</b>. Each drawing is shrunk to 20 × 20 pixels, turned into a list of 400 numbers, and compared with every example using distance. The 3 closest examples vote (k = 3).",
+ reflect:["Akili was trained only on two kinds of drawing. You draw a cat. What will happen?",["It will still pick one of the two labels","It will say “cat”"],0,"An AI only knows the labels it was taught. It can’t say “I don’t know” unless we design it to."]},
+{id:"tree",town:"Eldoret",x:300,y:205,c:"#0FA88F",e:"🌽",t:"Save the maize harvest",tool:"Leaf doctor",idea:"Thinking with rules",
+ who:["👨🏾‍🌾","Kiprop, maize farmer","Some of my maize leaves are sick. I need a quick way to check them before the disease spreads."],
+ learn:[["❓","Ask good questions","A decision tree sorts things by asking yes-or-no questions, one after another."],["🎯","Some questions matter more","“Does it have spots?” tells us a lot about sickness. Other questions may tell us nothing."],["🧪","Test it","We’ll run your tree on 12 real-looking leaves and see how many it gets right."]],
+ eng:"You’re building a <b>decision tree</b>, one of the most widely used machine-learning models. Choosing the most useful question first is called picking the feature with the most <b>information gain</b>.",
+ reflect:["Why was “Is the leaf big?” a weak question?",["Leaf size doesn’t tell us if it is sick","Big leaves are always sick"],0,"Useful questions (features) must be linked to the answer. Size isn’t, so it only confuses the tree."]},
+{id:"bot",town:"Mombasa",x:690,y:470,c:"#D63A6E",e:"💬",t:"A chatbot for Mama Halima’s duka",tool:"Duka chatbot",idea:"Talking with people",
+ who:["👩🏾‍🦱","Mama Halima, duka owner","My phone buzzes all day with the same questions. Can you build a chatbot that answers my customers?"],
+ learn:[["💬","Intents","An intent is what the customer wants: a greeting, the opening hours, a price or a delivery."],["🔑","Keywords","The bot looks for clue words. “Bei” or “how much” means the customer wants a price."],["🤷🏾","When it’s stuck","If no clue words match, a good bot says it doesn’t understand instead of guessing."]],
+ eng:"This is <b>intent classification</b> with keyword matching. Big AI chatbots use <b>large language models</b> trained on huge amounts of text, but they still need to work out the user’s intent.",
+ reflect:["A customer types “Una maziwa?” (Do you have milk?) and the bot can’t answer. What should Mama Halima do?",["Add a new intent for milk, with words like maziwa and milk","Blame the customer"],0,"Bots only understand what they were built for. Builders keep improving them with new intents and words."]},
+{id:"line",town:"Kisumu",x:220,y:300,c:"#7B4DE0",e:"🐟",t:"Predict the fish catch",tool:"Catch predictor",idea:"Learning from data",
+ who:["🧑🏾‍✈️","Otieno, boat captain on Lake Victoria","If I knew how many fish my nets will catch, I could plan how much ice to buy. Can data help?"],
+ learn:[["📈","Data shows a trend","When we plot nets against fish caught, the dots go up together."],["📏","Draw the best line","A good line passes close to all the dots. The gaps between line and dots are the errors."],["🔮","Predict","Once we have a good line, we can use it to predict new days."]],
+ eng:"Finding the line with the smallest total squared error is called <b>linear regression</b>. Training an AI often means the same thing: adjusting numbers to make the error as small as possible.",
+ reflect:["Otieno wants to use your line to predict the catch with 50 nets. Is that safe?",["Be careful: we have no data anywhere near 50 nets","Yes, a line is always right"],0,"Predicting far outside your data is called extrapolation. It can go very wrong."]},
+{id:"guard",town:"Malindi",x:752,y:350,c:"#E8590C",e:"🛡️",t:"Stop the scam messages",tool:"Scam guard",idea:"Learning from data",
+ who:["👵🏾","Bibi Zawadi, grandmother","I keep getting strange messages asking for my M-Pesa PIN. Can you build a guard that warns me?"],
+ learn:[["🏷️","Label examples","First you’ll teach the guard which messages are scams and which are safe."],["🧮","Word clues","The guard learns which words show up in scams, like “PIN”, “won” and “urgent”."],["🎚️","Set the alarm","You choose how strict the guard is. Too strict blocks good messages. Too relaxed lets scams through."]],
+ eng:"This is a <b>Naive Bayes text classifier</b>, the kind early spam filters used. The slider sets the <b>decision threshold</b>, which trades <b>false positives</b> (good messages blocked) against <b>false negatives</b> (scams missed).",
+ reflect:["Your guard blocks a real message from a teacher. What is that called?",["A false alarm (false positive)","A perfect result"],0,"Every AI makes mistakes. Engineers choose which mistakes are less harmful."]},
+{id:"council",town:"Nakuru",x:380,y:290,c:"#0F1B3D",e:"⚖️",t:"The AI Council",tool:"Ethics council",idea:"Changing society",
+ who:["🧑🏾‍⚖️","Councillor Amina","New AI tools are arriving in our county. I need young advisers to help decide how they should be used fairly."],
+ learn:[["🤔","No easy answers","Ethics questions often have no single right answer. What matters is thinking about everyone affected."],["👥","Many points of view","A student, a parent and a teacher may see the same AI very differently."],["🛡️","Fair, safe, honest","Good AI respects privacy, treats people fairly and is honest about what it is."]],
+ eng:"Professionals call this <b>responsible AI</b>: checking a system for <b>privacy</b>, <b>fairness</b>, <b>transparency</b> and <b>accountability</b> before using it.",
+ reflect:null}];
+const MI=Object.fromEntries(M.map(m=>[m.id,m]));
+const ms=id=>DB.m[id]||(DB.m[id]={});
+
+/* ---------------- views ---------------- */
+function about(){
+  app.innerHTML=`<section class="hero"><div class="glow"></div><div style="position:relative"><p class="kick" style="color:var(--saffron)">DigiSoma Lab · for ages 9 to 16</p><h1>Kids don’t just learn about AI. <em>They build it.</em></h1>
+   <p>On DigiSoma Lab, children become junior AI engineers. They take on real missions for communities across Kenya and build working AI tools, right in the browser, with no installs and no data leaving the device.</p>
+   <div class="row"><a class="btn" href="#m/see">🚀 Start mission 1</a><a class="btn w" href="#missions">See all missions</a></div></div>
+   <div class="c akw" style="position:relative"><svg class="akb" viewBox="0 0 200 200" aria-hidden="true"><use href="#ak"/></svg><p style="margin:0;font-weight:700">Meet Akili, your lab partner</p><p style="margin:0;font-size:14px;color:#B9C1E0">“Akili” means intelligence in Swahili</p></div></section>
+  <section style="margin-top:44px"><p class="kick">How every mission works</p><h2>Five steps, like real engineers</h2>
+   <div class="steps5"><div class="st5"><span>📣</span><b>1. Brief</b><small>Meet someone in a Kenyan town with a real problem.</small></div><div class="st5"><span>💡</span><b>2. Learn</b><small>Three quick idea cards, no long lectures.</small></div><div class="st5"><span>🛠️</span><b>3. Build</b><small>Make a working AI tool with your own hands.</small></div><div class="st5"><span>🧪</span><b>4. Test</b><small>Try it on new data. See where it fails.</small></div><div class="st5"><span>🤔</span><b>5. Reflect</b><small>Ask: is it fair, safe and honest?</small></div></div></section>
+  <section style="margin-top:44px" class="grid2"><div class="card"><p class="kick">What children build</p><h2 style="font-size:30px">Six real AI tools</h2><ul style="padding-left:20px;margin:10px 0 0">
+   <li><b>A drawing recogniser</b> that learns from their sketches</li><li><b>A leaf doctor</b> decision tree for maize farmers</li><li><b>A Swahili-and-English chatbot</b> for a duka</li><li><b>A catch predictor</b> using real maths</li><li><b>A scam guard</b> that learns from messages</li><li><b>An ethics council</b> to decide how AI should be used</li></ul></div>
+   <div class="card" style="background:#FFF3D1"><p class="kick">Why this approach</p><h2 style="font-size:30px">Learning by making</h2><p>Children understand AI best when they build it, break it and fix it. This idea, called <b>constructionism</b>, comes from the education researcher Seymour Papert.</p><p style="margin-bottom:0">Every mission ties AI to a problem in an African community, so children see technology as something <b>they</b> can use to help people.</p></div></section>
+  <section style="margin-top:44px"><p class="kick">Built in for every child</p><div class="grid3">
+   <div class="card"><h3>🔬 Two levels in one</h3><p class="mute" style="margin-bottom:0">Younger children get simple words. Flip on <b>Engineer mode</b> and older learners see the real terms: k-nearest neighbours, decision trees, regression, false positives.</p></div>
+   <div class="card"><h3>🗂️ A portfolio, not just points</h3><p class="mute" style="margin-bottom:0">Every tool a child builds is saved in <b>My Lab</b>, where they can reopen it, show it to family and keep improving it. All six earn a Junior AI Engineer certificate.</p></div>
+   <div class="card"><h3>🔒 Private by design</h3><p class="mute" style="margin-bottom:0">All the AI runs on the device. No accounts, no uploads and no chat with strangers. Only a first name is saved, and only in this browser.</p></div></div></section>
+  <section style="margin-top:44px" class="card"><div class="row" style="gap:20px;align-items:center"><div style="width:96px;height:96px;border-radius:50%;background:var(--saffron);border:3px solid var(--navy);display:grid;place-items:center;font-family:var(--disp);font-size:44px;font-weight:800;flex:none">A</div><div style="flex:1;min-width:240px"><p class="kick">From the founder</p><h2 style="font-size:28px">Built by an AI and data engineer in Nairobi</h2><p style="margin-bottom:0">“I’m Allan. I use AI and data for social change, and I care deeply about children’s wellbeing. I want Africa’s children to build the technology that shapes their future, not just use what was built elsewhere. DigiSoma Lab is where they start.”</p></div></div></section>
+  <p class="c" style="margin-top:36px"><a class="btn" href="#m/see">🚀 Start mission 1: Teach Akili to see</a></p>`}
+
+function mapSVG(){const pts=M.map(m=>[m.x,m.y]);let d=`M${pts[0][0]} ${pts[0][1]}`;for(let i=1;i<pts.length;i++){const[a,b]=pts[i-1],[x,y]=pts[i];d+=` Q${(a+x)/2+(i%2?40:-40)} ${(b+y)/2+(i%2?-40:40)} ${x} ${y}`}
+  return `<svg viewBox="0 0 900 560" role="img" aria-label="Mission map across Kenya. Not to scale."><defs><pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.6" fill="#B6DCD4"/></pattern></defs>
+  <rect width="900" height="560" fill="url(#dots)"/><path d="M820 0H900V560H760C770 500 800 470 800 420 830 330 820 200 820 0Z" fill="#9BD3EE" stroke="#0F1B3D" stroke-width="3"/><text x="840" y="300" fill="#0F1B3D" font-family="Lexend" font-size="15" font-weight="700" transform="rotate(90 840 300)">Indian Ocean</text>
+  <path d="M150 120C260 60 420 40 560 60 680 80 760 120 790 190 810 260 790 330 770 400 740 470 690 520 640 540 560 520 480 480 420 450 330 420 250 390 190 360 120 300 110 220 150 120Z" fill="#FFF3D1" stroke="#0F1B3D" stroke-width="4"/>
+  <path d="M90 270C130 250 170 265 180 300 185 335 150 360 115 350 80 340 70 295 90 270Z" fill="#9BD3EE" stroke="#0F1B3D" stroke-width="3"/><text x="70" y="390" font-family="Lexend" font-size="13" font-weight="700" fill="#0F1B3D">Lake Victoria</text>
+  
+  ${M.map((m,i)=>{const done=ms(m.id).done;return `<g class="mnode" tabindex="0" role="link" aria-label="Mission ${i+1}: ${m.t}, ${m.town}${done?", completed":""}" data-go="${m.id}"><circle class="r" cx="${m.x}" cy="${m.y}" r="30" fill="${m.c}" stroke="#0F1B3D" stroke-width="4"/><text x="${m.x}" y="${m.y+10}" text-anchor="middle" font-size="28">${done?"✅":m.e}</text><rect x="${m.x-62}" y="${m.y+38}" width="124" height="28" rx="8" fill="#fff" stroke="#0F1B3D" stroke-width="2.5"/><text x="${m.x}" y="${m.y+57}" text-anchor="middle" font-family="Lexend" font-weight="700" font-size="14" fill="#0F1B3D">${i+1}. ${m.town}</text></g>`}).join("")}
+  <text x="20" y="545" font-family="Lexend" font-size="12" fill="#535C7A">Map not to scale</text></svg>`}
+function missions(){const n=M.filter(m=>ms(m.id).done).length;
+  app.innerHTML=`<p class="kick">${DB.name?`Karibu, ${esc(DB.name)}! `:""}Mission control</p><div class="row" style="justify-content:space-between;align-items:flex-end"><h1>Six missions across Kenya</h1><span class="pill">${n} of 6 complete</span></div><p class="mute" style="max-width:46em">Each town has a problem that AI can help solve. Follow the numbers, or jump to any mission you like.</p>
+  <div class="mapw" style="margin-top:16px">${mapSVG()}</div>
+  <div class="mlist">${M.map((m,i)=>{const s=ms(m.id);return `<a class="mcard" href="#m/${m.id}"><span class="ic" style="background:${m.c}">${m.e}</span><span><small>Mission ${i+1} · ${m.town}</small><b>${m.t}</b><small>You build: <b style="display:inline;font-family:var(--body);font-size:14px">${m.tool}</b></small><br><span class="badge" style="background:${s.done?"#DDF5EF":"#fff"}">${s.done?"✅ Complete "+"⭐".repeat(s.stars||0):"Big idea: "+m.idea}</span></span></a>`}).join("")}</div>`;
+  app.querySelectorAll("[data-go]").forEach(g=>{const go=()=>location.hash="m/"+g.dataset.go;g.onclick=go;g.onkeydown=e=>{if(e.key=="Enter"||e.key==" "){e.preventDefault();go()}}})}
+
+/* mission shell: brief → learn → build → reflect → done */
+const STEPS=["📣 Brief","💡 Learn","🛠️ Build & test","🤔 Reflect","🏅 Done"];
+function mission(id,step){const m=MI[id];if(!m){location.hash="missions";return}const i=M.indexOf(m);step=step||0;
+  if(step==0&&!DB.name){return askName(()=>mission(id,0))}
+  app.innerHTML=`<div class="mhead" style="background:${m.c}"><span class="ic" aria-hidden="true">${m.e}</span><div style="flex:1;min-width:220px"><a href="#missions">← Mission control</a><h1 style="font-size:clamp(28px,4.5vw,44px)">${m.t}</h1><span style="opacity:.92;font-weight:500">Mission ${i+1} of 6 · ${m.town} · Big idea: ${m.idea}</span></div></div>
+  <div class="stepper" aria-label="Mission steps">${STEPS.map((s,j)=>`<span class="${j<step?"done":j==step?"on":""}" ${j==step?'aria-current="step"':""}>${s}</span>`).join("")}</div><div class="panel" id="pn"></div>`;
+  const pn=$("#pn"),next=()=>mission(id,step+1);window.scrollTo(0,0);
+  if(step==0){pn.innerHTML=`<div class="who"><span aria-hidden="true">${m.who[0]}</span><div><b>${m.who[1]}</b><br>“${m.who[2]}”</div></div>${ak(`Jambo ${esc(DB.name)}! I’m Akili, your lab partner. Let’s help ${m.who[1].split(",")[0]}. You’ll build a <b>${m.tool.toLowerCase()}</b>.`)}<p class="c"><button class="btn" id="nx">Accept the mission ▶</button></p>`;$("#nx").onclick=next}
+  else if(step==1){pn.innerHTML=`<h2 style="font-size:28px">Three ideas you need</h2><div class="lcards">${m.learn.map(c=>`<div class="lcard"><span aria-hidden="true">${c[0]}</span><b>${c[1]}</b><p>${c[2]}</p></div>`).join("")}</div>${eng(m.eng)}<p class="c"><button class="btn" id="nx">Let’s build ▶</button></p>`;$("#nx").onclick=next}
+  else if(step==2){TOOLS[id](pn,(stars,summary)=>{const s=ms(id);s.stars=Math.max(s.stars||0,stars);s.sum=summary;save();next()})}
+  else if(step==3){if(!m.reflect){next();return}const[q,o,a,why]=m.reflect;pn.innerHTML=`<h2 style="font-size:28px">Think like an engineer</h2><p style="font-size:19px">${q}</p><div class="opts">${o.map((x,j)=>`<button class="opt" data-j="${j}">${x}</button>`).join("")}</div><div id="fb" aria-live="polite"></div>`;
+    pn.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{pn.querySelectorAll(".opt").forEach(x=>{x.disabled=true;if(+x.dataset.j==a)x.classList.add("good")});if(+b.dataset.j!=a)b.classList.add("bad");$("#fb").innerHTML=`<p><b>${+b.dataset.j==a?"Exactly. ":"Good thinking, but… "}</b>${why}</p><p class="c"><button class="btn" id="nx">Finish mission ▶</button></p>`;$("#nx").onclick=next})}
+  else{const s=ms(id);const first=!s.done;s.done=1;save();if(first)boom();const n=M.filter(x=>ms(x.id).done).length,nm=M[i+1];
+    pn.innerHTML=`<div class="c"><div style="font-size:64px">🏅</div><h2>Mission complete!</h2><p class="stars" aria-label="${s.stars||1} of 3 stars">${"⭐".repeat(s.stars||1)}${"☆".repeat(3-(s.stars||1))}</p><p style="font-size:18px">${esc(DB.name)}, you built ${/^[aeiou]/i.test(m.tool)?"an":"a"} <b>${m.tool.toLowerCase()}</b> for ${m.town}. It’s saved in <a href="#lab" style="text-decoration:underline;font-weight:700">My Lab</a>.</p><p class="mute">${n} of 6 missions complete${n==6?". You’ve earned the Junior AI Engineer certificate! 🎓":""}</p>
+    <div class="row c">${nm?`<a class="btn" href="#m/${nm.id}">Next: ${nm.t} ▶</a>`:""}<a class="btn w" href="#lab">Open My Lab</a>${n==6?`<button class="btn t" id="ct">🎓 My certificate</button>`:""}</div></div>`;if($("#ct"))$("#ct").onclick=cert}}
+function askName(cb){app.innerHTML=`<div class="panel" style="max-width:560px;margin:30px auto">${ak("Karibu to DigiSoma Lab! Before your first mission, what should I call you?",80)}<label for="nm" style="font-weight:700">Your first name</label><input id="nm" maxlength="14" autocomplete="off" style="width:100%;font:inherit;font-size:20px;padding:10px 14px;border:3px solid var(--navy);border-radius:14px;margin:6px 0" placeholder="e.g. Amani"><p class="mute" style="font-size:14px">Only your first name, saved on this device. No email, no photo.</p><p id="ne" aria-live="polite"></p><p class="c"><button class="btn" id="ok">Let’s go ▶</button></p></div>`;
+  $("#nm").focus();$("#nm").onkeydown=e=>{if(e.key=="Enter")$("#ok").click()};$("#ok").onclick=()=>{const n=$("#nm").value.trim();if(!n){$("#ne").textContent="Type your first name to continue.";return}DB.name=n;save();cb()}}
+
+/* ---------------- TOOL 1: drawing recogniser (k-nearest neighbours) ---------------- */
+function pad(c){const x=c.getContext("2d");let d=0,last,ink=0;const W=c.width;
+  const clear=()=>{x.fillStyle="#fff";x.fillRect(0,0,W,W);ink=0};clear();x.lineCap="round";x.lineJoin="round";x.lineWidth=W/16;x.strokeStyle="#0F1B3D";
+  const pt=e=>{const r=c.getBoundingClientRect();return[(e.clientX-r.left)*W/r.width,(e.clientY-r.top)*W/r.height]};
+  c.onpointerdown=e=>{d=1;ink=1;last=pt(e);try{c.setPointerCapture(e.pointerId)}catch(_){}x.beginPath();x.arc(last[0],last[1],W/32,0,7);x.fillStyle="#0F1B3D";x.fill()};
+  c.onpointermove=e=>{if(!d)return;const p=pt(e);x.beginPath();x.moveTo(last[0],last[1]);x.lineTo(p[0],p[1]);x.stroke();last=p};
+  c.onpointerup=c.onpointercancel=c.onpointerleave=()=>d=0;
+  return{clear,has:()=>ink,vec:()=>feat(c),thumb:()=>{const t=document.createElement("canvas");t.width=t.height=64;t.getContext("2d").drawImage(c,0,0,64,64);return t.toDataURL()}}}
+function feat(c){const W=c.width,data=c.getContext("2d").getImageData(0,0,W,W).data;let x0=W,y0=W,x1=-1,y1=-1;
+  for(let y=0;y<W;y++)for(let x=0;x<W;x++){if(data[(y*W+x)*4]<128){if(x<x0)x0=x;if(x>x1)x1=x;if(y<y0)y0=y;if(y>y1)y1=y}}
+  if(x1<0)return null;const s=Math.max(x1-x0,y1-y0)+W/10,cx=(x0+x1)/2,cy=(y0+y1)/2,t=document.createElement("canvas");t.width=t.height=20;const g=t.getContext("2d");g.fillStyle="#fff";g.fillRect(0,0,20,20);g.drawImage(c,cx-s/2,cy-s/2,s,s,0,0,20,20);
+  const d=g.getImageData(0,0,20,20).data,v=[];for(let i=0;i<400;i++)v.push(+(1-d[i*4]/255).toFixed(3));return v}
+function knn(S,v,k=3){const ds=S.map((s,i)=>({i,l:s.l,d:s.v.reduce((a,x,j)=>a+(x-v[j])**2,0)})).sort((a,b)=>a.d-b.d).slice(0,k);const votes={};ds.forEach(o=>votes[o.l]=(votes[o.l]||0)+1);const best=Object.entries(votes).sort((a,b)=>b[1]-a[1])[0];return{l:+best[0],conf:best[1]/ds.length,near:ds}}
+const TOOLS={};
+TOOLS.see=(pn,done)=>{const st=ms("see");st.names=st.names||["🥭 Mango","🍌 Banana"];st.S=st.S||[];let mode="train",tests=0;
+  const draw=()=>{const cnt=[0,1].map(l=>st.S.filter(s=>s.l==l).length),ready=cnt[0]>=3&&cnt[1]>=3;
+    pn.innerHTML=ak(mode=="train"?"Draw on the pad, then tap which group it belongs to. Give me <b>at least 3 examples of each</b>. Different sizes and shapes help me learn!":"Now draw something new and tap <b>Ask Akili</b>. I’ll show you which of your examples it looks most like.")+
+    `<div class="draw"><div class="c"><canvas class="pad" id="pad" width="260" height="260" aria-label="Drawing pad"></canvas><div class="row c"><button class="btn w sm" id="clr">🧽 Clear</button></div></div><div>
+     ${mode=="train"?`<div class="classes">${[0,1].map(l=>`<div class="cls"><div class="row"><input value="${esc(st.names[l])}" data-n="${l}" aria-label="Name of group ${l+1}" maxlength="16"><button class="btn sm ${l?"t":""}" data-add="${l}">+ Add as this</button><span class="mute" style="font-size:14px">${cnt[l]} example${cnt[l]==1?"":"s"}</span></div><div class="thumbs">${st.S.filter(s=>s.l==l).map(s=>`<img src="${s.t}" alt="">`).join("")}</div></div>`).join("")}</div>
+      <p class="row" style="margin-top:12px"><button class="btn n" id="tr" ${ready?"":"disabled"}>🧠 Done training: test it ▶</button>${st.S.length?`<button class="btn w sm" id="rs">Start over</button>`:""}</p>`
+     :`<p class="row"><button class="btn t" id="ask">🤖 Ask Akili</button><button class="btn w sm" id="bk">← Add more examples</button></p><div id="out" aria-live="polite"></div>${tests>=3?`<p class="row"><button class="btn" id="fin">I’ve tested enough ▶</button></p>`:`<p class="mute" style="font-size:14px">Test at least 3 drawings (${tests}/3). Try a tricky one too!</p>`}`}
+    </div></div>${eng("Akili turns each drawing into 400 numbers (a 20 × 20 grid), then measures the distance to every example. The 3 nearest examples vote. That’s k-nearest neighbours with k = 3.")}`;
+    const P=pad($("#pad"));$("#clr").onclick=P.clear;
+    pn.querySelectorAll("[data-n]").forEach(inp=>inp.onchange=()=>{st.names[+inp.dataset.n]=inp.value.trim()||st.names[+inp.dataset.n];save()});
+    pn.querySelectorAll("[data-add]").forEach(b=>b.onclick=()=>{const v=P.vec();if(!v){toast("Draw something first!");return}st.S.push({l:+b.dataset.add,v,t:P.thumb()});save();draw()});
+    if($("#tr"))$("#tr").onclick=()=>{mode="test";draw()};if($("#rs"))$("#rs").onclick=()=>{st.S=[];save();draw()};
+    if($("#bk"))$("#bk").onclick=()=>{mode="train";draw()};
+    if($("#ask"))$("#ask").onclick=()=>{const v=P.vec();if(!v){toast("Draw something first!");return}const r=knn(st.S,v);tests++;
+      $("#out").innerHTML=`<div class="result"><b style="font-size:20px">Akili says: ${esc(st.names[r.l])}</b> <span class="mute">(${Math.round(r.conf*100)}% of the nearest examples agree)</span><div class="meterb" style="margin:8px 0"><i style="width:${r.conf*100}%"></i></div><small>It looks most like these examples you drew:</small><div class="thumbs">${r.near.map(n=>`<img src="${st.S[n.i].t}" alt="">`).join("")}</div></div>`;
+      if(tests==3){const keep=$("#out").innerHTML;draw();$("#out").innerHTML=keep}};
+    if($("#fin"))$("#fin").onclick=()=>done(st.S.length>=10?3:st.S.length>=8?2:1,`${st.S.length} examples`)};
+  draw()};
+
+/* ---------------- TOOL 2: decision tree for maize leaves ---------------- */
+const LEAVES=[];[["g",0,1],["g",0,0],["y",0,1],["y",0,0],["g",1,1],["g",1,0],["y",1,1],["y",1,0],["g",0,1],["g",0,0],["g",1,0],["y",0,1]].forEach(([c,s,b])=>LEAVES.push({yellow:c=="y",spots:!!s,big:!!b,sick:c=="y"||!!s}));
+const leafSVG=L=>`<svg viewBox="0 0 60 60" aria-hidden="true"><g transform="translate(30 30) scale(${L.big?1:.72}) translate(-30 -30)"><path d="M30 4C46 14 52 32 30 56 8 32 14 14 30 4Z" fill="${L.yellow?"#E2C044":"#3FA34D"}" stroke="#0F1B3D" stroke-width="2.5"/><path d="M30 8V52" stroke="#0F1B3D" stroke-width="1.5"/>${L.spots?'<circle cx="23" cy="24" r="3.5" fill="#6B3E12"/><circle cx="37" cy="33" r="3" fill="#6B3E12"/><circle cx="26" cy="40" r="2.5" fill="#6B3E12"/>':""}</g></svg>`;
+const TQ={spots:"Does it have spots?",yellow:"Is it yellow?",big:"Is it big?"};
+TOOLS.tree=(pn,done)=>{const st=ms("tree");let T=st.T||{q:null,yes:null,no:null},res=null;
+  const opt=(node,path,depth)=>{const cur=node;return `<div class="chips">${["sick","healthy"].map(l=>`<button class="chip ${cur&&cur.l==l?"on":""}" data-set="${path}" data-l="${l}">${l=="sick"?"🍂 Sick":"🌱 Healthy"}</button>`).join("")}${depth<2?Object.keys(TQ).filter(q=>q!=T.q).map(q=>`<button class="chip ${cur&&cur.q==q?"t":""}" data-set="${path}" data-q="${q}">❓ ${TQ[q]}</button>`).join(""):""}</div>${cur&&cur.q?`<div class="br" style="margin-top:8px">${["yes","no"].map(b=>`<div class="brb"><b>${TQ[cur.q]} ${b=="yes"?"Yes ✔":"No ✘"}</b><div class="chips">${["sick","healthy"].map(l=>`<button class="chip ${cur[b]==l?"on":""}" data-set2="${path}.${b}" data-l="${l}">${l=="sick"?"🍂 Sick":"🌱 Healthy"}</button>`).join("")}</div></div>`).join("")}</div>`:""}`};
+  const classify=(L,n)=>{if(!n)return null;if(typeof n=="string")return n=="sick";if(n.l)return n.l=="sick";if(n.q){const b=L[n.q]?n.yes:n.no;return b==null?null:b=="sick"}return null};
+  const complete=()=>T.q&&["yes","no"].every(b=>{const n=T[b];return n&&(n.l||(n.q&&n.yes&&n.no))});
+  const draw=()=>{pn.innerHTML=ak("Here are Kiprop’s leaves. Build a tree of questions that sorts <b>sick</b> from <b>healthy</b>. Look closely: what do the sick ones have in common?")+
+    `<div class="leaves">${LEAVES.map((L,i)=>{const p=res?res[i]:null;return `<div class="lf ${p==null?"":p==L.sick?"ok":"no"}">${leafSVG(L)}<br>${res?(p==null?"?":(p?"🍂 sick":"🌱 healthy")+(p==L.sick?" ✅":" ❌")):`Leaf ${i+1}`}</div>`}).join("")}</div>
+    ${res?"":`<p class="mute" style="font-size:14px">Hint from Kiprop: sick leaves are the yellow ones, or the ones with brown spots.</p>`}
+    <div class="tree"><span class="tq">Question 1</span><div class="chips" style="margin:6px 0">${Object.keys(TQ).map(q=>`<button class="chip ${T.q==q?"t":""}" data-q1="${q}">❓ ${TQ[q]}</button>`).join("")}</div>
+    ${T.q?`<div class="br">${["yes","no"].map(b=>`<div class="brb"><b>${TQ[T.q]} ${b=="yes"?"Yes ✔":"No ✘"} → then…</b>${opt(T[b],b,1)}</div>`).join("")}</div>`:""}</div>
+    <div id="rr" aria-live="polite"></div><p class="row c"><button class="btn n" id="run" ${complete()?"":"disabled"}>▶ Run my tree on all 12 leaves</button></p>${eng("Each box is a <b>node</b>. The answers at the ends are <b>leaf nodes</b> (yes, the tree has leaves too!). The best first question splits the data most cleanly.")}`;
+    pn.querySelectorAll("[data-q1]").forEach(b=>b.onclick=()=>{T={q:b.dataset.q1,yes:null,no:null};res=null;draw()});
+    pn.querySelectorAll("[data-set]").forEach(b=>b.onclick=()=>{const k=b.dataset.set;T[k]=b.dataset.l?{l:b.dataset.l}:{q:b.dataset.q,yes:null,no:null};res=null;draw()});
+    pn.querySelectorAll("[data-set2]").forEach(b=>b.onclick=()=>{const[k,br]=b.dataset.set2.split(".");T[k][br]=b.dataset.l;res=null;draw()});
+    $("#run").onclick=()=>{res=LEAVES.map(L=>{const n=L[T.q]?T.yes:T.no;return classify(L,n)});const ok=res.filter((p,i)=>p==LEAVES[i].sick).length;st.T=T;st.acc=ok;save();draw();
+      $("#rr").innerHTML=`<div class="result"><b style="font-size:20px">Your tree got ${ok} of 12 leaves right.</b><p style="margin:6px 0 0">${ok==12?"Perfect! Kiprop can check his whole field now.":ok>=9?"Close! Look at the ❌ leaves. Which question would catch them?":"Hmm. Look at the ❌ leaves and try a different question."}</p></div><p class="row c"><button class="btn" id="fin">${ok==12?"Finish building ▶":"Use this tree anyway ▶"}</button></p>`;
+      $("#fin").onclick=()=>done(ok==12?3:ok>=9?2:1,`${ok}/12 correct`)}};
+  draw()};
+
+/* ---------------- TOOL 3: duka chatbot (intents + keywords) ---------------- */
+const INT=[["greet","👋 Greeting",["hi","hello","jambo","habari","mambo"],"Karibu! Welcome to Mama Halima’s duka. How can I help?"],["hours","🕗 Opening hours",["open","close","time","hours","saa"],"We’re open every day from 7am to 9pm."],["price","💰 Prices",["price","cost","how much","bei","ngapi"],"Mandazi are KSh 10 each, and chai is KSh 20."],["deliver","🛵 Delivery",["deliver","delivery","bring","home","leta"],"Yes! We deliver nearby for KSh 50."]];
+const TESTS=[["Jambo!","greet"],["What time do you open?","hours"],["Bei ya mandazi ni ngapi?","price"],["Can you deliver to my house?","deliver"],["How much is chai?","price"],["Habari ya asubuhi","greet"]];
+TOOLS.bot=(pn,done)=>{const st=ms("bot");st.k=st.k||{greet:[],hours:[],price:[],deliver:[]};st.r=st.r||Object.fromEntries(INT.map(i=>[i[0],i[3]]));let mode="build",passed=null;
+  const reply=t=>{const s=" "+t.toLowerCase().replace(/[^a-z' ]/g," ")+" ";let best=null,bs=0,hit=[];INT.forEach(([id])=>{const h=st.k[id].filter(k=>s.includes(" "+k+" ")||(k.includes(" ")&&s.includes(k)));if(h.length>bs){bs=h.length;best=id;hit=h}});return{id:best,hit}};
+  const draw=()=>{if(mode=="build"){pn.innerHTML=ak("Give each intent some <b>clue words</b>. Tap the suggestions or type your own. Mama Halima’s customers write in English <b>and</b> Swahili!")+
+    `<div class="intents">${INT.map(([id,name,sug])=>`<div class="intent"><h3>${name}</h3><small class="mute">Clue words:</small><div class="kw">${st.k[id].map(k=>`<button class="chip on" data-rm="${id}" data-k="${esc(k)}" aria-label="Remove ${esc(k)}">${esc(k)} ✕</button>`).join("")||'<span class="mute" style="font-size:14px">none yet</span>'}</div><div class="kw">${sug.filter(k=>!st.k[id].includes(k)).map(k=>`<button class="chip" data-add="${id}" data-k="${k}">+ ${k}</button>`).join("")}</div><div class="addkw"><input placeholder="Add a word" maxlength="20" data-in="${id}" aria-label="Add a clue word for ${name}"><button class="btn sm" data-addin="${id}">Add</button></div><small class="mute">Bot reply:</small><textarea data-r="${id}" maxlength="140" aria-label="Reply for ${name}">${esc(st.r[id])}</textarea></div>`).join("")}</div>
+    <p class="row c"><button class="btn n" id="go">📱 Test my chatbot ▶</button></p>${eng("Each intent is a <b>class</b>, and the clue words are <b>features</b>. The bot picks the intent whose words match the message most often.")}`;
+    const add=(id,k)=>{k=k.trim().toLowerCase();if(k&&!st.k[id].includes(k))st.k[id].push(k);save();draw()};
+    pn.querySelectorAll("[data-add]").forEach(b=>b.onclick=()=>add(b.dataset.add,b.dataset.k));
+    pn.querySelectorAll("[data-rm]").forEach(b=>b.onclick=()=>{st.k[b.dataset.rm]=st.k[b.dataset.rm].filter(x=>x!=b.dataset.k);save();draw()});
+    pn.querySelectorAll("[data-addin]").forEach(b=>b.onclick=()=>add(b.dataset.addin,pn.querySelector(`[data-in="${b.dataset.addin}"]`).value));
+    pn.querySelectorAll("[data-in]").forEach(i=>i.onkeydown=e=>{if(e.key=="Enter")add(i.dataset.in,i.value)});
+    pn.querySelectorAll("[data-r]").forEach(t=>t.oninput=()=>{st.r[t.dataset.r]=t.value;save()});
+    $("#go").onclick=()=>{mode="test";draw()}}
+   else{pn.innerHTML=ak("Chat with your bot like a customer would. Then run Mama Halima’s <b>6 test messages</b> to see how it does.")+`<div class="grid2"><div class="phone"><div class="phead">🛒 Mama Halima’s Duka <small style="margin-left:auto;opacity:.85">bot</small></div><div class="msgs" id="msgs" aria-live="polite"></div><form class="pform" id="pf"><input id="pi" placeholder="Type a message…" maxlength="80" autocomplete="off" aria-label="Message the chatbot"><button class="btn t sm" type="submit">Send</button></form></div>
+    <div><button class="btn n" id="tst">🧪 Run the 6 test messages</button><div id="tr" aria-live="polite"></div><p class="row"><button class="btn w sm" id="bk">← Edit clue words</button></p></div></div>`;
+    const say=(t,u,meta)=>{const d=document.createElement("div");d.className="bub "+(u?"u":"b");d.innerHTML=esc(t)+(meta?`<small>${meta}</small>`:"");$("#msgs").append(d);$("#msgs").scrollTop=1e5};
+    const chat=t=>{if(!t.trim())return;say(t,1);const r=reply(t);setTimeout(()=>say(r.id?st.r[r.id]:"Sorry, I don’t understand. Please call Mama Halima.",0,r.id?`intent: ${INT.find(i=>i[0]==r.id)[1]} · matched: ${r.hit.join(", ")}`:"no clue words matched"),calm?0:350)};
+    say("Jambo! Ask me about opening hours, prices or delivery.",0);
+    $("#pf").onsubmit=e=>{e.preventDefault();chat($("#pi").value);$("#pi").value=""};$("#bk").onclick=()=>{mode="build";draw()};
+    $("#tst").onclick=()=>{const rs=TESTS.map(([t,want])=>({t,want,got:reply(t).id}));passed=rs.filter(r=>r.got==r.want).length;
+      $("#tr").innerHTML=`<div class="msgl" style="margin-top:10px">${rs.map(r=>`<div class="mrow"><p>“${r.t}”</p><b>${r.got==r.want?"✅":"❌"} ${r.got?INT.find(i=>i[0]==r.got)[1]:"not understood"}</b></div>`).join("")}</div><div class="result"><b>${passed} of 6 answered correctly.</b> ${passed==6?"Mama Halima is delighted!":"Add clue words for the ❌ messages, then test again."}</div><p class="row"><button class="btn" id="fin">${passed==6?"Finish building ▶":"Finish anyway ▶"}</button></p>`;
+      $("#fin").onclick=()=>done(passed==6?3:passed>=4?2:1,`${passed}/6 test messages`)}}};
+  draw()};
+
+/* ---------------- TOOL 4: line of best fit ---------------- */
+const FISH=[[1,9],[2,17],[3,22],[4,27],[5,35],[6,38],[7,46],[8,52],[9,57],[10,63]];
+TOOLS.line=(pn,done)=>{const st=ms("line");let a=st.a??20,b=st.b??30,moved=0;const n=FISH.length,mx=FISH.reduce((s,p)=>s+p[0],0)/n,my=FISH.reduce((s,p)=>s+p[1],0)/n,sl=FISH.reduce((s,p)=>s+(p[0]-mx)*(p[1]-my),0)/FISH.reduce((s,p)=>s+(p[0]-mx)**2,0),ic=my-sl*mx;
+  const W=560,H=360,L=50,R=20,T=20,B=40,X=v=>L+v/11*(W-L-R),Y=v=>H-B-v/80*(H-T-B),inv=py=>(H-B-py)/(H-T-B)*80;
+  const yAt=x=>a+(b-a)*x/11,sse=(f)=>FISH.reduce((s,[x,y])=>s+(y-f(x))**2,0),best=sse(x=>ic+sl*x),e0=Math.max(sse(yAt),best*4);
+  pn.innerHTML=ak("Each dot is one of Otieno’s fishing days: how many nets he used, and how many fish he caught. <b>Drag the two yellow handles</b> to make the line pass as close to the dots as you can. Watch the red gaps shrink!")+
+   `<svg class="plot" id="pl" viewBox="0 0 ${W} ${H}" role="img" aria-label="Scatter plot of nets against fish caught, with a line you can move"></svg>
+   <div class="grid2" style="margin-top:14px"><div><b>Total error (smaller is better)</b><div class="meterb" style="height:22px;margin-top:6px"><i id="eb" style="background:var(--magenta)"></i></div><p id="et" class="mute" style="margin:4px 0"></p></div><div id="pr"></div></div>
+   <p class="row c"><button class="btn w sm" id="up1" aria-label="Move left handle up">⬆ left</button><button class="btn w sm" id="dn1" aria-label="Move left handle down">⬇ left</button><button class="btn w sm" id="up2" aria-label="Move right handle up">⬆ right</button><button class="btn w sm" id="dn2" aria-label="Move right handle down">⬇ right</button></p>
+   <p class="row c"><button class="btn t" id="ai">🤖 Show Akili’s best line</button><button class="btn" id="fin" disabled>Use my line ▶</button></p>${eng("Akili’s line uses <b>least squares</b>: it finds the slope and starting point that make the total squared error as small as possible. Many AI models learn in a similar way, step by step, using <b>gradient descent</b>.")}`;
+  let showAI=0;
+  const draw=()=>{const sv=$("#pl"),e=sse(yAt),ratio=Math.min(1,best/e);let g=`<rect width="${W}" height="${H}" fill="#fff"/>`;
+    for(let v=0;v<=80;v+=20)g+=`<line x1="${L}" x2="${W-R}" y1="${Y(v)}" y2="${Y(v)}" stroke="#EEE6D6"/><text x="${L-8}" y="${Y(v)+4}" text-anchor="end" font-size="12" fill="#535C7A" font-family="Lexend">${v}</text>`;
+    for(let v=0;v<=10;v+=2)g+=`<text x="${X(v)}" y="${H-B+18}" text-anchor="middle" font-size="12" fill="#535C7A" font-family="Lexend">${v}</text>`;
+    g+=`<text x="${(W+L)/2}" y="${H-4}" text-anchor="middle" font-size="13" font-weight="700" fill="#0F1B3D" font-family="Lexend">Nets used</text><text x="14" y="${(H)/2}" text-anchor="middle" font-size="13" font-weight="700" fill="#0F1B3D" font-family="Lexend" transform="rotate(-90 14 ${H/2})">Fish caught</text>`;
+    FISH.forEach(([x,y])=>{g+=`<line x1="${X(x)}" x2="${X(x)}" y1="${Y(y)}" y2="${Y(yAt(x))}" stroke="#D63A6E" stroke-width="2.5" stroke-dasharray="3 3"/>`});
+    if(showAI)g+=`<line x1="${X(0)}" x2="${X(11)}" y1="${Y(ic)}" y2="${Y(ic+sl*11)}" stroke="#0FA88F" stroke-width="4" stroke-dasharray="10 6"/>`;
+    g+=`<line x1="${X(0)}" x2="${X(11)}" y1="${Y(a)}" y2="${Y(b)}" stroke="#0F1B3D" stroke-width="4"/>`;
+    FISH.forEach(([x,y])=>{g+=`<circle cx="${X(x)}" cy="${Y(y)}" r="7" fill="#3BB7E0" stroke="#0F1B3D" stroke-width="2.5"/>`});
+    g+=`<g class="handle" data-h="0"><circle cx="${X(0)}" cy="${Y(a)}" r="16" fill="#FFB703" stroke="#0F1B3D" stroke-width="3"/></g><g class="handle" data-h="1"><circle cx="${X(11)}" cy="${Y(b)}" r="16" fill="#FFB703" stroke="#0F1B3D" stroke-width="3"/></g>`;
+    sv.innerHTML=g;$("#eb").style.width=Math.max(3,Math.min(100,(e-best)/(e0-best)*100))+"%";$("#et").textContent=`Your error: ${Math.round(e)} · Best possible: ${Math.round(best)}${showAI?" (Akili’s green line)":""}`;
+    const p=yAt(12),slope=(b-a)/11;$("#pr").innerHTML=`<b>Your line predicts</b><p style="margin:4px 0;font-size:20px">12 nets → about <b>${Math.max(0,Math.round(p))} fish</b></p><div class="engnote" style="margin:0">Equation: fish = ${slope.toFixed(1)} × nets + ${a.toFixed(1)}</div>`;
+    $("#fin").disabled=!moved;st.a=a;st.b=b;save()};
+  const sv=$("#pl");let drag=null;
+  sv.onpointerdown=e=>{const h=e.target.closest(".handle");if(h){drag=+h.dataset.h;try{sv.setPointerCapture(e.pointerId)}catch(_){}}};
+  sv.onpointermove=e=>{if(drag==null)return;const r=sv.getBoundingClientRect(),py=(e.clientY-r.top)*H/r.height,v=Math.max(0,Math.min(80,inv(py)));drag?b=v:a=v;moved=1;draw()};
+  sv.onpointerup=sv.onpointercancel=()=>drag=null;
+  const nudge=(h,d)=>{h?b=Math.max(0,Math.min(80,b+d)):a=Math.max(0,Math.min(80,a+d));moved=1;draw()};
+  $("#up1").onclick=()=>nudge(0,2);$("#dn1").onclick=()=>nudge(0,-2);$("#up2").onclick=()=>nudge(1,2);$("#dn2").onclick=()=>nudge(1,-2);
+  $("#ai").onclick=()=>{showAI=1;draw()};
+  $("#fin").onclick=()=>{const r=sse(yAt)/best;done(r<=1.3?3:r<=2.2?2:1,`error ${Math.round(sse(yAt))}`)};
+  draw()};
+
+/* ---------------- TOOL 5: scam guard (Naive Bayes + threshold) ---------------- */
+const GTR=[["You have WON KSh 50,000! Send your PIN to claim",1],["URGENT: your account is blocked, click this link now",1],["Send a KSh 1,000 fee today to get your prize",1],["Congratulations winner! Reply with your password",1],["Free data offer! Click the link and enter your PIN now",1],["Mum: dinner is ready, come home",0],["Teacher: homework is on page 12",0],["Grandpa: happy birthday my dear",0],["Coach: training moved to 4pm today",0],["Friend: see you at the library tomorrow",0]];
+const GTE=[["WINNER! Claim your KSh 10,000 prize, send PIN now",1],["Click this link now to unblock your account",1],["You won free airtime, reply with your password",1],["Coach: well done at training today",0],["Mum: please buy bread on your way home",0],["Teacher: the prize giving is on Friday",0]];
+TOOLS.guard=(pn,done)=>{const st=ms("guard");let lab=st.lab||{},th=st.th??50,model=null;const tok=t=>t.toLowerCase().match(/[a-z]+/g)||[];
+  const train=()=>{const c=[{},{}],tot=[0,0],docs=[0,0];GTR.forEach(([m],i)=>{const y=lab[i];docs[y]++;tok(m).forEach(w=>{c[y][w]=(c[y][w]||0)+1;tot[y]++})});const V=new Set(GTR.flatMap(([m])=>tok(m))).size;
+    model=t=>{const lp=[0,1].map(y=>Math.log((docs[y]+1)/(GTR.length+2))+tok(t).reduce((a,w)=>a+Math.log(((c[y][w]||0)+1)/(tot[y]+V)),0));return 1/(1+Math.exp(-(lp[1]-lp[0])/3))}};
+  const draw=()=>{const n=Object.keys(lab).length;
+    if(!model){pn.innerHTML=ak("Label Bibi Zawadi’s old messages: <b>scam</b> or <b>safe</b>? Your labels are the guard’s training data.")+`<div class="msgl">${GTR.map(([m],i)=>`<div class="mrow"><p>“${m}”</p><span class="row" style="gap:4px"><button class="chip ${lab[i]===1?"on":""}" data-i="${i}" data-v="1">🚩 Scam</button><button class="chip ${lab[i]===0?"t":""}" data-i="${i}" data-v="0">✅ Safe</button></span></div>`).join("")}</div><p class="row c"><button class="btn n" id="tr" ${n<GTR.length?"disabled":""}>🧠 Train the guard (${n}/${GTR.length})</button></p>`;
+      pn.querySelectorAll("[data-i]").forEach(b=>b.onclick=()=>{lab[b.dataset.i]=+b.dataset.v;st.lab=lab;save();draw()});$("#tr").onclick=()=>{train();draw()};return}
+    const sc=GTE.map(([m,y])=>({m,y,p:model(m)})),blocked=sc.filter(r=>r.p*100>=th),caught=blocked.filter(r=>r.y).length,fa=blocked.filter(r=>!r.y).length;
+    pn.innerHTML=ak("Your guard has learned! Here are <b>6 new messages</b> with their scam scores. Move the slider to set how strict the guard is. Can you catch all 3 scams <b>without</b> blocking any good messages?")+
+     `<label for="th"><b>Block messages with a scam score above ${th}%</b></label><input type="range" id="th" min="5" max="95" step="5" value="${th}"><div class="row mute" style="justify-content:space-between;font-size:13px"><span>◀ Strict: blocks more</span><span>Relaxed: blocks less ▶</span></div>
+     <div class="msgl" style="margin-top:10px">${sc.map(r=>`<div class="mrow"><p>“${r.m}”</p><span class="score" title="Scam score ${Math.round(r.p*100)}%"><i style="width:${r.p*100}%;background:${r.p*100>=th?"var(--magenta)":"var(--teal)"}"></i></span><b style="min-width:120px">${r.p*100>=th?"🚩 Blocked":"✅ Allowed"} ${(r.p*100>=th)==!!r.y?"✔":"✘"}</b></div>`).join("")}</div>
+     <div class="grid2" style="margin-top:12px"><div class="result" style="background:#DDF5EF">🛡️ Scams caught: <b>${caught} of 3</b></div><div class="result" style="background:#FBE0E8">😬 Good messages wrongly blocked: <b>${fa} of 3</b></div></div>
+     ${eng("The guard softens its scores a little so they aren’t all 0% or 100%, like a <b>temperature</b> setting. Caught scams are <b>true positives</b>. Wrongly blocked messages are <b>false positives</b>. Missed scams are <b>false negatives</b>. Moving the threshold trades one kind of mistake for another.")}
+     <p class="row c"><button class="btn w sm" id="rl">← Relabel</button><button class="btn" id="fin">Save my guard ▶</button></p>`;
+    $("#th").oninput=e=>{th=+e.target.value;st.th=th;save();draw();$("#th").focus()};$("#rl").onclick=()=>{model=null;draw()};
+    $("#fin").onclick=()=>{const good=GTR.every(([,y],i)=>lab[i]===y);done(good&&caught==3&&fa==0?3:good?2:1,`${caught}/3 caught, ${fa} false alarms`)}};
+  draw()};
+
+/* ---------------- TOOL 6: AI council (ethics, no single right answer) ---------------- */
+const DIL=[{e:"📷",q:"A school wants cameras with face recognition to take attendance automatically.",o:["Yes, it saves teachers time","No, it’s too risky for children’s privacy","Only if parents agree, the data is deleted quickly and it works fairly for every child"],p:[["🧒🏾 Student","“I don’t like being watched all day. Where do the pictures go?”"],["👩🏾 Parent","“I want to know who can see my child’s face data.”"],["👨🏾‍🏫 Teacher","“It would save time, but only if it’s fair and safe.”"]]},
+{e:"📝",q:"An AI tool can write a whole essay in seconds. Should students be allowed to use it for homework?",o:["Yes, for anything","No, never","Yes for ideas and checking, but students must do their own thinking and say how they used it"],p:[["🧒🏾 Student","“It helps me when I’m stuck, but then I don’t really learn.”"],["👨🏾‍🏫 Teacher","“I need to know what the student can actually do.”"],["👩🏾 Parent","“Honesty matters most to me.”"]]},
+{e:"💳",q:"A loan app uses AI to decide who can borrow money. It learned from old data where fewer women got loans.",o:["Use it, AI is neutral","Stop using it until it’s checked and fixed for bias","Let the AI decide alone, it’s faster"],p:[["👩🏾‍💼 Business owner","“I was refused, and nobody can explain why.”"],["🧑🏾‍💻 Engineer","“The AI copied unfairness from old data. We must test it.”"],["🏦 Bank","“We want speed, but not unfair decisions.”"]]},
+{e:"🎭",q:"An app can make very realistic fake videos of real people. What rule should it have?",o:["No rules needed","Fake videos must be clearly labelled, and using someone’s face needs their permission","Ban all video apps"],p:[["🧑🏾 Young person","“Someone could make a fake video of me!”"],["🎬 Film maker","“It’s a great tool for creative stories.”"],["📰 Journalist","“Fake videos can spread lies very fast.”"]]}];
+TOOLS.council=(pn,done)=>{const st=ms("council");st.ch=st.ch||{};let i=0;
+  const go=()=>{if(i>=DIL.length){pn.innerHTML=ak(`Thank you, Councillor ${esc(DB.name)}! You thought about <b>privacy</b>, <b>honesty</b>, <b>fairness</b> and <b>truth</b>. Real AI experts argue about these same questions every day.`)+`<p class="c"><button class="btn" id="fin">Submit my advice ▶</button></p>`;$("#fin").onclick=()=>done(3,"4 decisions");return}
+    const d=DIL[i];pn.innerHTML=`<p class="kick">Council question ${i+1} of ${DIL.length}</p><h2 style="font-size:26px">${d.e} ${d.q}</h2><p class="mute">There’s no single right answer. Choose what you think is best.</p><div class="opts">${d.o.map((x,j)=>`<button class="opt ${st.ch[i]===j?"on":""}" data-j="${j}">${x}</button>`).join("")}</div><div id="pv" aria-live="polite"></div>`;
+    pn.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{st.ch[i]=+b.dataset.j;save();pn.querySelectorAll(".opt").forEach(x=>x.classList.toggle("on",x==b));
+      $("#pv").innerHTML=`<p><b>Here’s how different people might see it:</b></p><div class="persp">${d.p.map(x=>`<div><b>${x[0]}</b>${x[1]}</div>`).join("")}</div>${eng("Ask four questions about any AI: Is it <b>private</b>? Is it <b>fair</b> to everyone? Is it <b>transparent</b> (can it explain itself)? Who is <b>accountable</b> when it goes wrong?")}<p class="c"><button class="btn" id="nx">${i+1<DIL.length?"Next question ▶":"Finish ▶"}</button></p>`;$("#nx").onclick=()=>{i++;go()}})};
+  go()};
+
+/* ---------------- MY LAB (portfolio) ---------------- */
+function lab(){const n=M.filter(m=>ms(m.id).done).length;
+  app.innerHTML=`<p class="kick">${DB.name?esc(DB.name)+"’s":"My"} portfolio</p><div class="row" style="justify-content:space-between;align-items:flex-end"><h1>My Lab</h1><span class="pill">${n} of 6 tools built</span></div><p class="mute">Everything you build lives here. Reopen a tool to improve it or show it to your family.</p>
+  <div class="lab" style="margin-top:16px">${M.map(m=>{const s=ms(m.id);return `<div class="tool ${s.done?"":"locked"}"><div class="top" style="background:${m.c}"><span aria-hidden="true">${s.done?m.e:"🔒"}</span><b>${m.tool}</b></div><div class="bd"><small class="mute">For ${m.who[1].split(",")[0]} in ${m.town}</small><p style="margin:6px 0">${s.done?`<span class="stars" aria-label="${s.stars} of 3 stars">${"⭐".repeat(s.stars||1)}</span><br><b>${esc(s.sum||"")}</b>`:"Not built yet"}</p>${m.id=="see"&&s.S&&s.S.length?`<div class="thumbs">${s.S.slice(0,8).map(x=>`<img src="${x.t}" alt="">`).join("")}</div>`:""}<a class="btn ${s.done?"w":""} sm" href="#m/${m.id}${s.done?"/2":""}">${s.done?"🛠️ Open tool":"Start mission"}</a></div></div>`}).join("")}</div>
+  <div class="card" style="margin-top:24px;display:flex;gap:16px;align-items:center;flex-wrap:wrap"><span style="font-size:48px">🎓</span><div style="flex:1;min-width:220px"><h2 style="font-size:26px">Junior AI Engineer certificate</h2><p class="mute" style="margin:4px 0 0">${n==6?"You built all six tools. You earned it!":`Build all six tools to earn it. ${6-n} to go!`}</p></div><button class="btn ${n==6?"":"w"}" id="ct" ${n==6?"":"disabled"}>View certificate</button></div>
+  ${DB.name?`<p class="c" style="margin-top:20px"><button class="btn w sm" id="rst">Start fresh (erase my lab)</button></p>`:""}`;
+  if(n==6)$("#ct").onclick=cert;
+  if($("#rst")){let sure=0;$("#rst").onclick=()=>{if(!sure){sure=1;$("#rst").textContent="Tap again to erase everything";return}DB={name:"",m:{},eng:DB.eng};save();lab()}}}
+function cert(){dlg.innerHTML=`<div class="cert"><svg viewBox="0 0 200 200" width="90" height="90" aria-hidden="true"><use href="#ak"/></svg><p class="kick" style="margin-top:8px">DigiSoma Lab · Certificate</p><p style="margin:4px 0">This certifies that</p><h2>${esc(DB.name)}</h2><p style="margin:6px 0">is a</p><h2 style="color:var(--teal)">Junior AI Engineer</h2><p class="mute" style="margin:10px 0 0">Built 6 AI tools for communities in Nairobi, Eldoret, Mombasa, Kisumu, Malindi and Nakuru.<br>${new Date().toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"})}</p></div><p class="c"><button class="btn" id="pr">🖨️ Print</button><button class="btn w" id="cx">Close</button></p><p class="c mute" id="pm" aria-live="polite"></p>`;
+  dlg.showModal();boom();$("#cx").onclick=()=>dlg.close();$("#pr").onclick=()=>{try{window.print()}catch(e){$("#pm").textContent="Printing isn’t available here. Try it on the live website."}}}
+
+/* ---------------- router ---------------- */
+function route(){const h=location.hash.slice(1)||"about",[a,b,c]=h.split("/");
+  document.querySelectorAll("nav.tabs a").forEach(x=>{const on=x.dataset.t==(a=="m"?"missions":a);x.classList.toggle("on",on);on?x.setAttribute("aria-current","page"):x.removeAttribute("aria-current")});
+  window.scrollTo(0,0);if(a=="m")return mission(b,+c||0);if(a=="missions")return missions();if(a=="lab")return lab();about()}
+window.onhashchange=route;route();
+</script>
+</body>
+</html>
